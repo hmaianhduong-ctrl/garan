@@ -1,68 +1,66 @@
 import { NextResponse } from 'next/server';
-import { generateSlug, validatePostData } from '@/lib/utils';
-// Dữ liệu giả lập (Sthay bằng prisma.post.findMany)
-const MOCK_POSTS = [
-  {
-    id: 1,
-    title: "Khuyến mãi Gà Rán Thứ 4 Vui Vẻ",
-    slug: "khuyen-mai-ga-ran-thu-4",
-    thumbnail: "https://via.placeholder.com/150",
-    status: "PUBLISHED",
-    createdAt: "2023-10-20T08:00:00Z"
-  },
-  {
-    id: 2,
-    title: "Bài viết nháp chưa đăng",
-    slug: "bai-viet-nhap",
-    thumbnail: null,
-    status: "DRAFT",
-    createdAt: "2023-10-21T09:00:00Z"
-  }
-];
+import { prisma } from '@/lib/prisma'; 
+import { generateSlug, validatePostData } from '@/lib/utils'; 
 
-// GET: Trả về danh sách bài viết
-export async function GET() {
-  // Giả vờ đợi 1 giây cho giống mạng thật (Optional)
-  await new Promise(resolve => setTimeout(resolve, 1000));
-  
-  return NextResponse.json(MOCK_POSTS);
-}
-
-
+//API TẠO BÀI VIẾT (LƯU VÀO DB)
 export async function POST(request: Request) {
   try {
-    const body = await request.json(); // Lấy dữ liệu Admin gửi lên
+    const body = await request.json();
 
-    // 1. VALIDATE: Kiểm tra lỗi bằng hàm tiện ích
-    // (Logic này chạy ngay lập tức, không cần Database)
+    //KIỂM TRA DỮ LIỆU ---
     const errorMsg = validatePostData(body);
     if (errorMsg) {
       return NextResponse.json({ error: errorMsg }, { status: 400 });
     }
 
-    // 2. FORMAT: Tự động tạo slug chuẩn SEO
-    // (Logic này cũng xử lý luôn, không cần Database)
-    let finalSlug = body.slug;
-    if (!finalSlug) {
-      finalSlug = generateSlug(body.title); 
-    } else {
-      finalSlug = generateSlug(finalSlug);
+    // XỬ LÝ SLUG ---
+    let finalSlug = body.slug ? generateSlug(body.slug) : generateSlug(body.title);
+
+    // Kiểm tra trùng slug
+    const existingPost = await prisma.post.findUnique({
+      where: { slug: finalSlug }
+    });
+
+    if (existingPost) {
+      finalSlug = `${finalSlug}-${Date.now()}`;
     }
 
-    // --- ĐẾN ĐÂY LÀ XONG PHẦN LOGIC KHÔNG CẦN DB ---
-
-    // Trả về kết quả để bạn test Postman ngay
-    return NextResponse.json({ 
-      message: "Check dữ liệu thành công (Logic OK)", 
-      data_received: {
-          title: body.title,
-          original_slug: body.slug,
-          generated_slug: finalSlug, // Xem cái này có ra chuẩn không 
-          status: body.status || 'DRAFT'
+    // LƯU VÀO DATABASE ---
+    const newPost = await prisma.post.create({
+      data: {
+        title: body.title,
+        slug: finalSlug,
+        content: body.content,
+        thumbnail: body.thumbnail || null,
+        status: body.status || 'DRAFT',
+        description: body.description || "",
+      
+        author: {
+           connect: { id: 1 } 
+        }
       }
     });
 
+    // Trả về bài viết ĐÃ LƯU
+    return NextResponse.json({ 
+      message: "Tạo bài viết thành công!", 
+      data: newPost 
+    }, { status: 201 });
+
   } catch (error) {
-    return NextResponse.json({ error: "Lỗi Server" }, { status: 500 });
+    console.error("❌ Lỗi tạo bài:", error);
+    return NextResponse.json({ error: "Lỗi Server (Khả năng do chưa có User ID=1)" }, { status: 500 });
+  }
+}
+
+export async function GET() {
+  try {
+    const posts = await prisma.post.findMany({
+      orderBy: { createdAt: 'desc' },
+      include: { author: true }
+    });
+    return NextResponse.json(posts);
+  } catch (error) {
+    return NextResponse.json({ error: "Lỗi server" }, { status: 500 });
   }
 }
