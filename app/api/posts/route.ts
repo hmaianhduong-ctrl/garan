@@ -2,24 +2,14 @@ import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma'; 
 import { generateSlug, validatePostData } from '@/lib/utils'; 
 
-//API TẠO BÀI VIẾT (LƯU VÀO DB)
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-<<<<<<< HEAD
-=======
-
-    //KIỂM TRA DỮ LIỆU ---
->>>>>>> backend-api
     const errorMsg = validatePostData(body);
     if (errorMsg) {
       return NextResponse.json({ error: errorMsg }, { status: 400 });
     }
 
-<<<<<<< HEAD
-=======
-    // XỬ LÝ SLUG ---
->>>>>>> backend-api
     let finalSlug = body.slug ? generateSlug(body.slug) : generateSlug(body.title);
 
     // Kiểm tra trùng slug
@@ -31,10 +21,6 @@ export async function POST(request: Request) {
       finalSlug = `${finalSlug}-${Date.now()}`;
     }
 
-<<<<<<< HEAD
-=======
-    // LƯU VÀO DATABASE ---
->>>>>>> backend-api
     const newPost = await prisma.post.create({
       data: {
         title: body.title,
@@ -43,12 +29,8 @@ export async function POST(request: Request) {
         thumbnail: body.thumbnail || null,
         status: body.status || 'DRAFT',
         description: body.description || "",
-<<<<<<< HEAD
         
         // ⚠️ QUAN TRỌNG: Gán bài viết cho User ID = 1
-=======
-      
->>>>>>> backend-api
         author: {
            connect: { id: 1 } 
         }
