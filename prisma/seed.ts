@@ -21,7 +21,7 @@ async function main() {
         slug: `bai-viet-mau-${i}`,
         description: `Mô tả ngắn bài viết ${i}`,
         content: `<p>Nội dung bài viết mẫu ${i}</p>`,
-        status: "Published",
+        status: "PUBLISHED",
         publishedAt: new Date(),
         authorId: admin.id,
       },
