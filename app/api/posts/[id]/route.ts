@@ -78,12 +78,26 @@ export async function PUT(
   }
 }
 
-// 3. DELETE: Xóa bài viết (Database)
 export async function DELETE(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> } 
 ) {
-  const id = parseInt(params.id);
-  await prisma.post.delete({ where: { id } });
-  return NextResponse.json({ message: "Đã xóa bài viết" });
+  try {
+    const { id: idStr } = await params;
+    const id = parseInt(idStr);
+
+    if (isNaN(id)) return NextResponse.json({ error: "ID không hợp lệ" }, { status: 400 });
+
+    // Kiểm tra xem bài viết có tồn tại không trước khi xóa
+    const post = await prisma.post.findUnique({ where: { id } });
+    if (!post) return NextResponse.json({ error: "Không tìm thấy bài viết để xóa" }, { status: 404 });
+
+    // Xóa bài viết
+    await prisma.post.delete({ where: { id } });
+    
+    return NextResponse.json({ message: "Đã xóa bài viết thành công" });
+  } catch (error) {
+    console.error("Lỗi xóa bài:", error);
+    return NextResponse.json({ error: "Lỗi Server Delete" }, { status: 500 });
+  }
 }
