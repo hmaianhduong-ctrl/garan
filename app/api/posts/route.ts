@@ -38,6 +38,7 @@
             thumbnail: body.thumbnail || null,
             status: body.status || 'DRAFT',
             description: body.description || "",
+            publishedAt: body.publishedAt ? new Date(body.publishedAt) : null,
             author: { connect: { id: 1 } } // Admin ID=1
         }
         });
