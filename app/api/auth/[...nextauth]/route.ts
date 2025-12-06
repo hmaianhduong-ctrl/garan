@@ -31,7 +31,7 @@ const { handlers, auth, signIn, signOut } = NextAuth({
             id: user.id.toString(), 
             name: user.name, 
             email: user.email, 
-            image: user.image,
+            // image: user.image,
             role: user.role 
           };
         }
@@ -50,7 +50,7 @@ const { handlers, auth, signIn, signOut } = NextAuth({
               data: {
                 email: user.email!,
                 name: user.name || "Google User",
-                image: user.image,
+                // image: user.image,
                 role: 'VIEWER',
                 password: '',
               }
@@ -66,7 +66,6 @@ const { handlers, auth, signIn, signOut } = NextAuth({
     },
     async session({ session, token }) {
       if (session.user && token.sub) {
-        // @ts-expect-error
         session.user.id = token.sub;
       }
       return session;
