@@ -83,7 +83,6 @@ export async function PUT(
   }
 }
 
-<<<<<<< HEAD
 export async function DELETE(
   request: Request,
   { params }: { params: Promise<{ id: string }> } 
@@ -104,7 +103,6 @@ export async function DELETE(
     return NextResponse.json({ message: "Đã xóa bài viết thành công" });
   } catch (error) {
     console.error("Lỗi xóa bài:", error);
-=======
 // -------------------------------------------------------------
 // 3. DELETE: Xóa bài viết
 // -------------------------------------------------------------
@@ -123,7 +121,6 @@ export async function DELETE(
     await prisma.post.delete({ where: { id } });
     return NextResponse.json({ message: "Xóa thành công" });
   } catch (error) {
->>>>>>> backend-api
     return NextResponse.json({ error: "Lỗi Server Delete" }, { status: 500 });
   }
 }

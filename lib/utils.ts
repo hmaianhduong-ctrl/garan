@@ -18,7 +18,7 @@ export function generateSlug(title: string): string {
  * 2. HÀM VALIDATE: Kiểm tra dữ liệu đầu vào có hợp lệ không
  * Trả về: null nếu OK, hoặc chuỗi thông báo lỗi nếu sai.
  */
-export function validatePostData(body: any) {
+export function validatePostData(body: Record<string, unknown>) {
   // Kiểm tra tiêu đề
   if (!body.title || body.title.trim().length < 5) {
     return "Tiêu đề phải có ít nhất 5 ký tự.";
