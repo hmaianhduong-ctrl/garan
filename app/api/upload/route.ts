@@ -3,40 +3,35 @@ import path from 'path';
 import { writeFile, mkdir } from 'fs/promises';
 
 export async function POST(request: Request) {
-  console.log("🚀 Bắt đầu nhận request Upload..."); // Log 1
-
   try {
     const formData = await request.formData();
     const file = formData.get('file');
 
+    // Kiểm tra file hợp lệ
     if (!file || !(file instanceof File)) {
-      console.log("❌ Lỗi: Không tìm thấy file trong FormData"); // Log lỗi
       return NextResponse.json({ error: "Không tìm thấy file" }, { status: 400 });
     }
 
-    console.log(`📂 Đang xử lý file: ${file.name} (${file.size} bytes)`); // Log 2
-
     const buffer = Buffer.from(await file.arrayBuffer());
     
-    // Tạo tên file
+    // Tạo tên file duy nhất (Timestamp + Tên gốc)
     const filename = `${Date.now()}_${file.name.replaceAll(" ", "_")}`;
     
-    // Đường dẫn thư mục (Dùng process.cwd() chuẩn cho Next.js)
+    // Đường dẫn lưu file: public/uploads
     const uploadDir = path.join(process.cwd(), "public/uploads");
 
-    // 1. Cố gắng tạo thư mục (Nếu chưa có)
+    // Tạo thư mục nếu chưa có
     try {
         await mkdir(uploadDir, { recursive: true });
-        console.log("✅ Đã kiểm tra/tạo thư mục uploads"); // Log 3
     } catch (e) {
-        console.error("❌ Lỗi tạo thư mục:", e);
+        console.error("Lỗi tạo thư mục upload:", e);
     }
 
-    // 2. Ghi file
+    // Ghi file vào ổ cứng
     const filePath = path.join(uploadDir, filename);
     await writeFile(filePath, buffer);
-    console.log(`✅ Đã ghi file thành công tại: ${filePath}`); // Log 4
 
+    // Trả về đường dẫn ảnh
     return NextResponse.json({ 
       success: true, 
       url: `/uploads/${filename}`,
@@ -44,7 +39,7 @@ export async function POST(request: Request) {
     });
 
   } catch (error) {
-    console.error("❌ LỖI CRASH SERVER:", error); // Log 5 (Quan trọng nhất)
+    console.error("Upload Error:", error);
     return NextResponse.json({ error: "Lỗi xử lý file phía Server" }, { status: 500 });
   }
 }
