@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-
+</head>
 <body class="sticky-header">
 
   <!-- HEADER -->
@@ -23,19 +23,84 @@
       <a href="login.html">Login</a>
     </nav>
   </header>
+
+  <!-- BLOG HERO -->
+  <section class="blog-hero">
+    <div class="blog-hero-image"></div>
+    <div class="blog-hero-overlay"></div>
+
+    <h1 class="inner-blog-title">Tiêu đề bài viết</h1>
+
+    <p class="inner-blog-desc">
+      Một chiếc nhật ký nhỏ được nêm nếm mỗi ngày bằng những món ngon, mẩu chuyện vui
+      và rất nhiều năng lượng tích cực. Hãy cùng cập nhật những deal hời nóng hổi chỉ
+      áp dụng tại cửa hàng, khám phá nhiều công thức mới toanh và chuyện bếp núc thú
+      vị của nhà Elis nào!
+    </p>
+  </section>
+
+  <!-- BLOG BODY CONTENT -->
+  <div class="blog-container">
+
+    <!-- META ROW -->
+    <div class="blog-meta">
+      <span class="blog-tag blog-tag-single">Lifestyle</span>
+
+      <div class="blog-published">
+        <span>Published</span>
+        <span class="blog-date">06/12/2025</span>
+      </div>
+    </div>
+
+    <!-- SUBHEADER -->
+    <h2 class="blog-subheader">Subheader mẫu đặt ở đây và đây sẽ là một ví dụ cho một subheader dài để bo margin</h2>
+
+    <!-- FIRST PARAGRAPH -->
+    <p class="blog-paragraph">
+      Đây là đoạn mô tả đầu tiên của blog. Bạn có thể viết khoảng 
+      2–3 dòng mở bài, giới thiệu nội dung chính, tạo cảm giác dẫn dắt cho độc giả…
+    </p>
+
+    <img class="blog-image" src="https://picsum.photos/900/560" alt="Blog Image">
+
+    <h3 class="blog-subsubheader">Tiêu đề nhỏ hơn đặt ở đây và tôi sẽ cho đây là một tiêu đề nhỏ nhỏ nhưng dài hơn bình thường</h3>
+
+        <p class="blog-paragraph">
+      Đây là đoạn mô tả đầu tiên của blog. Bạn có thể viết khoảng 
+      2–3 dòng mở bài, giới thiệu nội dung chính, tạo cảm giác dẫn dắt cho độc giả…
+    </p>
+
+        <div class="blog-end-row">
+      <p class="blog-end-text">
+        Bạn thích bài viết này chứ? Hãy cho chúng mình biết nhé!
+      </p>
+
+      <div class="blog-end-open">
+        <span class="open-title">Open Daily</span>
+        <span class="open-hours">09:00 - 22:00</span>
+      </div>
+    </div>
+
+
+
+
+  </div>
+
+  <!-- ACTION BUTTONS BELOW BLOG -->
+<div class="blog-actions">
   
-  <!-- BLOG HERO THUMBNAIL -->
-<section class="blog-hero">
-  <div class="blog-hero-image"></div>
-  <div class="blog-hero-overlay"></div>
-</section>
+  <!-- LIKE BUTTON -->
+  <button class="action-btn like-btn" id="likeBtn">
+    <i class="fa-regular fa-thumbs-up"></i>
+  </button>
 
+  <!-- VIEW STATIC -->
+  <div class="action-btn view-btn">
+    <i class="fa-regular fa-eye"></i>
+  </div>
 
-  <!-- BODY CONTENT -->
-  <main id="blog-content">
-	
-    <!-- JS will render blog posts here -->
-  </main>
+</div>
+
 
   <!-- FOOTER -->
   <footer class="footer-logo">
@@ -72,3 +137,15 @@
 
 </body>
 </html>
+
+<script>
+  const likeBtn = document.getElementById("likeBtn");
+  let liked = false;
+
+  likeBtn.addEventListener("click", () => {
+    liked = !liked;
+    likeBtn.innerHTML = liked
+      ? '<i class="fa-solid fa-thumbs-up"></i>'
+      : '<i class="fa-regular fa-thumbs-up"></i>';
+  });
+</script>
