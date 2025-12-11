@@ -7,15 +7,17 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// 🟢 MODEL NÀY ĐÃ ĐƯỢC FIX LỖI 
 model User {
-  id        Int       @id @default(autoincrement())
+  id        Int        @id @default(autoincrement())
   name      String
-  email     String    @unique
+  email     String     @unique
   password  String
   role      String
-  createdAt DateTime  @default(now())
+  createdAt DateTime   @default(now())
   posts     Post[]
   comments  Comment[]
+  reactions Reaction[] // Trường đối ứng cho model Reaction đã được thêm vào
 }
 
 model Post {
@@ -31,46 +33,46 @@ model Post {
   authorId    Int
   author      User      @relation(fields: [authorId], references: [id])
 
-  commentsLocked Boolean @default(false) // 🟢 Thêm an toàn
+  commentsLocked Boolean   @default(false)
   comments       Comment[]
 
-  views       View[]      // 🟢 Bổ sung nhẹ
-  reactions   Reaction[]  // 🟢 Bổ sung nhẹ
+  views     View[]
+  reactions Reaction[]
 }
 
 model Comment {
-  id        Int       @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   content   String
-  createdAt DateTime  @default(now())
+  createdAt DateTime @default(now())
 
-  isHidden  Boolean @default(false) // 🟢 Thêm an toàn
+  isHidden Boolean @default(false)
 
-  postId    Int
-  post      Post      @relation(fields: [postId], references: [id])
-  userId    Int
-  user      User      @relation(fields: [userId], references: [id])
+  postId Int
+  post   Post @relation(fields: [postId], references: [id])
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
 }
 
 model Media {
-  id        Int       @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   url       String
-  createdAt DateTime  @default(now())
+  createdAt DateTime @default(now())
 }
 
 model View {
-  id        Int       @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   postId    Int
-  createdAt DateTime  @default(now())
+  createdAt DateTime @default(now())
 
-  post      Post @relation(fields: [postId], references: [id])
+  post Post @relation(fields: [postId], references: [id])
 }
 
 model Reaction {
-  id      Int      @id @default(autoincrement())
-  type    String
-  postId  Int
-  userId  Int?
+  id     Int    @id @default(autoincrement())
+  type   String
+  postId Int
+  userId Int?
 
-  post    Post @relation(fields: [postId], references: [id])
-  user    User? @relation(fields: [userId], references: [id])
+  post Post  @relation(fields: [postId], references: [id])
+  user User? @relation(fields: [userId], references: [id])
 }
