@@ -1459,3 +1459,39 @@ html, body {
   color: #000;
   font-weight: 350;
 }
+
+/* ===== FIX OVERLAY ĐỎ TRONG RECOMMENDED ===== */
+#recommendContainer .bcard-thumb,
+#recommendContainer .bcard-thumb::after,
+#recommendContainer .bcard::after {
+  background: none !important;
+  filter: none !important;
+  mix-blend-mode: normal !important;
+  opacity: 1 !important;
+}
+
+/* ===== TAG COLORS (để tag không bị trắng) ===== */
+.tag-Recipe { background: #e99f3c; }
+.tag-Voucher { background: #ba3801; }
+.tag-News { background: #4a7bc0; }
+.tag-Event { background: #7a4acc; }
+
+/* ===== BLOG LIST STYLE ===== */
+#blogContent ul {
+  padding-left: 22px;
+  margin: 10px 0 20px;
+}
+
+#blogContent ul li {
+  margin-bottom: 6px;
+  line-height: 1.55;
+  font-size: 16px;
+  font-weight: 350;
+  color: #000;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+#blogContent ul li::marker {
+  color: #ba3801;
+  font-size: 14px;
+}

@@ -3,8 +3,8 @@
     "slug": "hoi-u50-chat-cung-thich-tiec-tung",
     "title": "Hội U50 ‘chất’ cũng thích tiệc tùng cuối tuần ở nhà Elis!",
     "description": "Một chiếc nhật ký nhỏ  được nêm nếm mỗi ngày bằng những món ngon, mẩu chuyện vui và rất nhiều năng lượng tích cực. Hãy cùng cập nhật những deal hời nóng hổi chỉ áp dụng tại cửa hàng, khám phá nhiều công thức mới toanh và chuyện bếp núc thú vị của nhà Elis nào!",
-    "thumbnail": "garan/app/news-user/post1/post1-thumb.png",
-    "tag": "lifestyle",
+    "thumbnail": "news-user/post1/post1-thumb.png",
+    "tag": "Lifestyle",
     "date": "2025-12-02",
 
     "content": [
@@ -18,7 +18,7 @@
       },
       {
         "type": "image",
-        "value": "garan/app/news-user/post1/post1-1.png"
+        "value": "news-user/post1/post1-1.png"
       },
       {
         "type": "h3",
@@ -40,7 +40,7 @@
 
       {
         "type": "image",
-        "value": "garan/app/news-user/post1/post1-2.png"
+        "value": "news-user/post1/post1-2.png"
       },
 
       {
@@ -54,7 +54,7 @@
 
       {
         "type": "image",
-        "value": "garan/app/news-user/post1/post1-3.png"
+        "value": "news-user/post1/post1-3.png"
       }
     ]
   },
@@ -65,8 +65,8 @@
   "slug": "hanh-trinh-hoc-hoi-va-niem-dam-me-am-thuc-cua-mr-boss",
   "title": "Hành trình học hỏi và niềm đam mê ẩm thực của MR.BOSS",
   "description": "Một chiếc nhật ký nhỏ được nêm nếm mỗi ngày bằng những món ngon, mẩu chuyện vui và rất nhiều năng lượng tích cực. Hãy cùng cập nhật những deal hời nóng hổi chỉ áp dụng tại cửa hàng, khám phá nhiều công thức mới toanh và chuyện bếp núc thú vị của nhà Elis nào!",
-  "thumbnail": "garan/app/news-user/post2/post2-thumb.png",
-  "tag": "journey",
+  "thumbnail": "news-user/post2/post2-thumb.png",
+  "tag": "Journey",
   "date": "2025-11-27",
 
   "content": [
@@ -81,7 +81,7 @@
 
     {
       "type": "image",
-      "value": "garan/app/news-user/post2/post2-1.png"
+      "value": "news-user/post2/post2-1.png"
     },
 
     {
@@ -104,7 +104,7 @@
 
     {
       "type": "image",
-      "value": "garan/app/news-user/post2/post2-2.png"
+      "value": "news-user/post2/post2-2.png"
     },
 
     {
@@ -138,11 +138,6 @@
     },
 
     {
-      "type": "image",
-      "value": "garan/app/news-user/post2/post2-3.png"
-    },
-
-    {
       "type": "h3",
       "value": "Trở về Việt Nam – mang những kinh nghiệm tích lũy mở ra Elis' Favorite"
     },
@@ -166,8 +161,9 @@
 
     {
       "type": "h3",
-      "value": "Trở về Việt Nam – mang những kinh nghiệm tích lũy mở ra Elis' Favorite"
+      "value": "Những câu chuyện hậu trường từ bếp Elis"
     },
+    
     {
       "type": "paragraph",
       "value": "Thầy khó tính nhưng công bằng\nBạn Thảo – phụ bếp kể:\n“Anh Khang khó lắm, sai một chút gia vị là anh sửa ngay. Nhưng cách anh chỉ tụi em rất dễ thương. Ảnh bảo: ‘Cứ sai đi, miễn sửa được.’”"
@@ -187,33 +183,33 @@
   "slug": "8-loai-salad-cuon-mieng-de-lam-den-khong-ngo-bat-mi-bi-mat",
   "title": "8 loại salad ‘cuốn miệng’ & dễ làm đến không ngờ - bật mí bí mật",
   "description": "Một chiếc nhật ký nhỏ được nêm nếm mỗi ngày bằng những món ngon, mẩu chuyện vui và rất nhiều năng lượng tích cực. Hãy cùng cập nhật những deal hời nóng hổi chỉ áp dụng tại cửa hàng, khám phá nhiều công thức mới toanh và chuyện bếp núc thú vị của nhà Elis nào!",
-  "thumbnail": "garan/app/news-user/post3/post3-thumb.png",
+  "thumbnail": "news-user/post3/post3-thumb.png",
   "tag": "Recipe",
   "date": "2025-11-15",
   "content": [
     {
       "type": "h2",
-      "text": "“Một người biết làm salad ngon là người tôn trọng nguyên liệu.”"
+      "value": "“Một người biết làm salad ngon là người tôn trọng nguyên liệu.”"
     },
     {
       "type": "paragraph",
-      "text": "Ngày còn làm phụ bếp ở một nhà hàng nhỏ vùng Nam Ý, ông chủ từng nói với tôi: ‘Một người biết làm salad ngon là người tôn trọng nguyên liệu.’ Và tôi mang bài học đó theo suốt những chuyến đi, từ Paris đến Prague… Hôm nay, tôi chia lại cho bạn 10 món salad khiến tôi mê nhất, vừa dễ làm vừa chuẩn vị Âu – ai cũng có thể thử tại nhà."
+      "value": "Ngày còn làm phụ bếp ở một nhà hàng nhỏ vùng Nam Ý, ông chủ từng nói với tôi: ‘Một người biết làm salad ngon là người tôn trọng nguyên liệu.’ Và tôi mang bài học đó theo suốt những chuyến đi, từ Paris đến Prague… Hôm nay, tôi chia lại cho bạn 10 món salad khiến tôi mê nhất, vừa dễ làm vừa chuẩn vị Âu – ai cũng có thể thử tại nhà."
     },
     {
       "type": "image",
-      "value": "garan/app/news-user/post3/post3-1.png"
+      "value": "news-user/post3/post3-1.png"
     },
+
     {
       "type": "h3",
-      "text": "1. Salad Caesar – Bí mật nằm ở sốt"
+      "value": "1. Salad Caesar – Bí mật nằm ở sốt"
     },
     {
       "type": "paragraph",
-      "text": "Cách làm:"
+      "value": "Cách làm:"
     },
     {
       "type": "list",
-      "style": "unordered",
       "items": [
         "Romaine rửa khô, cắt vừa.",
         "Bánh mì vuông, nướng giòn với bơ tỏi.",
@@ -223,19 +219,19 @@
     },
     {
       "type": "paragraph",
-      "text": "Mẹo của tôi: Parmesan càng ngon, salad càng “ra chất”."
+      "value": "Mẹo của tôi: Parmesan càng ngon, salad càng “ra chất”."
     },
+
     {
       "type": "h3",
-      "text": "2. Salad Hy Lạp – Đơn giản nhưng giàu tính cách"
+      "value": "2. Salad Hy Lạp – Đơn giản nhưng giàu tính cách"
     },
     {
       "type": "paragraph",
-      "text": "Cách làm:"
+      "value": "Cách làm:"
     },
     {
       "type": "list",
-      "style": "unordered",
       "items": [
         "Cà chua – dưa leo – hành tây tím – olive – phô mai Feta.",
         "Sốt: dầu oliu, chanh, oregano (vị Hy Lạp đặc trưng)."
@@ -243,23 +239,23 @@
     },
     {
       "type": "paragraph",
-      "text": "Mẹo: Cắt rau thành miếng to, để giữ đúng tinh thần Địa Trung Hải – mộc mà sang."
+      "value": "Mẹo: Cắt rau thành miếng to, để giữ đúng tinh thần Địa Trung Hải – mộc mà sang."
     },
     {
       "type": "image",
-      "value": "garan/app/news-user/post3/post3-2.png"
+      "value": "news-user/post3/post3-2.png"
     },
+
     {
       "type": "h3",
-      "text": "3. Salad xoài tôm – Món tôi học từ một đầu bếp Thái ở Paris"
+      "value": "3. Salad xoài tôm – Món tôi học từ một đầu bếp Thái ở Paris"
     },
     {
       "type": "paragraph",
-      "text": "Cách làm:"
+      "value": "Cách làm:"
     },
     {
       "type": "list",
-      "style": "unordered",
       "items": [
         "Xoài chín vừa, thái lát",
         "Tôm luộc bóc vỏ.",
@@ -269,19 +265,19 @@
     },
     {
       "type": "paragraph",
-      "text": "Mẹo: Xoài đừng chín quá, sẽ mất độ “pop” khi ăn."
+      "value": "Mẹo: Xoài đừng chín quá, sẽ mất độ “pop” khi ăn."
     },
+
     {
       "type": "h3",
-      "text": "4. Salad bò áp chảo – Dành cho người thích vị mạnh"
+      "value": "4. Salad bò áp chảo – Dành cho người thích vị mạnh"
     },
     {
       "type": "paragraph",
-      "text": "Cách làm:"
+      "value": "Cách làm:"
     },
     {
       "type": "list",
-      "style": "unordered",
       "items": [
         "Làm nóng chảo, áp bò 1–2 phút mỗi mặt để còn hồng.",
         "Cắt lát mỏng, trộn với rau rocket.",
@@ -290,19 +286,19 @@
     },
     {
       "type": "paragraph",
-      "text": "Mẹo: Rocket có vị hơi cay nồng, ăn cùng bò thì hợp bất ngờ."
+      "value": "Mẹo: Rocket có vị hơi cay nồng, ăn cùng bò thì hợp bất ngờ."
     },
+
     {
       "type": "h3",
-      "text": "5. Salad ngũ hạt – Bữa sáng no 4 tiếng"
+      "value": "5. Salad ngũ hạt – Bữa sáng no 4 tiếng"
     },
     {
       "type": "paragraph",
-      "text": "Cách làm:"
+      "value": "Cách làm:"
     },
     {
       "type": "list",
-      "style": "unordered",
       "items": [
         "Luộc quinoa, yến mạch cán dày, hạt bí – hướng dương – óc chó rang.",
         "Thêm táo hoặc nho khô.",
@@ -311,19 +307,19 @@
     },
     {
       "type": "paragraph",
-      "text": "Mẹo: Trộn khi hạt còn hơi ấm sẽ thấm vị tốt hơn."
+      "value": "Mẹo: Trộn khi hạt còn hơi ấm sẽ thấm vị tốt hơn."
     },
+
     {
       "type": "h3",
-      "text": "6. Salad táo – óc chó – mật ong"
+      "value": "6. Salad táo – óc chó – mật ong"
     },
     {
       "type": "paragraph",
-      "text": "Cách làm:"
+      "value": "Cách làm:"
     },
     {
       "type": "list",
-      "style": "unordered",
       "items": [
         "Táo xanh thái lát.",
         "Giấm táo + mật ong + 1 chút muối đánh đều.",
@@ -332,19 +328,19 @@
     },
     {
       "type": "paragraph",
-      "text": "Mẹo: Táo xanh giúp món không bị ngọt quá."
+      "value": "Mẹo: Táo xanh giúp món không bị ngọt quá."
     },
+
     {
       "type": "h3",
-      "text": "7. Salad trứng sốt mè rang – Bữa trưa tiết kiệm"
+      "value": "7. Salad trứng sốt mè rang – Bữa trưa tiết kiệm"
     },
     {
       "type": "paragraph",
-      "text": "Cách làm:"
+      "value": "Cách làm:"
     },
     {
       "type": "list",
-      "style": "unordered",
       "items": [
         "Trứng luộc cắt đôi.",
         "Cà rốt – bắp cải tím bào sợi.",
@@ -353,19 +349,19 @@
     },
     {
       "type": "paragraph",
-      "text": "Mẹo: Mè rang hơi cháy cạnh mới dậy mùi."
+      "value": "Mẹo: Mè rang hơi cháy cạnh mới dậy mùi."
     },
+
     {
       "type": "h3",
-      "text": "8. Salad cá ngừ – Món của những ngày bận rộn"
+      "value": "8. Salad cá ngừ – Món của những ngày bận rộn"
     },
     {
       "type": "paragraph",
-      "text": "Cách làm:"
+      "value": "Cách làm:"
     },
     {
       "type": "list",
-      "style": "unordered",
       "items": [
         "Cá ngừ hộp để ráo dầu.",
         "Trộn với ngô ngọt, dưa leo và ít tiêu.",
@@ -374,8 +370,121 @@
     },
     {
       "type": "paragraph",
-      "text": "Mẹo: Đừng bỏ hết dầu trong hộp cá, giữ lại 1 chút cho “đúng vị”."
+      "value": "Mẹo: Đừng bỏ hết dầu trong hộp cá, giữ lại 1 chút cho “đúng vị”."
+    }
+  ]
+},
+
+{
+  "slug": "voucher-hot-hit-black-friday-11-2025",
+  "title": "Voucher hot hit của tháng BLACK FRIDAY 11/2025",
+  "description": "Deal chạm đáy – ăn hết mình! Bộ sưu tập voucher Black Friday 11/2025 của Elis đã chính thức mở, ưu đãi lớn nhất năm dành riêng cho bạn.",
+  "thumbnail": "news-user/post4/post4-thumb.png",
+  "tag": "Voucher",
+  "date": "2025-11-01",
+
+  "content": [
+    {
+      "type": "h2",
+      "value": "Ăn đã đời – Deal chạm đáy – Chốt đơn không cần nghĩ suy!"
+    },
+    {
+      "type": "paragraph",
+      "value": "Tháng 11 về không chỉ mang theo gió lạnh, mà còn kéo theo mùa Black Friday được mong đợi nhất năm.\nVới Elis, Black Friday không phải chuyện chạy theo giảm giá cho vui — mà là dịp để khách ăn ngon hơn, trả ít hơn và tận hưởng trọn vẹn hơn.\n\nNếu bạn đang chờ một cái cớ để rủ hội bạn, dắt gia đình hay tự thưởng cho bản thân một bữa ăn “xịn xò”, thì voucher Black Friday 11/2025 của Elis chính là lý do hợp lý nhất."
+    },
+
+    {
+      "type": "image",
+      "value": "news-user/post4/post4-1.png"
+    },
+
+    {
+      "type": "h3",
+      "value": "TOP VOUCHER HOT HIT – CHỈ CÓ TRONG THÁNG 11"
+    },
+
+    {
+      "type": "paragraph",
+      "value": "1. Voucher Giảm 30% Toàn Menu"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Áp dụng cho các món gà rán, burger, salad và combo.",
+        "Dành cho khách dùng tại quán hoặc đặt mang về.",
+        "Tip nhỏ: Đi nhóm 3–4 người là lời nhất!"
+      ]
+    },
+
+    {
+      "type": "paragraph",
+      "value": "2. Mua 1 Combo – Tặng 1 Salad Đặc Biệt"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Tặng salad phiên bản giới hạn Black Friday.",
+        "Món nhẹ – chống ngán – cực hợp ăn kèm đồ chiên."
+      ]
+    },
+
+    {
+      "type": "paragraph",
+      "value": "3. Voucher “Gia Đình & Bạn Bè” – Giảm Sâu Hơn Khi Đi Đông"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Áp dụng cho hóa đơn từ 3 người trở lên.",
+        "Càng đông – giá càng dễ chịu."
+      ]
+    },
+
+    {
+      "type": "paragraph",
+      "value": "4. Ưu Đãi Riêng Cho Khách Quen"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Khách từng check-in, theo dõi fanpage hoặc quay lại lần 2 trong tháng 11 sẽ nhận voucher bí mật tại quầy.",
+        "Không công bố công khai — chỉ khách thân mới biết 😉"
+      ]
+    },
+    
+    {
+      "type": "h3",
+      "value": "THỜI GIAN ÁP DỤNG"
+    },
+    {
+      "type": "paragraph",
+      "value": "📅 Từ 01/11 đến 30/11/2025\n📍 Áp dụng tại tất cả các khung giờ trong ngày\n⚠ Số lượng voucher có hạn – hết là dừng"
+    },
+
+    {
+      "type": "h3",
+      "value": "Lời Nhắn Từ Bếp Trưởng (MR. BOSS)"
+    },
+    {
+      "type": "paragraph",
+      "value": "“Black Friday là dịp để khách ăn vui hơn,\ncòn tụi mình thì vui vì được phục vụ nhiều hơn.”\n— Anh Khang, Bếp trưởng Elis."
+    },
+
+    {
+      "type": "h3",
+      "value": "ĐỪNG ĐỂ BLACK FRIDAY TRÔI QUA TRONG TIẾC NUỐI"
+    },
+    {
+      "type": "paragraph",
+      "value": "Deal ngon – giá tốt – không thử là thiếu sót.\n📍 Ghé Elis ngay trong tháng 11 này để ăn Black Friday cho đúng nghĩa!\n👉 Theo dõi fanpage & website để không bỏ lỡ voucher giới hạn."
+    },
+
+    {
+      "type": "image",
+      "value": "news-user/post4/post4-2.png"
     }
   ]
 }
+
+
 ]

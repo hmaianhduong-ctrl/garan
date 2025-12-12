@@ -141,45 +141,43 @@
     </div>
   </div>
 
-  <!-- SCRIPT LOAD BLOG DATA -->
-  <script>
-    async function loadBlog() {
-      const params = new URLSearchParams(window.location.search);
-      const slug = params.get("post");
+<script>
+  async function loadBlog() {
+    const params = new URLSearchParams(window.location.search);
+    const slug = params.get("post");
 
-      const res = await fetch("blogs.json");
-      const blogs = await res.json();
+    const res = await fetch("blogs.json");
+    const blogs = await res.json();
 
-      const blog = blogs.find(b => b.slug === slug);
+    const blog = blogs.find(b => b.slug === slug);
 
-      if (!blog) {
-        document.querySelector("#blogTitle").textContent = "Post not found";
-        return;
-      }
+    if (!blog) {
+      document.querySelector("#blogTitle").textContent = "Post not found";
+      return;
+    }
 
-      // HERO
-      document.querySelector("#heroImage").style.backgroundImage =
-        `url(${blog.thumbnail})`;
+    // HERO
+    document.querySelector("#heroImage").style.backgroundImage =
+      `url(${blog.thumbnail})`;
 
-      document.querySelector("#blogTitle").textContent = blog.title;
-      document.querySelector("#blogDescription").textContent = blog.description;
-      document.querySelector("#blogTag").textContent = blog.tag;
-      document.querySelector("#blogDate").textContent = blog.date;
+    document.querySelector("#blogTitle").textContent = blog.title;
+    document.querySelector("#blogDescription").textContent = blog.description;
+    document.querySelector("#blogTag").textContent = blog.tag;
+    document.querySelector("#blogDate").textContent = blog.date;
 
-        // CONTENT RENDER
+    // CONTENT RENDER
     const container = document.querySelector("#blogContent");
 
     blog.content.forEach(block => {
 
       // Cho phép đọc cả "value" và "text"
       const text = block.value || block.text || "";
-
-      let el;
+      let el = null; // ⚠️ cần null để tránh lỗi append
 
       if (block.type === "paragraph") {
         el = document.createElement("p");
         el.className = "blog-paragraph";
-        el.innerHTML = text.replace(/\n/g, "<br>"); // hỗ trợ xuống dòng
+        el.innerHTML = text.replace(/\n/g, "<br>");
 
       } else if (block.type === "h2") {
         el = document.createElement("h2");
@@ -191,7 +189,7 @@
         el.className = "blog-subsubheader";
         el.textContent = text;
 
-      } else if (block.type === "image") {
+      } else if (block.type === "image" && block.value) {
         el = document.createElement("img");
         el.className = "blog-image";
         el.src = block.value;
@@ -206,37 +204,39 @@
         });
       }
 
-      container.appendChild(el);
+      // Chỉ append nếu el tồn tại (tránh lỗi)
+      if (el) container.appendChild(el);
     });
 
-      // RECOMMEND (lấy 3 bài bất kỳ trừ bài hiện tại)
-      const recommendBox = document.querySelector("#recommendContainer");
+    // RECOMMEND (3 bài bất kỳ)
+    const recommendBox = document.querySelector("#recommendContainer");
 
-      blogs
-        .filter(b => b.slug !== slug)
-        .slice(0, 3)
-        .forEach(b => {
-          recommendBox.innerHTML += `
-            <a href="blog.html?post=${b.slug}" class="bcard">
-              <img src="${b.thumbnail}" class="bcard-thumb">
+    blogs
+      .filter(b => b.slug !== slug)
+      .slice(0, 3)
+      .forEach(b => {
+        recommendBox.innerHTML += `
+          <a href="blog.html?post=${b.slug}" class="bcard">
+            <img src="${b.thumbnail}" class="bcard-thumb">
 
-              <h3 class="bcard-title">${b.title}</h3>
+            <h3 class="bcard-title">${b.title}</h3>
 
-              <div class="bcard-meta">
-                <span class="bcard-tag tag-${b.tag}">${b.tag}</span>
+            <div class="bcard-meta">
+              <span class="bcard-tag tag-${b.tag}">${b.tag}</span>
 
-                <div class="bcard-date">
-                  <span class="date-text">Published</span>
-                  <span class="date-value">${b.date}</span>
-                </div>
+              <div class="bcard-date">
+                <span class="date-text">Published</span>
+                <span class="date-value">${b.date}</span>
               </div>
-            </a>
-          `;
-        });
-    }
+            </div>
+          </a>
+        `;
+      });
+  }
 
-    loadBlog();
-  </script>
+  loadBlog();
+</script>
+
 
 </body>
 </html>
