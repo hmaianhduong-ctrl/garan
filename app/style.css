@@ -1161,7 +1161,12 @@ html, body {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 40px; /* khoảng cách giữa 2 icon */
+  gap: 40px;
+}
+
+/* BLOCK ICON + SỐ */
+.action-block {
+  text-align: center;
 }
 
 /* NÚT BASE STYLE */
@@ -1169,7 +1174,7 @@ html, body {
   width: 70px;
   height: 70px;
   background: #fff;
-  border: 1.5px solid #ba3801;
+  border: 2px solid #ba3801;
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -1178,20 +1183,279 @@ html, body {
   transition: 0.2s ease;
 }
 
-/* ICON */
 .action-btn i {
   font-size: 26px;
   color: #ba3801;
 }
 
-/* HOVER */
 .action-btn:hover {
   background: #fff6f2;
 }
 
-/* VIEW BUTTON KHÔNG CLICK ĐƯỢC */
+/* VIEW: KHÔNG CLICK */
 .view-btn {
   cursor: default;
 }
 
+/* SỐ BÊN DƯỚI ICON */
+.action-number {
+  margin-top: 10px;
+  font-size: 16px;
+  font-weight: 500;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  color: #ba3801;
+}
 
+/* ================= RECOMMEND SECTION ================= */
+.blog-recommend-wrapper {
+  width: 100%;
+  background-color: #fff8cf;
+  padding: 60px 0;
+  margin-top: 40px;
+  padding-left: 150px; 
+  position: relative;
+
+}
+
+/* Nút overlay */
+.back-to-library {
+  position: absolute;
+  left: 40px;                  /* sát trái rectangle */
+  top: 50%;
+  transform: translateY(-50%);
+
+  width: 170px;
+  height: 70px;
+  border-radius: 50%;
+
+
+  border: 1.5px solid #ba3801;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 18px;
+  line-height: 18px;
+  color: #ba3801;
+  background: none;
+  z-index: 50;              /* đè lên rectangle */
+  cursor: pointer;
+}
+
+.back-to-library span {
+  display: block;
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: 0.5px;
+}
+
+
+.blog-recommend-inner {
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  transform: scale(0.95);
+  transform-origin: left center;
+}
+
+
+/* ================= CARD ================= */
+.bcard {
+  width: 40%;
+  overflow: hidden;
+  padding-bottom: 30px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+
+/* ================= THUMBNAIL ================= */
+.bcard-thumb {
+  width: 100%;
+  aspect-ratio: 1 / 1; /* Thumbnail vuông */
+  object-fit: cover;
+  display: block;
+}
+
+
+/* ================= TITLE ================= */
+.bcard-title {
+  padding: 15px 12px 0;
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.45;
+  color: #ba3801;
+  margin: 0;
+}
+
+
+/* ================= TAG + DATE ROW ================= */
+.bcard-meta {
+  margin-top: 12px;
+  padding: 0 12px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+/* TAG — tái sử dụng màu tag cũ nhưng KHÔNG dùng layout cũ */
+.bcard-tag {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-style: italic;
+  color: white;
+  display: inline-block;
+}
+
+
+/* ================= DATE ================= */
+.bcard-date {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-style: italic;
+}
+
+.bcard-date .date-text {
+  color: #ba3801;
+  opacity: 0.8;
+}
+
+.bcard-date .date-value {
+  color: #ba3801;
+  font-weight: 500;
+}
+
+/* ===== COMMENT SECTION WRAPPER ===== */
+.comment-wrapper {
+  max-width: 900px;
+  margin: 80px auto 120px;   /* tách khỏi rectangle */
+  padding: 0 20px;
+}
+
+/* Avatar + Box */
+.comment-top {
+  display: flex;
+  justify-content: center;   /* canh giữa */
+  align-items: flex-start;
+  gap: 20px;
+}
+
+/* Avatar */
+.comment-avatar {
+  font-size: 42px;
+  color: #ba3801;
+  flex-shrink: 0;
+}
+
+/* Input Box */
+.comment-box-area {
+  display: flex;
+  flex-direction: column;
+  width: 700px;
+}
+
+.comment-input-box {
+  width: 700px;
+  height: 160px;
+  border: 1px solid #d2ac4d;
+  background: #fff;
+  border-radius: 8px;
+  padding: 12px 16px;
+  box-sizing: border-box;
+  display: flex;
+}
+
+.comment-textarea {
+  width: 100%;
+  height: 100%;
+  resize: none;
+  border: none;
+  outline: none;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 350;
+  line-height: 22px;
+  color: #000;
+}
+
+.comment-textarea::placeholder {
+  color: #000;
+  opacity: 0.4;
+}
+
+/* Submit Button */
+.comment-submit-btn {
+  margin-top: 17px;
+  align-self: flex-end;   /* 🎯 chính là dòng giúp canh phải box */
+
+  width: 160px;
+  height: 45px;
+  background-color: #ffeda8;
+  border-radius: 24px;
+  border: 0.8px solid #d2ac4d;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 15px;
+  color: #ba3801;
+  cursor: pointer;
+}
+
+/* ===== ONE COMMENT BLOCK ===== */
+.comment-placeholder {
+  display: flex;
+  margin-bottom: 40px;
+  justify-content: center; 
+  align-items: flex-start;
+  gap: 40px;
+  margin-top: 60px;
+}
+
+/* Avatar giữ nguyên */
+
+/* Right column */
+.comment-body {
+  position: relative;
+  width: 650px; 
+  display: flex;
+  flex-direction: column;
+  font-family: 'Plus Jakarta Sans', sans-serif;   /* 🎯 đồng bộ */
+}
+
+/* Name */
+.comment-name {
+  font-size: 16px;
+  font-weight: 480;
+  font-family: 'Plus Jakarta Sans', sans-serif;   /* 🎯 đồng bộ */
+  color: #000;
+}
+
+/* Time */
+.comment-time {
+  position: absolute;
+  right: 0;
+  top: 0;
+  font-size: 13px;
+  font-weight: 400;
+  font-family: 'Plus Jakarta Sans', sans-serif;   /* 🎯 đồng bộ */
+  color: #000;
+  opacity: 0.3;
+  display: inline-block;
+}
+
+/* Comment content */
+.comment-text {
+  margin-top: 6px;
+  font-size: 16px;
+  line-height: 20px;
+  font-family: 'Plus Jakarta Sans', sans-serif;   /* 🎯 đồng bộ */
+  color: #000;
+  font-weight: 350;
+}

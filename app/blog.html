@@ -87,24 +87,150 @@
   </div>
 
   <!-- ACTION BUTTONS BELOW BLOG -->
-<div class="blog-actions">
-  
-  <!-- LIKE BUTTON -->
-  <button class="action-btn like-btn" id="likeBtn">
-    <i class="fa-regular fa-thumbs-up"></i>
-  </button>
+  <div class="blog-actions">
 
-  <!-- VIEW STATIC -->
-  <div class="action-btn view-btn">
-    <i class="fa-regular fa-eye"></i>
+    <!-- LIKE BUTTON BLOCK -->
+    <div class="action-block">
+      <button class="action-btn like-btn" id="likeBtn">
+        <i class="fa-regular fa-thumbs-up"></i>
+      </button>
+      <div class="action-number" id="likeCount">123</div>
+    </div>
+
+    <!-- VIEW BLOCK -->
+    <div class="action-block">
+      <div class="action-btn view-btn">
+        <i class="fa-regular fa-eye"></i>
+      </div>
+      <div class="action-number" id="viewCount">542</div>
+    </div>
+
   </div>
 
+<!-- YELLOW RECOMMEND SECTION -->
+<div class="blog-recommend-wrapper">
+
+    <!-- BACK TO LIBRARY button overlay -->
+  <div class="back-to-library">
+    <span>BACK TO</span>
+    <span>LIBRARY</span>
+  </div>
+
+  <div class="blog-recommend-inner">
+
+    <div class="bcard">
+      <img src="https://i.postimg.cc/hvd2WSnL/news2.png" class="bcard-thumb" alt="News Image 2">
+
+      <h3 class="bcard-title">
+        HÀNH TRÌNH HỌC HỎI VÀ NIỀM ĐAM MÊ ẨM THỰC CỦA MR. BOSS
+      </h3>
+
+      <div class="bcard-meta">
+        <span class="bcard-tag tag-journey">Journey</span>
+
+        <div class="bcard-date">
+          <span class="date-text">Published</span>
+          <span class="date-value">27/11/2025</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bcard">
+      <img src="https://i.postimg.cc/QCTfGXDJ/news3.png" class="bcard-thumb" alt="News Image 3">
+
+      <h3 class="bcard-title">
+        8 LOẠI SALAD ‘CUỐN MIỆNG’ & DỄ LÀM ĐẾN KHÔNG NGỜ - BẬT MÍ BÍ MẬT
+      </h3>
+
+      <div class="bcard-meta">
+        <span class="bcard-tag tag-recipe">Recipe</span>
+
+        <div class="bcard-date">
+          <span class="date-text">Published</span>
+          <span class="date-value">15/11/2025</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bcard">
+      <img src="https://i.postimg.cc/PJwSstHb/news4.png" class="bcard-thumb" alt="News Image 4">
+
+      <h3 class="bcard-title">
+        VOUCHER HOT HIT CỦA THÁNG BLACK FRIDAY 11/2025
+      </h3>
+
+      <div class="bcard-meta">
+        <span class="bcard-tag tag-voucher">Voucher</span>
+
+        <div class="bcard-date">
+          <span class="date-text">Published</span>
+          <span class="date-value">02/12/2025</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </div>
+
+<div class="comment-wrapper">
+
+  <!-- 🎯 COMMENT BOX -->
+  <div class="comment-top">
+    <div class="comment-avatar">👤</div>
+
+    <div class="comment-box-area">
+      <div class="comment-input-box">
+        <textarea
+          class="comment-textarea"
+          placeholder="Nhập bình luận của bạn..."
+        ></textarea>
+      </div>
+
+      <button class="comment-submit-btn">Đăng bình luận</button>
+    </div>
+  </div>
+
+  <!-- 🎯 COMMENT MẪU 1 -->
+  <div class="comment-placeholder">
+      <div class="comment-avatar">👤</div>
+
+      <div class="comment-body">
+        <div class="comment-header">
+          <span class="comment-name">Alex</span>
+          <span class="comment-time">1 phút trước</span>
+        </div>
+
+        <div class="comment-text">
+          Đây là bình luận mẫu để xem style hiển thị.
+        </div>
+      </div>
+  </div>
+
+  <!-- 🎯 COMMENT MẪU 2 -->
+  <div class="comment-placeholder">
+    <div class="comment-avatar">👤</div>
+
+    <div class="comment-body">
+      <div class="comment-header">
+        <span class="comment-name">Minh Anh</span>
+        <span class="comment-time">5 phút trước</span>
+      </div>
+
+      <div class="comment-text">
+        Đây là một bình luận ví dụ khác để bạn canh spacing giữa nhiều comment với nhau.
+        Bạn có thể thay đổi nội dung dài ngắn tùy ý để test bố cục.
+      </div>
+    </div>
+  </div>
+
+</div> <!-- 🔚 kết thúc comment-wrapper -->
+
 
 
   <!-- FOOTER -->
   <footer class="footer-logo">
     <img src="https://i.postimg.cc/7PGsTNz6/chuvahinh.png" alt="Footer Logo">
+
     <div class="footer-right">
       <div class="footer-column">
         <a href="#" class="footer-link">Menu</a>
@@ -112,6 +238,7 @@
         <a href="#" class="footer-link">About us</a>
         <a href="#" class="footer-link">Career</a>
       </div>
+
       <div class="social-block">
         <div class="follow-us">Follow us!</div>
         <div class="social-icons">
@@ -123,29 +250,18 @@
     </div>
   </footer>
 
-  <!-- FOOTER INFO -->
   <div class="footer-info">
     <div class="footer-left">
       <span><strong>Our home:</strong> 128A Nguyễn Khánh Toàn, Cầu Giấy, Hà Nội</span>
       <span><strong>Email:</strong> support@elisfavorite.vn</span>
       <span><strong>Hotline:</strong> 0977 345 xxx</span>
     </div>
+
     <div class="footer-right-text">
       <span>@ 2025 Elis’ Favorite</span>
     </div>
   </div>
 
+  <script src="script.js"></script>
 </body>
 </html>
-
-<script>
-  const likeBtn = document.getElementById("likeBtn");
-  let liked = false;
-
-  likeBtn.addEventListener("click", () => {
-    liked = !liked;
-    likeBtn.innerHTML = liked
-      ? '<i class="fa-solid fa-thumbs-up"></i>'
-      : '<i class="fa-regular fa-thumbs-up"></i>';
-  });
-</script>
