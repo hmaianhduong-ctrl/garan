@@ -3,7 +3,7 @@
     "slug": "hoi-u50-chat-cung-thich-tiec-tung",
     "title": "Hội U50 ‘chất’ cũng thích tiệc tùng cuối tuần ở nhà Elis!",
     "description": "Một chiếc nhật ký nhỏ  được nêm nếm mỗi ngày bằng những món ngon, mẩu chuyện vui và rất nhiều năng lượng tích cực. Hãy cùng cập nhật những deal hời nóng hổi chỉ áp dụng tại cửa hàng, khám phá nhiều công thức mới toanh và chuyện bếp núc thú vị của nhà Elis nào!",
-    "thumbnail": "news-user/library/lifestyle1.png",
+    "thumbnail": "garan/app/news-user/post1/post1-thumb.png",
     "tag": "lifestyle",
     "date": "2025-12-02",
 
@@ -18,7 +18,7 @@
       },
       {
         "type": "image",
-        "value": "news-user/post1/post1-1.png"
+        "value": "garan/app/news-user/post1/post1-1.png"
       },
       {
         "type": "h3",
@@ -40,7 +40,7 @@
 
       {
         "type": "image",
-        "value": "news-user/post1/post1-2.png"
+        "value": "garan/app/news-user/post1/post1-2.png"
       },
 
       {
@@ -54,7 +54,7 @@
 
       {
         "type": "image",
-        "value": "news-user/post1/post1-3.png"
+        "value": "garan/app/news-user/post1/post1-3.png"
       }
     ]
   },
@@ -65,7 +65,7 @@
   "slug": "hanh-trinh-hoc-hoi-va-niem-dam-me-am-thuc-cua-mr-boss",
   "title": "Hành trình học hỏi và niềm đam mê ẩm thực của MR.BOSS",
   "description": "Một chiếc nhật ký nhỏ được nêm nếm mỗi ngày bằng những món ngon, mẩu chuyện vui và rất nhiều năng lượng tích cực. Hãy cùng cập nhật những deal hời nóng hổi chỉ áp dụng tại cửa hàng, khám phá nhiều công thức mới toanh và chuyện bếp núc thú vị của nhà Elis nào!",
-  "thumbnail": "news-user/library/journey1.png",
+  "thumbnail": "garan/app/news-user/post2/post2-thumb.png",
   "tag": "journey",
   "date": "2025-11-27",
 
@@ -81,7 +81,7 @@
 
     {
       "type": "image",
-      "value": "news-user/post2/post2-1.png"
+      "value": "garan/app/news-user/post2/post2-1.png"
     },
 
     {
@@ -104,7 +104,7 @@
 
     {
       "type": "image",
-      "value": "news-user/post2/post2-2.png"
+      "value": "garan/app/news-user/post2/post2-2.png"
     },
 
     {
@@ -139,7 +139,7 @@
 
     {
       "type": "image",
-      "value": "news-user/post2/post2-3.png"
+      "value": "garan/app/news-user/post2/post2-3.png"
     },
 
     {
@@ -187,7 +187,7 @@
   "slug": "8-loai-salad-cuon-mieng-de-lam-den-khong-ngo-bat-mi-bi-mat",
   "title": "8 loại salad ‘cuốn miệng’ & dễ làm đến không ngờ - bật mí bí mật",
   "description": "Một chiếc nhật ký nhỏ được nêm nếm mỗi ngày bằng những món ngon, mẩu chuyện vui và rất nhiều năng lượng tích cực. Hãy cùng cập nhật những deal hời nóng hổi chỉ áp dụng tại cửa hàng, khám phá nhiều công thức mới toanh và chuyện bếp núc thú vị của nhà Elis nào!",
-  "thumbnail": "news-user/library/recipe1.png",
+  "thumbnail": "garan/app/news-user/post3/post3-thumb.png",
   "tag": "Recipe",
   "date": "2025-11-15",
   "content": [
@@ -201,7 +201,7 @@
     },
     {
       "type": "image",
-      "value": "news-user/post3/post3-1.png"
+      "value": "garan/app/news-user/post3/post3-1.png"
     },
     {
       "type": "h3",
@@ -247,7 +247,7 @@
     },
     {
       "type": "image",
-      "value": "news-user/post3/post3-2.png"
+      "value": "garan/app/news-user/post3/post3-2.png"
     },
     {
       "type": "h3",
@@ -291,10 +291,6 @@
     {
       "type": "paragraph",
       "text": "Mẹo: Rocket có vị hơi cay nồng, ăn cùng bò thì hợp bất ngờ."
-    },
-    {
-      "type": "image",
-      "value": "news-user/post3/post3-3.png"
     },
     {
       "type": "h3",

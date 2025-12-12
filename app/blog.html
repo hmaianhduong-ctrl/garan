@@ -9,8 +9,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
 </head>
+
 <body class="sticky-header">
 
   <!-- HEADER -->
@@ -26,51 +26,34 @@
 
   <!-- BLOG HERO -->
   <section class="blog-hero">
-    <div class="blog-hero-image"></div>
+    <div class="blog-hero-image" id="heroImage"></div>
     <div class="blog-hero-overlay"></div>
 
-    <h1 class="inner-blog-title">Tiêu đề bài viết</h1>
+    <h1 class="inner-blog-title" id="blogTitle">Loading...</h1>
 
-    <p class="inner-blog-desc">
-      Một chiếc nhật ký nhỏ được nêm nếm mỗi ngày bằng những món ngon, mẩu chuyện vui
-      và rất nhiều năng lượng tích cực. Hãy cùng cập nhật những deal hời nóng hổi chỉ
-      áp dụng tại cửa hàng, khám phá nhiều công thức mới toanh và chuyện bếp núc thú
-      vị của nhà Elis nào!
+    <p class="inner-blog-desc" id="blogDescription">
+      Loading description...
     </p>
   </section>
 
-  <!-- BLOG BODY CONTENT -->
+  <!-- BLOG BODY -->
   <div class="blog-container">
 
-    <!-- META ROW -->
+    <!-- META -->
     <div class="blog-meta">
-      <span class="blog-tag blog-tag-single">Lifestyle</span>
+      <span class="blog-tag blog-tag-single" id="blogTag">Loading...</span>
 
       <div class="blog-published">
         <span>Published</span>
-        <span class="blog-date">06/12/2025</span>
+        <span class="blog-date" id="blogDate">--/--/----</span>
       </div>
     </div>
 
-    <!-- SUBHEADER -->
-    <h2 class="blog-subheader">Subheader mẫu đặt ở đây và đây sẽ là một ví dụ cho một subheader dài để bo margin</h2>
+    <!-- CONTENT OUTPUT -->
+    <div id="blogContent"></div>
 
-    <!-- FIRST PARAGRAPH -->
-    <p class="blog-paragraph">
-      Đây là đoạn mô tả đầu tiên của blog. Bạn có thể viết khoảng 
-      2–3 dòng mở bài, giới thiệu nội dung chính, tạo cảm giác dẫn dắt cho độc giả…
-    </p>
-
-    <img class="blog-image" src="https://picsum.photos/900/560" alt="Blog Image">
-
-    <h3 class="blog-subsubheader">Tiêu đề nhỏ hơn đặt ở đây và tôi sẽ cho đây là một tiêu đề nhỏ nhỏ nhưng dài hơn bình thường</h3>
-
-        <p class="blog-paragraph">
-      Đây là đoạn mô tả đầu tiên của blog. Bạn có thể viết khoảng 
-      2–3 dòng mở bài, giới thiệu nội dung chính, tạo cảm giác dẫn dắt cho độc giả…
-    </p>
-
-        <div class="blog-end-row">
+    <!-- END SECTION -->
+    <div class="blog-end-row">
       <p class="blog-end-text">
         Bạn thích bài viết này chứ? Hãy cho chúng mình biết nhé!
       </p>
@@ -80,16 +63,10 @@
         <span class="open-hours">09:00 - 22:00</span>
       </div>
     </div>
-
-
-
-
   </div>
 
-  <!-- ACTION BUTTONS BELOW BLOG -->
+  <!-- ACTION BUTTONS -->
   <div class="blog-actions">
-
-    <!-- LIKE BUTTON BLOCK -->
     <div class="action-block">
       <button class="action-btn like-btn" id="likeBtn">
         <i class="fa-regular fa-thumbs-up"></i>
@@ -97,135 +74,37 @@
       <div class="action-number" id="likeCount">123</div>
     </div>
 
-    <!-- VIEW BLOCK -->
     <div class="action-block">
       <div class="action-btn view-btn">
         <i class="fa-regular fa-eye"></i>
       </div>
       <div class="action-number" id="viewCount">542</div>
     </div>
-
   </div>
 
-<!-- YELLOW RECOMMEND SECTION -->
-<div class="blog-recommend-wrapper">
+  <!-- RECOMMEND SECTION -->
+  <div class="blog-recommend-wrapper">
+    <div class="back-to-library">
+      <span>BACK TO</span>
+      <span>LIBRARY</span>
+    </div>
 
-    <!-- BACK TO LIBRARY button overlay -->
-  <div class="back-to-library">
-    <span>BACK TO</span>
-    <span>LIBRARY</span>
+    <div class="blog-recommend-inner" id="recommendContainer"></div>
   </div>
 
-  <div class="blog-recommend-inner">
-
-    <div class="bcard">
-      <img src="https://i.postimg.cc/hvd2WSnL/news2.png" class="bcard-thumb" alt="News Image 2">
-
-      <h3 class="bcard-title">
-        HÀNH TRÌNH HỌC HỎI VÀ NIỀM ĐAM MÊ ẨM THỰC CỦA MR. BOSS
-      </h3>
-
-      <div class="bcard-meta">
-        <span class="bcard-tag tag-journey">Journey</span>
-
-        <div class="bcard-date">
-          <span class="date-text">Published</span>
-          <span class="date-value">27/11/2025</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="bcard">
-      <img src="https://i.postimg.cc/QCTfGXDJ/news3.png" class="bcard-thumb" alt="News Image 3">
-
-      <h3 class="bcard-title">
-        8 LOẠI SALAD ‘CUỐN MIỆNG’ & DỄ LÀM ĐẾN KHÔNG NGỜ - BẬT MÍ BÍ MẬT
-      </h3>
-
-      <div class="bcard-meta">
-        <span class="bcard-tag tag-recipe">Recipe</span>
-
-        <div class="bcard-date">
-          <span class="date-text">Published</span>
-          <span class="date-value">15/11/2025</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="bcard">
-      <img src="https://i.postimg.cc/PJwSstHb/news4.png" class="bcard-thumb" alt="News Image 4">
-
-      <h3 class="bcard-title">
-        VOUCHER HOT HIT CỦA THÁNG BLACK FRIDAY 11/2025
-      </h3>
-
-      <div class="bcard-meta">
-        <span class="bcard-tag tag-voucher">Voucher</span>
-
-        <div class="bcard-date">
-          <span class="date-text">Published</span>
-          <span class="date-value">02/12/2025</span>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-<div class="comment-wrapper">
-
-  <!-- 🎯 COMMENT BOX -->
-  <div class="comment-top">
-    <div class="comment-avatar">👤</div>
-
-    <div class="comment-box-area">
-      <div class="comment-input-box">
-        <textarea
-          class="comment-textarea"
-          placeholder="Nhập bình luận của bạn..."
-        ></textarea>
-      </div>
-
-      <button class="comment-submit-btn">Đăng bình luận</button>
-    </div>
-  </div>
-
-  <!-- 🎯 COMMENT MẪU 1 -->
-  <div class="comment-placeholder">
+  <!-- COMMENT SECTION -->
+  <div class="comment-wrapper">
+    <div class="comment-top">
       <div class="comment-avatar">👤</div>
 
-      <div class="comment-body">
-        <div class="comment-header">
-          <span class="comment-name">Alex</span>
-          <span class="comment-time">1 phút trước</span>
+      <div class="comment-box-area">
+        <div class="comment-input-box">
+          <textarea class="comment-textarea" placeholder="Bạn nghĩ gì về bài viết này?"></textarea>
         </div>
-
-        <div class="comment-text">
-          Đây là bình luận mẫu để xem style hiển thị.
-        </div>
-      </div>
-  </div>
-
-  <!-- 🎯 COMMENT MẪU 2 -->
-  <div class="comment-placeholder">
-    <div class="comment-avatar">👤</div>
-
-    <div class="comment-body">
-      <div class="comment-header">
-        <span class="comment-name">Minh Anh</span>
-        <span class="comment-time">5 phút trước</span>
-      </div>
-
-      <div class="comment-text">
-        Đây là một bình luận ví dụ khác để bạn canh spacing giữa nhiều comment với nhau.
-        Bạn có thể thay đổi nội dung dài ngắn tùy ý để test bố cục.
+        <button class="comment-submit-btn">Đăng tải bình luận</button>
       </div>
     </div>
   </div>
-
-</div> <!-- 🔚 kết thúc comment-wrapper -->
-
-
 
   <!-- FOOTER -->
   <footer class="footer-logo">
@@ -262,6 +141,102 @@
     </div>
   </div>
 
-  <script src="script.js"></script>
+  <!-- SCRIPT LOAD BLOG DATA -->
+  <script>
+    async function loadBlog() {
+      const params = new URLSearchParams(window.location.search);
+      const slug = params.get("post");
+
+      const res = await fetch("blogs.json");
+      const blogs = await res.json();
+
+      const blog = blogs.find(b => b.slug === slug);
+
+      if (!blog) {
+        document.querySelector("#blogTitle").textContent = "Post not found";
+        return;
+      }
+
+      // HERO
+      document.querySelector("#heroImage").style.backgroundImage =
+        `url(${blog.thumbnail})`;
+
+      document.querySelector("#blogTitle").textContent = blog.title;
+      document.querySelector("#blogDescription").textContent = blog.description;
+      document.querySelector("#blogTag").textContent = blog.tag;
+      document.querySelector("#blogDate").textContent = blog.date;
+
+        // CONTENT RENDER
+    const container = document.querySelector("#blogContent");
+
+    blog.content.forEach(block => {
+
+      // Cho phép đọc cả "value" và "text"
+      const text = block.value || block.text || "";
+
+      let el;
+
+      if (block.type === "paragraph") {
+        el = document.createElement("p");
+        el.className = "blog-paragraph";
+        el.innerHTML = text.replace(/\n/g, "<br>"); // hỗ trợ xuống dòng
+
+      } else if (block.type === "h2") {
+        el = document.createElement("h2");
+        el.className = "blog-subheader";
+        el.textContent = text;
+
+      } else if (block.type === "h3") {
+        el = document.createElement("h3");
+        el.className = "blog-subsubheader";
+        el.textContent = text;
+
+      } else if (block.type === "image") {
+        el = document.createElement("img");
+        el.className = "blog-image";
+        el.src = block.value;
+
+      } else if (block.type === "list") {
+        el = document.createElement("ul");
+        const items = block.items || block.value || [];
+        items.forEach(item => {
+          const li = document.createElement("li");
+          li.textContent = item;
+          el.appendChild(li);
+        });
+      }
+
+      container.appendChild(el);
+    });
+
+      // RECOMMEND (lấy 3 bài bất kỳ trừ bài hiện tại)
+      const recommendBox = document.querySelector("#recommendContainer");
+
+      blogs
+        .filter(b => b.slug !== slug)
+        .slice(0, 3)
+        .forEach(b => {
+          recommendBox.innerHTML += `
+            <a href="blog.html?post=${b.slug}" class="bcard">
+              <img src="${b.thumbnail}" class="bcard-thumb">
+
+              <h3 class="bcard-title">${b.title}</h3>
+
+              <div class="bcard-meta">
+                <span class="bcard-tag tag-${b.tag}">${b.tag}</span>
+
+                <div class="bcard-date">
+                  <span class="date-text">Published</span>
+                  <span class="date-value">${b.date}</span>
+                </div>
+              </div>
+            </a>
+          `;
+        });
+    }
+
+    loadBlog();
+  </script>
+
 </body>
 </html>
