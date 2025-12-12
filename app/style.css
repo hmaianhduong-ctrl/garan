@@ -3,6 +3,8 @@
   padding: 0;
 }
 
+
+
 /* FULLSCREEN VIDEO */
 .video-hero {
   width: 100%;
@@ -92,6 +94,30 @@ body.sticky-header #header nav a {
 body.sticky-header #logo {
   content: url('https://i.postimg.cc/7b4MF0XW/logo-colored.png');
 }
+
+header nav a {
+  position: relative;
+  padding-bottom: 6px;
+}
+
+header nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 2px;
+  background: #BA3801;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s ease;
+}
+
+header nav a.clicked::after {
+  transform: scaleX(1);
+}
+
+
 
 /* HERO TEXT SECTION */
 .hero-text-section {
@@ -1487,3 +1513,77 @@ html, body {
   font-size: 14px;
 }
 
+/* ===========================
+   HIRING PAGE
+=========================== */
+
+.hiring-wrapper {
+  max-width: 1200px;
+  margin: 120px auto;
+  padding: 0 20px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* Subheader chính */
+.hiring-subheader {
+  font-size: 30px;
+  font-weight: 600;
+  font-style: italic;
+  color: #ba3801;
+  margin-bottom: 80px;
+  text-align: left;
+}
+
+/* 3 column */
+.hiring-columns {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+/* 1 column */
+.hiring-col {
+  width: 33.33%;
+  color: #000;
+  font-size: 16.5px;
+  line-height: 1.3;
+}
+
+/* Subheader 3 */
+.hiring-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: #ba3801;
+  margin-bottom: 18px;
+}
+
+/* Bold group titles */
+.hiring-bold {
+  font-weight: 650;
+  margin: 18px 0 8px;
+  color: #ba3801;
+}
+
+/* List */
+.hiring-list {
+  font-weight:400;
+  color: #ba3801;
+  padding-left: 22px;
+  margin-bottom: 13px;
+
+}
+
+.hiring-list li {
+  margin-bottom: 4px;
+}
+
+/* Mobile responsive */
+@media (max-width: 900px) {
+  .hiring-columns {
+    flex-direction: column;
+  }
+  
+  .hiring-col {
+    width: 100%;
+  }
+}

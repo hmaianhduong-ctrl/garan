@@ -9,18 +9,13 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener('scroll', () => {
       if (window.scrollY > 550) {
         header.classList.add('scrolled');
-        logo.classList.remove('white');
-        logo.classList.add('colored');
         logo.src = 'https://i.postimg.cc/7b4MF0XW/logo-colored.png';
       } else {
         header.classList.remove('scrolled');
-        logo.classList.remove('colored');
-        logo.classList.add('white');
         logo.src = 'https://i.postimg.cc/dDFmbrnX/logo-white.png?v=1';
       }
     });
   }
-
 
   /* ============================
      LIKE BUTTON + COUNTER
@@ -43,4 +38,33 @@ document.addEventListener("DOMContentLoaded", () => {
       likeCountElm.textContent = likeCount;
     });
   }
-});
+
+  /* ============================
+     NAV UNDERLINE CLICK ANIMATION
+  ============================ */
+  const navLinks = document.querySelectorAll("header nav a");
+
+  navLinks.forEach(link => {
+    link.addEventListener("click", () => {
+      // remove clicked from all
+      navLinks.forEach(l => l.classList.remove("clicked"));
+
+      // add clicked to the clicked link
+      link.classList.add("clicked");
+
+      // save state
+      localStorage.setItem("activeMenu", link.getAttribute("href"));
+    });
+  });
+
+  // Restore underline when page reloads
+  const activeMenu = localStorage.getItem("activeMenu");
+  if (activeMenu) {
+    navLinks.forEach(link => {
+      if (link.getAttribute("href") === activeMenu) {
+        link.classList.add("clicked");
+      }
+    });
+  }
+
+}); // <-- đóng đúng chỗ
