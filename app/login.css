@@ -1,0 +1,244 @@
+:root{
+    --primary:#BA3801;
+    --accent:#FFEDA8;
+    --white:#fff;
+    --muted:rgba(255,255,255,0.75);
+    --input-border:#9e3100;
+    --shadow: rgba(0,0,0,0.08);
+    --radius:12px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{
+    height:100%;
+    overflow-y: hidden;}
+body{
+    font-family:"Plus Jakarta Sans", sans-serif;
+    background:var(--primary);
+    color:var(--white);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+}
+
+/* Loader */
+#globalLoader{
+    position:fixed; inset:0;
+    display:flex; align-items:center; justify-content:center;
+    background:var(--primary);
+    z-index:6000;
+    transition:opacity .35s ease;
+}
+.loader-spinner{
+    width:56px; height:56px;
+    border:5px solid rgba(255,255,255,0.18);
+    border-top:5px solid var(--accent);
+    border-radius:50%;
+    animation:spin .95s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Layout */
+.container{
+    display:flex;
+    min-height:0vh;
+}
+.left-panel{
+    flex:0 0 50%;
+    max-width:50%;
+    min-width:0;
+}
+.right-panel{
+    min-height:100vh;
+    flex:0 0 50%;
+    max-width:50%;
+    min-width:0;
+}
+.login-panel{
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    padding-top:16px;
+    padding-left:40px;
+    padding-right:40px;
+    padding-bottom:40px;
+    justify-content:flex-start;
+}
+
+/* header */
+.lp-header{
+    display:flex; justify-content:space-between; align-items:center;
+    margin-bottom:60px;
+}
+.logo img{height:76px; margin-left:-20px;}
+.register-link{font-size:14px;color:var(--muted)}
+.register-link a{color:var(--accent);text-decoration:none;font-weight:600;margin-left:6px}
+
+/* content */
+.login-box{
+    max-width:400px;
+    min-width: 400px;
+    margin:0 auto;
+}
+.avatar-icon{
+    width:72px;height:72px;border-radius:50%;background:var(--white);color:var(--primary);
+    display:flex;align-items:center;justify-content:center;font-size:28px;
+    margin:0 auto 10px; box-shadow:0 6px 18px var(--shadow);
+}
+.title{text-align:center;font-size:28px;font-weight:700;margin-bottom:6px}
+.subtitle{text-align:center;color:var(--muted);margin-bottom:12px}
+
+/* Google login button */
+.google-login{
+    width:100%;height:44px;
+    display:flex;align-items:center;justify-content:center;gap:10px;
+    border-radius:var(--radius);
+    border:1px solid var(--input-border);
+    background:transparent;color:var(--white);
+    cursor:pointer;font-weight:600;
+    margin-bottom:18px;
+}
+
+/* Divider */
+.divider{text-align:center;color:var(--muted);margin:5px 0;font-size:13px}
+
+/* INPUT GROUP */
+.input-group{
+    display:flex;
+    flex-direction:column;
+    margin-bottom:12px;
+    position:relative;
+}
+
+.input-label{
+    font-size:15px;
+    font-weight:500;
+    margin-bottom:6px;
+    color:var(--white);
+}
+
+
+.input-group input::placeholder{
+    color:rgba(255,255,255,0.6);
+}
+
+/* Fix input + icon alignment */
+.input-field {
+    position: relative;
+}
+
+.input-field input {
+    width: 100%;
+    height: 44px;
+    padding: 10px 14px 10px 44px; /* chừa chỗ cho icon */
+    border-radius: var(--radius);
+    border: 1px solid var(--input-border);
+    background: rgba(255,255,255,0.08);
+    color: var(--white);
+    font-size: 15px;
+    outline: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.04) inset;
+}
+
+.input-field .icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--muted);
+    font-size: 14px;
+    pointer-events: none;
+}
+
+
+/* Error */
+.error-message{
+    color:var(--accent);
+    text-align:center;
+    margin-top:-6px;
+    margin-bottom:10px;
+    opacity:0;transition:opacity .2s;
+}
+.error-message.show{opacity:1}
+
+/* Options row */
+.options-row{
+    display:flex;justify-content:space-between;align-items:center;
+    color:var(--muted);font-size:14px;margin-bottom:18px;
+}
+.remember-me{display:flex;align-items:center;gap:8px}
+.remember-me input{width:16px;height:16px;accent-color:var(--accent)}
+.forgot-password{color:var(--muted);text-decoration:none}
+
+/* Login button */
+.login-btn{
+    max-width: 400px;
+    width:100%;
+    min-width: 400px;
+    height:44px;
+    border-radius:var(--radius);
+    background:var(--accent);
+    color:var(--primary);
+    font-weight:700;
+    font-size:16px;
+    border:none;
+    cursor:pointer;
+    position:relative;
+    overflow:hidden;
+}
+
+.login-btn .btn-text{
+    transition:opacity .2s;
+}
+
+.login-btn .loading-spinner{
+    position:absolute;
+    inset:0;
+    margin:auto;
+    width:22px;
+    height:22px;
+    border:3px solid rgba(0,0,0,0.18);
+    border-top:3px solid var(--primary);
+    border-radius:50%;
+    display:none;
+    animation:spin .9s linear infinite;
+}
+
+.login-btn.loading .btn-text{opacity:0}
+.login-btn.loading .loading-spinner{display:block}
+
+/* RIGHT PANEL */
+.right-panel{
+    position:relative;overflow:hidden;background:#ce4000;
+}
+.illustration-img{
+    position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;
+}
+.foreground-img{
+    z-index:3;
+    transform:translateX(6%);
+}
+
+/* Mobile */
+@media (max-width:1100px){
+    .right-panel{display:none}
+    .left-panel{flex:1 0 100%;max-width:100%}
+    .login-panel{padding:28px 26px}
+}
+
+.hidden-opacity{opacity:0;transition:opacity .35s}
+.container:not(.hidden-opacity){opacity:1}
+
+/* =========================================
+   PAGE ENTER ANIMATION (EASE-IN)
+========================================= */
+.preload-hidden {
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity .55s ease, transform .55s ease;
+}
+
+.preload-show {
+    opacity: 1;
+    transform: translateY(0);
+}
+

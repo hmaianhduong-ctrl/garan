@@ -232,6 +232,33 @@
           </a>
         `;
       });
+    /* ============================
+   LIKE BUTTON TOGGLE
+============================ */
+const likeBtn = document.getElementById("likeBtn");
+const likeCount = document.getElementById("likeCount");
+
+let liked = false; // trạng thái ban đầu
+
+likeBtn.addEventListener("click", () => {
+  liked = !liked;
+
+  if (liked) {
+    // đổi icon sang solid
+    likeBtn.innerHTML = `<i class="fa-solid fa-thumbs-up"></i>`;
+
+    // tăng số like
+    likeCount.textContent = parseInt(likeCount.textContent) + 1;
+
+  } else {
+    // đổi lại icon regular
+    likeBtn.innerHTML = `<i class="fa-regular fa-thumbs-up"></i>`;
+
+    // giảm số like
+    likeCount.textContent = parseInt(likeCount.textContent) - 1;
+  }
+});
+
   }
 
   loadBlog();
