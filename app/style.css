@@ -1460,21 +1460,12 @@ html, body {
   font-weight: 350;
 }
 
-/* ===== FIX OVERLAY ĐỎ TRONG RECOMMENDED ===== */
-#recommendContainer .bcard-thumb,
-#recommendContainer .bcard-thumb::after,
-#recommendContainer .bcard::after {
-  background: none !important;
-  filter: none !important;
-  mix-blend-mode: normal !important;
-  opacity: 1 !important;
-}
 
-/* ===== TAG COLORS (để tag không bị trắng) ===== */
-.tag-Recipe { background: #e99f3c; }
-.tag-Voucher { background: #ba3801; }
-.tag-News { background: #4a7bc0; }
-.tag-Event { background: #7a4acc; }
+/* TAG COLORS (chính xác theo mẫu bạn yêu cầu) */
+.tag-lifestyle { background-color: #d2ac4d; }
+.tag-journey   { background-color: #9abfb1; }
+.tag-recipe    { background-color: #a1bb77; }
+.tag-voucher   { background-color: #955033; }
 
 /* ===== BLOG LIST STYLE ===== */
 #blogContent ul {
@@ -1485,7 +1476,7 @@ html, body {
 #blogContent ul li {
   margin-bottom: 6px;
   line-height: 1.55;
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 350;
   color: #000;
   font-family: "Plus Jakarta Sans", sans-serif;
@@ -1495,3 +1486,4 @@ html, body {
   color: #ba3801;
   font-size: 14px;
 }
+

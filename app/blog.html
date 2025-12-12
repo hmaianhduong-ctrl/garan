@@ -170,30 +170,25 @@
 
     blog.content.forEach(block => {
 
-      // Cho phép đọc cả "value" và "text"
       const text = block.value || block.text || "";
-      let el = null; // ⚠️ cần null để tránh lỗi append
+      let el = null;
 
       if (block.type === "paragraph") {
         el = document.createElement("p");
         el.className = "blog-paragraph";
         el.innerHTML = text.replace(/\n/g, "<br>");
-
       } else if (block.type === "h2") {
         el = document.createElement("h2");
         el.className = "blog-subheader";
         el.textContent = text;
-
       } else if (block.type === "h3") {
         el = document.createElement("h3");
         el.className = "blog-subsubheader";
         el.textContent = text;
-
       } else if (block.type === "image" && block.value) {
         el = document.createElement("img");
         el.className = "blog-image";
         el.src = block.value;
-
       } else if (block.type === "list") {
         el = document.createElement("ul");
         const items = block.items || block.value || [];
@@ -204,11 +199,12 @@
         });
       }
 
-      // Chỉ append nếu el tồn tại (tránh lỗi)
       if (el) container.appendChild(el);
     });
 
-    // RECOMMEND (3 bài bất kỳ)
+    /* ============================
+       RECOMMEND (ĐÃ SỬA VÀO ĐÂY)
+       ============================ */
     const recommendBox = document.querySelector("#recommendContainer");
 
     blogs
@@ -217,18 +213,22 @@
       .forEach(b => {
         recommendBox.innerHTML += `
           <a href="blog.html?post=${b.slug}" class="bcard">
-            <img src="${b.thumbnail}" class="bcard-thumb">
+
+            <div class="bcard-thumb-wrapper">
+              <img src="${b.thumbnail}" alt="" class="bcard-thumb">
+            </div>
 
             <h3 class="bcard-title">${b.title}</h3>
 
             <div class="bcard-meta">
-              <span class="bcard-tag tag-${b.tag}">${b.tag}</span>
+              <span class="bcard-tag tag-${b.tag.toLowerCase()}">${b.tag}</span>
 
               <div class="bcard-date">
                 <span class="date-text">Published</span>
                 <span class="date-value">${b.date}</span>
               </div>
             </div>
+
           </a>
         `;
       });
