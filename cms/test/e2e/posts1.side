@@ -1,0 +1,527 @@
+{
+  "id": "2e7a3f01-f2d4-4a8b-b1e6-056a09c00e62",
+  "version": "2.0",
+  "name": "Posts Management Test Suite (Vietnamese) - V2.0.11 (Unique Title Fix)",
+  "url": "http://127.0.0.1:5500/",
+  "tests": [
+    {
+      "id": "e305e94b-483a-4412-a8c4-1596c0d68f23",
+      "name": "VerifyPageLoad",
+      "commands": [
+        {
+          "id": "a90b8f0a-7b56-4b2a-8c70-7d72c1c3f2d9",
+          "comment": "Kiểm tra Tiêu đề trang Posts",
+          "command": "open",
+          "target": "posts.html",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "8c7f9d0e-2d1b-4f0c-9e3a-6b5d7c4a1e9f",
+          "comment": "Xác minh trang đã tải đúng",
+          "command": "assertTitle",
+          "target": "Posts | Elis Favorite CMS",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "3b2c1d0f-5e6a-4c8b-9a7d-1f2e3c4b5d6a",
+          "comment": "Xác minh tiêu đề chính trong nội dung trang",
+          "command": "assertText",
+          "target": "xpath=//h1[text()='All Posts']",
+          "targets": [
+            [
+              "xpath=//h1[text()='All Posts']",
+              "xpath:innerText"
+            ]
+          ],
+          "value": "All Posts"
+        }
+      ]
+    },
+    {
+      "id": "90d16467-3475-4089-943b-410a76c66d1f",
+      "name": "SearchPostsByTitle",
+      "commands": [
+        {
+          "id": "c1f2e3d4-5a6b-7c8d-9e0f-1a2b3c4d5e6f",
+          "comment": "Đảm bảo trang Posts đang mở (chạy độc lập)",
+          "command": "open",
+          "target": "posts.html",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d",
+          "comment": "Tìm kiếm theo tiêu đề \"ẩm thực\"",
+          "command": "type",
+          "target": "id=search-input",
+          "targets": [
+            [
+              "id=search-input",
+              "id"
+            ]
+          ],
+          "value": "ẩm thực"
+        },
+        {
+          "id": "a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6e",
+          "comment": "Chờ 500ms để bộ lọc áp dụng",
+          "command": "pause",
+          "target": "500",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "d1c2b3a4-f5e6-7d8c-9b0a-1f2e3d4c5b6a",
+          "comment": "Xác minh chỉ còn 1 bài viết khớp",
+          "command": "assertElementPresent",
+          "target": "xpath=//tr[contains(., 'Tuyệt đỉnh ẩm thực đường phố Việt Nam')]",
+          "targets": [
+            [
+              "xpath=//tr[contains(., 'Tuyệt đỉnh ẩm thực đường phố Việt Nam')]",
+              "xpath:textEquals"
+            ]
+          ],
+          "value": ""
+        },
+        {
+          "id": "e1f2g3h4-i5j6-k7l8-m9n0-o1p2q3r4s5t6",
+          "comment": "Xóa nội dung tìm kiếm để reset",
+          "command": "type",
+          "target": "id=search-input",
+          "targets": [
+            [
+              "id=search-input",
+              "id"
+            ]
+          ],
+          "value": ""
+        },
+        {
+          "id": "a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6e",
+          "comment": "Chờ 500ms để bộ lọc reset",
+          "command": "pause",
+          "target": "500",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "9218d6e9-b508-4122-823d-4952d76a5960",
+      "name": "FilterByStatusPublished",
+      "commands": [
+        {
+          "id": "e4f5g6h7-i8j9-k0l1-m2n3-o4p5q6r7s8t9",
+          "comment": "Đảm bảo trang Posts đang mở (chạy độc lập)",
+          "command": "open",
+          "target": "posts.html",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "f5e4d3c2-b1a0-9f8e-7d6c-5b4a3c2b1a0f",
+          "comment": "Chọn filter \"Đã xuất bản\"",
+          "command": "select",
+          "target": "id=status-filter",
+          "targets": [
+            [
+              "id=status-filter",
+              "id"
+            ]
+          ],
+          "value": "label=Đã xuất bản"
+        },
+        {
+          "id": "f5e4d3c2-b1a0-9f8e-7d6c-5b4a3c2b1a0e",
+          "comment": "Chờ 500ms để bộ lọc áp dụng",
+          "command": "pause",
+          "target": "500",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "a0b1c2d3-e4f5-6a7b-8c9d-0e1f2a3b4c5d",
+          "comment": "Xác minh chỉ có bài viết ID 1 (Đã XB) hiển thị",
+          "command": "assertElementPresent",
+          "target": "xpath=//tr[@id='post-1']//span[text()='Đã XB']",
+          "targets": [
+            [
+              "xpath=//tr[@id='post-1']//span[text()='Đã XB']",
+              "xpath:textEquals"
+            ]
+          ],
+          "value": ""
+        },
+        {
+          "id": "a0b1c2d3-e4f5-6a7b-8c9d-0e1f2a3b4c5d",
+          "comment": "Xác minh không có bài viết khác",
+          "command": "assertElementNotPresent",
+          "target": "xpath=//tr[@id='post-2']",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "g6f5e4d3-c2b1-a09f-8e7d-6c5b4a3c2b1a",
+          "comment": "Reset filter về \"Tất cả Trạng thái\"",
+          "command": "select",
+          "target": "id=status-filter",
+          "targets": [
+            [
+              "id=status-filter",
+              "id"
+            ]
+          ],
+          "value": "label=Tất cả Trạng thái"
+        },
+        {
+          "id": "f5e4d3c2-b1a0-9f8e-7d6c-5b4a3c2b1a0f",
+          "comment": "Chờ 500ms để bộ lọc reset",
+          "command": "pause",
+          "target": "500",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "1e788c22-0d17-4351-ad77-94d13c75f569",
+      "name": "CreateNewDraftPost",
+      "commands": [
+        {
+          "id": "e305e94b-1c39-4456-9ff5-515c128503fa",
+          "comment": "Đảm bảo trang Posts đang mở (chạy độc lập)",
+          "command": "open",
+          "target": "posts.html",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "038374d7-156c-482f-87d3-b71b87b7a5a8",
+          "comment": "Nhấn nút Tạo bài viết mới để mở Modal",
+          "command": "click",
+          "target": "id=add-post-btn",
+          "targets": [
+            [
+              "id=add-post-btn",
+              "id"
+            ]
+          ],
+          "value": ""
+        },
+        {
+          "id": "f2a2c2b2-1c2c-3d4d-5e6e-7f8f9a0a1b2b",
+          "comment": "Tạo tiêu đề duy nhất bằng timestamp",
+          "command": "executeScript",
+          "target": "return \"Bài viết Test Mới (DRAFT) \" + Date.now();",
+          "targets": [],
+          "value": "uniqueTitle"
+        },
+        {
+          "id": "b1a1c3f9-87d3-b71b-482f-87d3b71b87d3",
+          "comment": "SỬ DỤNG EXPLICIT WAIT: Chờ khu vực Content Editor hiển thị.",
+          "command": "waitForElementVisible",
+          "target": "id=content-blocks-container",
+          "targets": [],
+          "value": "30000"
+        },
+        {
+          "id": "2d1a388f-6824-4f08-b12e-15f5c40467f9",
+          "comment": "Nhập Tiêu đề (Sử dụng biến)",
+          "command": "type",
+          "target": "id=title",
+          "targets": [
+            [
+              "id=title",
+              "id"
+            ]
+          ],
+          "value": "${uniqueTitle}"
+        },
+        {
+          "id": "f51c7268-d055-403d-82c0-85f6966144e0",
+          "comment": "Nhập Mô tả",
+          "command": "type",
+          "target": "id=description",
+          "targets": [
+            [
+              "id=description",
+              "id"
+            ]
+          ],
+          "value": "Đây là bài viết dùng để kiểm thử."
+        },
+        {
+          "id": "c6a12b9a-4122-4412-a774-72648793b8d4",
+          "comment": "Chọn Tag Lifestyle bằng XPath theo value",
+          "command": "click",
+          "target": "xpath=//input[@type='radio' and @value='Lifestyle']",
+          "targets": [
+            [
+              "xpath=//input[@type='radio' and @value='Lifestyle']",
+              "xpath:attributes"
+            ]
+          ],
+          "value": ""
+        },
+        {
+          "id": "111a111a-1111-2222-3333-444444444444",
+          "comment": "CHỜ RÕ RÀNG: Chờ nút Đoạn văn (ID mới) hiển thị và tương tác được.",
+          "command": "waitForElementVisible",
+          "target": "id=add-paragraph-btn",
+          "targets": [],
+          "value": "30000"
+        },
+        {
+          "id": "d7e8f90a-1b2c-3d4e-5f6a-7b8c9d0e1f2a",
+          "comment": "Kích hoạt Content Editor bằng cách click vào textarea mặc định (trước khi click nút Đoạn văn)",
+          "command": "click",
+          "target": "css=#content-blocks-container > div:first-child textarea",
+          "targets": [
+            [
+              "css=#content-blocks-container > div:first-child textarea",
+              "css:textarea"
+            ]
+          ],
+          "value": ""
+        },
+        {
+          "id": "a9d701e9-9a08-4158-b710-5309d9441111",
+          "comment": "Thêm một Paragraph Block (Sử dụng ID mới)",
+          "command": "click",
+          "target": "id=add-paragraph-btn",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "b1a1c3f9-7d0e-4e6f-a9b0-9f1c7d0d0a7a",
+          "comment": "Nhập nội dung cho Paragraph Block",
+          "command": "type",
+          "target": "css=#content-blocks-container > div:first-child textarea",
+          "targets": [
+            [
+              "css=#content-blocks-container > div:first-child textarea",
+              "css:textarea"
+            ]
+          ],
+          "value": "Nội dung kiểm thử cho đoạn văn đầu tiên."
+        },
+        {
+          "id": "e028b28a-7221-4d37-8822-0a174f85e43f",
+          "comment": "Nhấn nút Lưu Bài Viết (Dùng contains cho linh hoạt)",
+          "command": "click",
+          "target": "xpath=//button[contains(text(), 'Lưu Bài Viết')]",
+          "targets": [
+            [
+              "xpath=//button[contains(text(), 'Lưu Bài Viết')]",
+              "xpath:innerText"
+            ]
+          ],
+          "value": ""
+        },
+        {
+          "id": "b410425a-48d6-41e7-b4d4-343209584d43",
+          "comment": "Chờ 500ms để Modal đóng lại và bảng cập nhật",
+          "command": "pause",
+          "target": "500",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "c5f5a5c6-5192-4f3b-b7e3-0b1a0e8d0111",
+          "comment": "CHỜ RÕ RÀNG: Chờ bài viết mới xuất hiện trong bảng (sử dụng unique title)",
+          "command": "waitForElementPresent",
+          "target": "xpath=//tr[contains(., '${uniqueTitle}')]",
+          "targets": [
+            [
+              "xpath=//tr[contains(., '${uniqueTitle}')]",
+              "xpath:innerText"
+            ]
+          ],
+          "value": "30000"
+        }
+      ]
+    },
+    {
+      "id": "f5f0b5d8-c112-4091-a67b-23a7e588f6f5",
+      "name": "EditExistingPostTitle",
+      "commands": [
+        {
+          "id": "75806e30-1c39-4456-9ff5-515c128503fa",
+          "comment": "Đảm bảo trang Posts đang mở (chạy độc lập)",
+          "command": "open",
+          "target": "posts.html",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "a1d3f8c8-b0a3-4a1e-b8d4-53c6e9d0e2c1",
+          "comment": "Nhấn nút Sửa (Edit) cho bài viết ID 2 (Bản nháp)",
+          "command": "click",
+          "target": "xpath=//tr[@id='post-2']//button[@title='Sửa bài']",
+          "targets": [
+            [
+              "xpath=//tr[@id='post-2']//button[@title='Sửa bài']",
+              "xpath:button"
+            ]
+          ],
+          "value": ""
+        },
+        {
+          "id": "b1a1c3f9-87d3-b71b-482f-87d3b71b87d4",
+          "comment": "SỬ DỤNG EXPLICIT WAIT: Chờ nút Lưu Bài Viết hiển thị.",
+          "command": "waitForElementVisible",
+          "target": "xpath=//button[contains(text(), 'Lưu Bài Viết')]",
+          "targets": [],
+          "value": "30000"
+        },
+        {
+          "id": "2d1a388f-6824-4f08-b12e-15f5c40467f9",
+          "comment": "Thay đổi Tiêu đề",
+          "command": "type",
+          "target": "id=title",
+          "targets": [
+            [
+              "id=title",
+              "id"
+            ]
+          ],
+          "value": "SEO Updated - Đã chỉnh sửa"
+        },
+        {
+          "id": "a123a123-1111-2222-3333-444444444444",
+          "comment": "Thay đổi Tag sang Journey bằng XPath theo value",
+          "command": "click",
+          "target": "xpath=//input[@type='radio' and @value='Journey']",
+          "targets": [
+            [
+              "xpath=//input[@type='radio' and @value='Journey']",
+              "xpath:attributes"
+            ]
+          ],
+          "value": ""
+        },
+        {
+          "id": "e028b28a-7221-4d37-8822-0a174f85e43f",
+          "comment": "Nhấn nút Lưu Bài Viết (Dùng contains cho linh hoạt)",
+          "command": "click",
+          "target": "xpath=//button[contains(text(), 'Lưu Bài Viết')]",
+          "targets": [
+            [
+              "xpath=//button[contains(text(), 'Lưu Bài Viết')]",
+              "xpath:innerText"
+            ]
+          ],
+          "value": ""
+        },
+        {
+          "id": "b410425a-48d6-41e7-b4d4-343209584d43",
+          "comment": "Xác minh Modal đóng lại (Đợi 500ms để JS xử lý và render lại)",
+          "command": "pause",
+          "target": "500",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "c5f5a5c6-5192-4f3b-b7e3-0b1a0e8d0111",
+          "comment": "Xác minh tiêu đề mới đã được cập nhật trong bảng",
+          "command": "assertText",
+          "target": "xpath=//tr[@id='post-2']/td[1]/div[1]",
+          "targets": [
+            [
+              "xpath=//tr[@id='post-2']/td[1]/div[1]",
+              "xpath:innerText"
+            ]
+          ],
+          "value": "SEO Updated - Đã chỉnh sửa"
+        },
+        {
+          "id": "c5f5a5c6-5192-4f3b-b7e3-0b1a0e8d0112",
+          "comment": "Xác minh tag mới đã được cập nhật",
+          "command": "assertText",
+          "target": "xpath=//tr[@id='post-2']//span[contains(@class, 'post-tag')]",
+          "targets": [
+            [
+              "xpath=//tr[@id='post-2']//span[contains(@class, 'post-tag')]",
+              "xpath:innerText"
+            ]
+          ],
+          "value": "Journey"
+        }
+      ]
+    },
+    {
+      "id": "b96a9287-2f3b-4c5d-8a7e-1d0f2c3e4b5a",
+      "name": "DeletePost",
+      "commands": [
+        {
+          "id": "a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6e",
+          "comment": "Đảm bảo trang Posts đang mở (chạy độc lập)",
+          "command": "open",
+          "target": "posts.html",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "d4c3b2a1-f6e5-7c8d-9e0f-1a2b3c4d5e6f",
+          "comment": "Tìm và xóa bài viết ID 3",
+          "command": "click",
+          "target": "xpath=//tr[@id='post-3']//button[@title='Xóa bài']",
+          "targets": [
+            [
+              "xpath=//tr[@id='post-3']//button[@title='Xóa bài']",
+              "xpath:button"
+            ]
+          ],
+          "value": ""
+        },
+        {
+          "id": "e4d3c2b1-a0f9-8e7d-6c5b-4a3c2b1a0f9e",
+          "comment": "Chờ 500ms để JS xử lý và render lại",
+          "command": "pause",
+          "target": "500",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "f9e8d7c6-b5a4-3210-fedc-ba9876543210",
+          "comment": "Xác minh bài viết ID 3 không còn tồn tại",
+          "command": "assertElementNotPresent",
+          "target": "xpath=//tr[@id='post-3']",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "f9e8d7c6-b5a4-3210-fedc-ba9876543210",
+          "comment": "Kiểm tra vẫn còn ít nhất 2 bài viết",
+          "command": "assertElementPresent",
+          "target": "xpath=//tr[@id='post-1']",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    }
+  ],
+  "suites": [
+    {
+      "id": "97e68c92-7489-4d6d-b80c-0f9c2e0b5d4f",
+      "name": "Default Suite",
+      "persistSession": false,
+      "parallel": false,
+      "timeout": 300,
+      "tests": [
+        "e305e94b-483a-4412-a8c4-1596c0d68f23",
+        "90d16467-3475-4089-943b-410a76c66d1f",
+        "9218d6e9-b508-4122-823d-4952d76a5960",
+        "1e788c22-0d17-4351-ad77-94d13c75f569",
+        "f5f0b5d8-c112-4091-a67b-23a7e588f6f5",
+        "b96a9287-2f3b-4c5d-8a7e-1d0f2c3e4b5a"
+      ]
+    }
+  ],
+  "urls": [
+    "http://127.0.0.1:5500/"
+  ],
+  "plugins": []
+}

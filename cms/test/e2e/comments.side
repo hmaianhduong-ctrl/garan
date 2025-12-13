@@ -1,0 +1,338 @@
+{
+  "id": "b3b4a2d1-e5f6-7a8b-9c0d-1e2f3g4h5i6j",
+  "version": "2.0",
+  "name": "Comments_Manager_Test_Minimal",
+  "url": "http://127.0.0.1:5500", 
+  "tests": [
+    {
+      "id": "78a22123-d3c5-430c-85f8-842245b7e9b0",
+      "name": "1. Filter_By_Status_Minimal",
+      "commands": [
+        {
+          "id": "c1f73d4a-3843-42e7-a92c-5b23d57d7715",
+          "comment": "1. Truy cập trang (Đảm bảo môi trường sạch)",
+          "command": "open",
+          "target": "comments.html",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "comment": "Chờ bình luận ID 101 xuất hiện, đảm bảo JS đã render xong bảng.",
+          "command": "waitForElementPresent",
+          "target": "id=comment-101",
+          "targets": [],
+          "value": "10000"
+        },
+        {
+          "comment": "Lọc chỉ hiển thị bình luận 'Đã ẩn' (HIDDEN) - Mong muốn: Chỉ ID 102",
+          "command": "select",
+          "target": "id=status-filter",
+          "targets": [],
+          "value": "label=Đã ẩn"
+        },
+        {
+          "comment": "Xác nhận ID 102 có mặt.",
+          "command": "assertElementPresent",
+          "target": "id=comment-102",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "comment": "Xác nhận ID 101 (VISIBLE) không có mặt.",
+          "command": "assertElementNotPresent",
+          "target": "id=comment-101",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "comment": "Lọc chỉ hiển thị bình luận 'Đang hiển thị' (VISIBLE) - Mong muốn: ID 101, 103, 104",
+          "command": "select",
+          "target": "id=status-filter",
+          "targets": [],
+          "value": "label=Đang hiển thị"
+        },
+        {
+          "comment": "Xác nhận ID 101 có mặt.",
+          "command": "assertElementPresent",
+          "target": "id=comment-101",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "comment": "Xác nhận ID 102 (HIDDEN) không có mặt.",
+          "command": "assertElementNotPresent",
+          "target": "id=comment-102",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "52c8b030-9759-4b36-9359-462319f6a70e",
+      "name": "2. Search_Functionality_Minimal",
+      "commands": [
+        {
+          "command": "open",
+          "target": "comments.html",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "command": "waitForElementPresent",
+          "target": "id=comment-101",
+          "targets": [],
+          "value": "10000"
+        },
+        {
+          "comment": "Tìm kiếm theo Nội dung: 'gà rán' (Mong muốn: Chỉ ID 101).",
+          "command": "type",
+          "target": "id=search-input",
+          "targets": [],
+          "value": "gà rán"
+        },
+        {
+          "comment": "Xác nhận ID 101 có mặt.",
+          "command": "assertElementPresent",
+          "target": "id=comment-101",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "comment": "Xác nhận ID 103 không có mặt.",
+          "command": "assertElementNotPresent",
+          "target": "id=comment-103",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "comment": "Xóa tìm kiếm.",
+          "command": "type",
+          "target": "id=search-input",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "comment": "Tìm kiếm theo Tác giả: 'Hoàng Thị B' (Mong muốn: Chỉ ID 103).",
+          "command": "type",
+          "target": "id=search-input",
+          "targets": [],
+          "value": "Hoàng Thị B"
+        },
+        {
+          "comment": "Xác nhận ID 103 có mặt.",
+          "command": "assertElementPresent",
+          "target": "id=comment-103",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "comment": "Xác nhận ID 101 không có mặt.",
+          "command": "assertElementNotPresent",
+          "target": "id=comment-101",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "a1b2c3d4-e5f6-7a8b-9c0d-1e2f3g4h5i6j_extra",
+      "name": "3. Filter_By_Post_Title_Minimal",
+      "commands": [
+        {
+          "command": "open",
+          "target": "comments.html",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "command": "waitForElementPresent",
+          "target": "id=comment-101",
+          "targets": [],
+          "value": "10000"
+        },
+        {
+          "comment": "Chọn Bài viết ID 1: 'Tuyệt đỉnh ẩm thực...' (Chứa ID 101, 102).",
+          "command": "select",
+          "target": "id=post-filter",
+          "targets": [],
+          "value": "value=1"
+        },
+        {
+          "comment": "Xác nhận ID 101 có mặt.",
+          "command": "assertElementPresent",
+          "target": "id=comment-101",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "comment": "Xác nhận ID 103 (Post 2) không có mặt.",
+          "command": "assertElementNotPresent",
+          "target": "id=comment-103",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "comment": "Chọn Bài viết ID 2: 'Hướng dẫn tối ưu SEO...' (Chứa ID 103).",
+          "command": "select",
+          "target": "id=post-filter",
+          "targets": [],
+          "value": "value=2"
+        },
+        {
+          "comment": "Xác nhận ID 103 có mặt.",
+          "command": "assertElementPresent",
+          "target": "id=comment-103",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "comment": "Xác nhận ID 101 không có mặt.",
+          "command": "assertElementNotPresent",
+          "target": "id=comment-101",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "f5f5f5f5-a1a1-4b4b-8c8c-1234567890ab",
+      "name": "4. Toggle_Comment_Status_Minimal",
+      "commands": [
+        {
+          "command": "open",
+          "target": "comments.html",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "command": "waitForElementPresent",
+          "target": "id=comment-101",
+          "targets": [],
+          "value": "10000"
+        },
+        {
+          "comment": "Kiểm tra trạng thái ban đầu ID 101: HIỂN THỊ",
+          "command": "assertText",
+          "target": "xpath=//tr[@id='comment-101']//span[contains(@class, 'status-VISIBLE')]",
+          "targets": [],
+          "value": "HIỂN THỊ"
+        },
+        {
+          "comment": "Click nút Ẩn/Hiện của ID 101 để chuyển sang trạng thái ẨN.",
+          "command": "click",
+          "target": "xpath=//tr[@id='comment-101']//button[contains(@class, 'toggle-hide-btn')]",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "comment": "Chấp nhận Alert Mock",
+          "command": "assertAlert",
+          "target": "Đã ẨN bình luận ID: 101",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "comment": "Kiểm tra trạng thái mới ID 101: ĐÃ ẨN",
+          "command": "assertText",
+          "target": "xpath=//tr[@id='comment-101']//span[contains(@class, 'status-HIDDEN')]",
+          "targets": [],
+          "value": "ĐÃ ẨN"
+        },
+        {
+          "comment": "Click nút Ẩn/Hiện của ID 101 để chuyển ngược lại trạng thái HIỂN THỊ.",
+          "command": "click",
+          "target": "xpath=//tr[@id='comment-101']//button[contains(@class, 'toggle-hide-btn')]",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "comment": "Chấp nhận Alert Mock",
+          "command": "assertAlert",
+          "target": "Đã HIỆN bình luận ID: 101",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "comment": "Kiểm tra trạng thái cuối cùng ID 101: HIỂN THỊ",
+          "command": "assertText",
+          "target": "xpath=//tr[@id='comment-101']//span[contains(@class, 'status-VISIBLE')]",
+          "targets": [],
+          "value": "HIỂN THỊ"
+        }
+      ]
+    },
+    {
+      "id": "d0e1f2a3-b4c5-6d7e-8f9a-0b1c2d3e4f5a",
+      "name": "5. Delete_Comment_Minimal",
+      "commands": [
+        {
+          "command": "open",
+          "target": "comments.html",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "command": "waitForElementPresent",
+          "target": "id=comment-104",
+          "targets": [],
+          "value": "10000"
+        },
+        {
+          "comment": "Xóa bình luận ID 104.",
+          "command": "click",
+          "target": "xpath=//tr[@id='comment-104']//button[contains(@class, 'delete-btn')]",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "comment": "Chấp nhận Confirm (Mock confirm)",
+          "command": "assertConfirmation",
+          "target": "Bạn có chắc chắn muốn xóa bình luận ID 104? (Hành động này không thể hoàn tác)",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "comment": "Chấp nhận Alert (Mock alert)",
+          "command": "assertAlert",
+          "target": "Đã xóa bình luận ID: 104",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "comment": "Kiểm tra xem bình luận ID 104 đã bị xóa khỏi DOM chưa.",
+          "command": "assertElementNotPresent",
+          "target": "id=comment-104",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "comment": "Kiểm tra ID 101 vẫn còn (để đảm bảo không xóa nhầm).",
+          "command": "assertElementPresent",
+          "target": "id=comment-101",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    }
+  ],
+  "suites": [
+    {
+      "id": "c1d9a2b3-e4f5-6d7e-8f9a-0b1c2d3e4f5a",
+      "name": "Default Suite",
+      "persistSession": false,
+      "parallel": false,
+      "timeout": 300,
+      "tests": [
+        "78a22123-d3c5-430c-85f8-842245b7e9b0",
+        "52c8b030-9759-4b36-9359-462319f6a70e",
+        "a1b2c3d4-e5f6-7a8b-9c0d-1e2f3g4h5i6j_extra",
+        "f5f5f5f5-a1a1-4b4b-8c8c-1234567890ab",
+        "d0e1f2a3-b4c5-6d7e-8f9a-0b1c2d3e4f5a"
+      ]
+    }
+  ],
+  "urls": [
+    "http://127.0.0.1:5500"
+  ],
+  "plugins": []
+}

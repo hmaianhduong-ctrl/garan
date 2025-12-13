@@ -1,0 +1,187 @@
+{
+  "id": "277e923e-6f89-4b3f-b67f-9e6e8e8e7a04",
+  "version": "2.0",
+  "name": "Media_Library_Test_Vietnamese_V2",
+  "url": "http://127.0.0.1:5500/media.html",
+  "tests": [
+    {
+      "id": "8f8c47d6-3e4b-4a5f-b52b-c8c2c8c2c8c2",
+      "name": "Kiểm tra chức năng Media Library",
+      "commands": [
+        {
+          "id": "9742512a-365d-4f05-8e2b-2e2e2e2e2e2e",
+          "comment": "Mở trang media.html bằng địa chỉ server cục bộ",
+          "command": "open",
+          "target": "http://127.0.0.1:5500/media.html", // Sử dụng đường dẫn tương đối, vì url cơ sở đã là http://127.0.0.1:5500
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "e4f8e5b1-d3a9-4b5c-9c7d-7c7c7c7c7c7c",
+          "comment": "Kiểm tra thanh điều hướng: Đảm bảo link Media là active",
+          "command": "assertElementPresent",
+          "target": "xpath=//nav/a[text()='Media' and contains(@class, 'active-nav')]",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "6d91c2c3-1e4b-4f89-8a3c-3c3c3c3c3c3c",
+          "comment": "Kiểm tra tiêu đề trang",
+          "command": "assertText",
+          "target": "xpath=//h2[contains(text(), 'All Media')]",
+          "targets": [],
+          "value": "All Media"
+        },
+        {
+          "id": "b1a2c3d4-e5f6-4789-90ab-bcdef0123456",
+          "comment": "Kiểm tra số lượng ảnh ban đầu (6 ảnh giả lập)",
+          "command": "assertElementCount",
+          "target": "xpath=//div[@id='media-gallery']/div",
+          "targets": [],
+          "value": "6"
+        },
+        {
+          "id": "67a8b9c0-d1e2-3f45-6789-90abcdef0123",
+          "comment": "Click để mở dropdown",
+          "command": "click",
+          "target": "id=user-avatar",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "23b4c5d6-e7f8-0123-4567-89abcdef0123",
+          "comment": "Kiểm tra dropdown đã hiển thị",
+          "command": "assertClass",
+          "target": "id=logout-dropdown",
+          "targets": [],
+          "value": "logout-dropdown show"
+        },
+        {
+          "id": "3a4b5c6d-e7f8-9012-3456-789abcdef012",
+          "comment": "Click lại để đóng dropdown",
+          "command": "click",
+          "target": "id=user-avatar",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "4b5c6d7e-8f90-1234-5678-9abcdef01234",
+          "comment": "Kiểm tra dropdown đã đóng",
+          "command": "assertClass",
+          "target": "id=logout-dropdown",
+          "targets": [],
+          "value": "logout-dropdown"
+        },
+        {
+          "id": "a1b2c3d4-e5f6-7890-1234-567890abcdef",
+          "comment": "Click nút Copy Link của ảnh đầu tiên (id=1)",
+          "command": "click",
+          "target": "xpath=//div[@data-id='1']//button[contains(., 'Copy Link')]",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "6d7e8f90-1234-5678-9abc-def012345678",
+          "comment": "Kiểm tra thông báo 'Link ảnh đã được sao chép!' đã hiển thị",
+          "command": "assertClass",
+          "target": "id=copied-message",
+          "targets": [],
+          "value": "copied-message show"
+        },
+        {
+          "id": "7e8f9012-3456-789a-bcde-f01234567890",
+          "comment": "Chờ 2 giây để đảm bảo thông báo biến mất (dựa trên setTimeout 1500ms)",
+          "command": "pause",
+          "target": "2000",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "8f901234-5678-9abc-def0-1234567890ab",
+          "comment": "Kiểm tra thông báo đã biến mất",
+          "command": "assertClass",
+          "target": "id=copied-message",
+          "targets": [],
+          "value": "copied-message"
+        },
+        {
+          "id": "a1234567-89ab-cdef-0123-456789012345",
+          "comment": "Click nút Xóa của ảnh đầu tiên (id=1)",
+          "command": "click",
+          "target": "xpath=//div[@data-id='1']//button[contains(., 'Xóa')]",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "b2345678-9abc-def0-1234-567890123456",
+          "comment": "Chấp nhận alert xác nhận xóa",
+          "command": "assertConfirmation",
+          "target": "Bạn có chắc chắn muốn xóa ảnh này không? Hành động này không thể hoàn tác.",
+          "targets": [],
+          "value": "" // Giá trị này chỉ cần để trống hoặc là true/false
+        },
+        {
+          "id": "c3456789-abcd-ef01-2345-678901234567",
+          "comment": "Chấp nhận alert thông báo 'Đã xóa ảnh thành công.'",
+          "command": "assertAlert",
+          "target": "Đã xóa ảnh thành công.",
+          "targets": [],
+          "value": "" // Giá trị này chỉ cần để trống hoặc là true/false
+        },
+        {
+          "id": "d4567890-bcde-f012-3456-789012345678",
+          "comment": "Kiểm tra số lượng ảnh sau khi xóa (còn 5 ảnh)",
+          "command": "assertElementCount",
+          "target": "xpath=//div[@id='media-gallery']/div",
+          "targets": [],
+          "value": "5"
+        },
+        {
+          "id": "f6789012-def0-1234-5678-901234567890",
+          "comment": "Giả lập chọn file upload. THAY ĐỔI /path/to/your/test-image.jpg thành đường dẫn file ảnh hợp lệ trên máy tính của bạn (Ví dụ: C:\\temp\\test.jpg)",
+          "command": "type",
+          "target": "id=upload-input",
+          "targets": [],
+          "value": "C:\\temp\\test-image.jpg" // Vui lòng thay đổi đường dẫn này
+        },
+        {
+          "id": "01234567-ef01-2345-6789-012345678901",
+          "comment": "Chấp nhận alert thông báo upload thành công (Giả sử tên file là 'test-image.jpg')",
+          "command": "assertAlert",
+          "target": "Đã upload thành công test-image.jpg!",
+          "targets": [],
+          "value": "" // Giá trị này chỉ cần để trống hoặc là true/false
+        },
+        {
+          "id": "12345678-f012-3456-7890-123456789012",
+          "comment": "Kiểm tra số lượng ảnh sau khi upload (trở lại 6 ảnh)",
+          "command": "assertElementCount",
+          "target": "xpath=//div[@id='media-gallery']/div",
+          "targets": [],
+          "value": "6"
+        },
+        {
+          "id": "23456789-0123-4567-8901-234567890123",
+          "comment": "Kiểm tra ảnh mới được thêm vào đầu danh sách",
+          "command": "assertElementPresent",
+          "target": "xpath=(//div[@id='media-gallery']/div)[1]",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    }
+  ],
+  "suites": [
+    {
+      "id": "8c5e6221-a3b0-4c2d-9e1f-7f7f7f7f7f7f",
+      "name": "Default Suite",
+      "persistSession": false,
+      "parallel": false,
+      "timeout": 300,
+      "tests": [
+        "8f8c47d6-3e4b-4a5f-b52b-c8c2c8c2c8c2"
+      ]
+    }
+  ],
+  "configs": {}
+}
