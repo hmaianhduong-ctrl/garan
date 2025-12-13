@@ -1743,4 +1743,176 @@ html, body {
     transform: translateY(-50%);
   }
 }
+.menu-grid-wrapper {
+  position: relative;
+  margin-bottom: 70px; 
+  padding-bottom: 80px;
+}
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+    opacity: 0;
+  transform: translateY(4px);
+}
 
+.menu-grid.is-visible {
+  animation: gridFadeUp 0.7s ease-out forwards;
+}
+
+@keyframes gridFadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.menu-card {
+  border-top: 1px solid #BA3801;
+  border-bottom: 1px solid #BA3801;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0;
+  transform: translateY(4px);
+  
+}
+.menu-grid.is-visible .menu-card {
+  animation: cardFadeUp 0.5s ease-out forwards;
+}
+/* kẻ đường dọc giữa các cột */
+.menu-card:not(:nth-child(4n)) {
+  border-right: 1px solid #BA3801;
+}
+.menu-card:nth-child(1) { animation-delay: 0.05s; }
+.menu-card:nth-child(2) { animation-delay: 0.1s; }
+.menu-card:nth-child(3) { animation-delay: 0.15s; }
+.menu-card:nth-child(4) { animation-delay: 0.2s; }
+
+@keyframes cardFadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+.menu-card img {
+  max-width: 95%;
+  width: 100%;
+  margin: 10px auto 0;
+  object-fit: cover;
+}
+.menu-title-section {
+  font-family: 'Plus Jakarta Sans';
+  margin-top: 100px; /* đẩy xuống dưới header */
+  text-align: center;
+  font-size: 30px;
+  font-weight: 450;
+  font-family: 'Plus Jakarta Sans';
+  color: #ba3801;
+  margin-bottom: 40px;
+}
+
+.menu-title {
+  width: 95%;
+  margin: 10px auto 0;
+  font-size: 17px;
+  font-family: 'Plus Jakarta Sans';
+  color: #ba3801;
+  font-weight: 400;
+  line-height: 1.35;
+}
+
+.menu-price {
+  width: 85%;
+  margin: 10px auto;
+  text-align: right;
+  font-size: 14px;
+  font-style: italic;
+  color: #ba3801;
+}
+
+.menu-tag {
+  display: inline-block;
+  width: fit-content;
+  margin-left: 20px;
+  padding: 6px 14px;
+  border-radius: 6px;
+
+  font-size: 20px;
+  font-family: 'Plus Jakarta Sans';
+  font-weight: 500;
+  color: #fff;
+
+  background-color: #d2ac4d; /* cố định */
+  margin-bottom: 17px;
+  transform: translateY(-4px);
+  opacity: 0;
+  animation: tagFadeDown 0.5s ease-out forwards;
+}
+.menu-tag.is-visible {
+  animation: tagFadeDown 0.5s ease-out forwards;
+} 
+@media (max-width: 1200px) {
+  .menu-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .menu-grid {
+    grid-template-columns: 1fr;
+  }
+}
+@keyframes tagFadeDown {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.menu-note {
+  position: absolute;
+  right: 0;
+  left: 63%;
+  bottom: 25px; /* chỉnh sát / xa grid */
+  max-width: 500px;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 350;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  color: #ba3801;
+  text-align: right;
+  opacity: 0;
+  transform: translateY(4px);
+  animation: fadeUp 0.6s ease-out both;
+}
+
+.menu-note.is-visible {
+  animation: fadeUp 0.6s ease-out forwards;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.menu-grid,
+.menu-tag,
+.menu-note {
+  opacity: 0;
+  transform: translateY(2px);
+  transition: opacity 0.35s ease-out, transform 0.35s ease-out;
+  will-change: opacity, transform;
+}
+
+.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
