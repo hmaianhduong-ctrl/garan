@@ -1543,24 +1543,24 @@ html, body {
 
 /* 1 column */
 .hiring-col {
-  width: 33.33%;
+  width: 30%;
   color: #000;
-  font-size: 16.5px;
+  font-size: 15px;
   line-height: 1.3;
 }
 
 /* Subheader 3 */
 .hiring-title {
   font-size: 20px;
-  font-weight: 800;
+  font-weight: 900;
   color: #ba3801;
   margin-bottom: 18px;
 }
 
 /* Bold group titles */
 .hiring-bold {
-  font-weight: 650;
-  margin: 18px 0 8px;
+  font-weight: 750;
+  margin: 13px 0 8px;
   color: #ba3801;
 }
 
@@ -1586,4 +1586,35 @@ html, body {
   .hiring-col {
     width: 100%;
   }
+}
+
+/* ===== APPLY CONTACT INFO ===== */
+.hiring-contact {
+  width: 100%;
+  margin-top: 46px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; /* 🎯 canh phải */
+  gap: 10px;
+}
+
+.email-hrelisfavoritegmailc {
+  width: 956px;
+  height: auto;
+  font-size: 20px;
+  font-weight: 600;
+  font-family: 'Plus Jakarta Sans';
+  color: #ba3801;
+  text-align: right;
+  line-height: 1.35;
+}
+
+.ng-vin-gi {
+  width: 383px;
+  height: auto;
+  font-size: 16px;
+  font-family: 'Plus Jakarta Sans';
+  color: #ba3801;
+  text-align: right;
+  font-style: italic;
 }
