@@ -87,7 +87,7 @@
 
             const mockReactionData = [
                 { time: '09:00', type: 'Like', count: 15 },
-                { time: '14:00', type: 'Love', count: 30 },
+                { time: '14:00', type: 'Like', count: 30 },
             ];
 
             console.log(`[DASHBOARD API MOCK] Export View (${selectedDate})`, mockViewData);
