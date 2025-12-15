@@ -1,6 +1,9 @@
 /* =================================
    KHAI BÁO CÁC HÀM KHỞI TẠO CHUNG
 ================================= */
+let menuAnimationInterval = null;
+let instaAnimationInterval = null;
+
 
 // Hàm xử lý cuộn (Tách ra để dễ dàng thêm/xóa Listener)
 function headerScrollHandler() {
@@ -109,6 +112,8 @@ function handlePageUpdate() {
     
     // 5. Kích hoạt lại các script nội dung (Video, Slider, v.v. - NẾU CÓ)
     // Ví dụ: initVideos();
+    initMenuImageAnimation();
+    initInstaImageAnimation();
 }
 // Hàm Fetch nội dung trang mới (Đã sửa lỗi tải CSS và Fade-in)
 async function fetchPageContent(url, contentArea) {
@@ -226,3 +231,70 @@ document.addEventListener("DOMContentLoaded", () => {
   document.body.classList.add("page-loaded");
   handlePageUpdate();
 });
+
+function initMenuImageAnimation() {
+  const img = document.querySelector(".menu-animation");
+  if (!img) return;
+
+  const totalFrames = 8;
+  const framePath = "home-user/menu-pic/menu-pic";
+  let currentFrame = 1;
+
+  // ❌ DỪNG interval cũ nếu có
+  if (menuAnimationInterval) {
+    clearInterval(menuAnimationInterval);
+    menuAnimationInterval = null;
+  }
+
+  // ✅ Preload ảnh cho mượt
+  for (let i = 1; i <= totalFrames; i++) {
+    const preloadImg = new Image();
+    preloadImg.src = `${framePath}${i}.png`;
+  }
+
+  // ✅ Tạo interval MỚI
+  menuAnimationInterval = setInterval(() => {
+    currentFrame++;
+    if (currentFrame > totalFrames) {
+      currentFrame = 1;
+    }
+    img.src = `${framePath}${currentFrame}.png`;
+  }, 1000);
+}
+
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden && menuAnimationInterval) {
+    clearInterval(menuAnimationInterval);
+  } else {
+    initMenuImageAnimation();
+    initInstaImageAnimation();
+  }
+});
+
+function initInstaImageAnimation() {
+  const img = document.querySelector(".insta-animation"); // ✅ ĐÚNG
+  if (!img) return;
+
+  const totalFrames = 9;
+  const framePath = "home-user/ins-pic/ins";
+  let currentFrame = 1;
+
+  // ❌ Clear interval cũ
+  if (instaAnimationInterval) {
+    clearInterval(instaAnimationInterval);
+    instaAnimationInterval = null;
+  }
+
+  // ✅ Preload ảnh
+  for (let i = 1; i <= totalFrames; i++) {
+    const preloadImg = new Image();
+    preloadImg.src = `${framePath}${i}.png`;
+  }
+
+  // ✅ Animation loop
+  instaAnimationInterval = setInterval(() => {
+    currentFrame++;
+    if (currentFrame > totalFrames) currentFrame = 1;
+    img.src = `${framePath}${currentFrame}.png`;
+  }, 1000); // tốc độ mượt hơn 1000ms
+}

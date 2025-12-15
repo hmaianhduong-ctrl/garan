@@ -227,19 +227,40 @@
 }
 
 /* FULLSCREEN BANNER BELOW */
+/* FULLSCREEN BANNER BELOW */
 .full-banner {
   width: 100%;
-  height: auto;
-  display: flex;
-  justify-content: center;
+  height: 110px;
+  overflow: hidden;
+  background: transparent;
 }
 
-.banner-video {
+.banner-track {
+  display: flex;
+  width: max-content;
+  animation: banner-scroll 40s linear infinite;
+}
+
+.banner-track img {
   height: 110px;
   width: auto;
-  object-fit: contain;
   display: block;
-  margin: 0 auto;
+}
+
+/* KEYFRAMES */
+@keyframes banner-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 768px) {
+  .banner-track {
+    animation-duration: 40s;
+  }
 }
 
 
@@ -504,4 +525,92 @@
   max-width: 1937px;
   height: auto;
   display: block;
+}
+
+/* HIRING ELLIPSE BUTTON */
+.ellipse-hiring {
+  position: absolute;
+  bottom: 80px;        /* chỉnh lên/xuống */
+  left: 180px;
+  background-color: #ba3801; 
+  width: 160px;
+  height: 60px;
+
+  border-radius: 50%;
+  border: 2.5px solid #ffeda8;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  text-decoration: none;
+  z-index: 10;
+
+  transition: transform 0.3s ease;
+}
+
+.ellipse-hiring-text {
+  font-size: 16px;
+  font-weight: 500;
+  color: #ffeda8;
+  letter-spacing: 1px;
+}
+
+/* MENU IMAGE ANIMATION */
+.menu-animation {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
+/* Loại bỏ gạch chân cho tất cả các nút dạng link (Thẻ <a>) */
+/* 1. Nút VIEW MORE */
+.ellipse-blog {
+  text-decoration: none; /* Loại bỏ gạch chân */
+}
+
+/* 2. Nút DESCRIPTION (Hiring) */
+.ellipse-hiring {
+  text-decoration: none; /* Loại bỏ gạch chân */
+}
+
+/* 3. Đảm bảo các link trong footer cũng không gạch chân (nếu cần) */
+.footer-column a {
+  text-decoration: none;
+}
+
+/* =======================================
+   SỬA LỖI GẠCH CHÂN VÀ TỐI ƯU CÁC NÚT <a>
+======================================= */
+
+/* 1. Loại bỏ gạch chân cho các nút đã chuyển thành <a> */
+.ellipse-btn,
+.ellipse-red,
+.ellipse-blog,
+.ellipse-hiring,
+.follow-btn {
+  text-decoration: none; 
+}
+
+/* 2. Đảm bảo chữ bên trong các ellipse-btn (RESERVATION) vẫn giữ font màu */
+.ellipse-btn .ellipse-text,
+.ellipse-red .ellipse-red-text {
+    /* Đảm bảo màu chữ vẫn là #ffeda8 */
+    color: #ffeda8; 
+}
+
+/* 3. Đảm bảo khối FOLLOW BUTTON vẫn căn giữa chữ */
+.follow-btn {
+    /* Các thuộc tính cũ của DIV được giữ lại */
+    position: absolute;
+    top: 950px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 194px;
+    height: 123px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 20;
 }
