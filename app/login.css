@@ -242,3 +242,12 @@ body{
     transform: translateY(0);
 }
 
+.input-field input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px rgba(255,237,168,0.25);
+}
+
+.input-field input:focus + .icon,
+.input-field input:focus ~ .icon {
+    color: var(--accent);
+}
