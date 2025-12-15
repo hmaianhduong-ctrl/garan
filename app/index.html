@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script src="script.js" defer></script>
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -8,14 +10,23 @@
   <meta name="description" content="Elis Restaurant – Official supplier of good vibes. Explore our menu, lifestyle stories, and culinary journey.">
 
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="base.css">
+<link rel="stylesheet" href="home.css" data-page-style>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
 <body>
 
 <header id="header">
-  <img id="logo" class="logo white" src="https://i.postimg.cc/dDFmbrnX/logo-white.png?v=1" alt="Elis Logo" />
+  <a href="index.html" class="logo-link">
+    <img
+      id="logo"
+      class="logo"
+      src="https://i.postimg.cc/dDFmbrnX/logo-white.png?v=1"
+      alt="Elis Logo"
+    />
+  </a>
+
   <nav>
     <a href="menu.html">Menu</a>
     <a href="news.html">News</a>
@@ -24,120 +35,120 @@
   </nav>
 </header>
 
-<section class="video-hero" aria-hidden="true">
-  <video autoplay muted loop playsinline preload="auto" class="video-bg" poster="home-user/home1-poster.jpg">
-    <source src="home-user/home1.mp4" type="video/mp4">
-  </video>
-</section>
+<main id="content">
 
-<section class="hero-text-section">
-  <div class="hero-inner">
-    <h1 class="official-supplier-of">Official Supplier of Good Vibes.</h1>
-    <p class="blame-the-chefs">Blame the chefs, blame the flavor, we just make it too good.</p>
-  </div>
-</section>
+  <section class="video-hero" aria-hidden="true">
+    <video autoplay muted loop playsinline preload="auto" class="video-bg" poster="home-user/home1-poster.jpg">
+      <source src="home-user/home1.mp4" type="video/mp4">
+    </video>
+  </section>
 
-<section class="rectangle-div">
-  <div class="rect-left">
-    <div class="ellipse-btn">
-      <span class="ellipse-text">RESERVATION</span>
+  <section class="hero-text-section">
+    <div class="hero-inner">
+      <h1 class="official-supplier-of">Official Supplier of Good Vibes.</h1>
+      <p class="blame-the-chefs">Blame the chefs, blame the flavor, we just make it too good.</p>
     </div>
-    <img class="left-image" src="https://i.postimg.cc/FzLT59vZ/reservation.png" alt="Reservation Image">
-  </div>
+  </section>
 
-  <div class="rect-right">
-    <div class="ellipse-red">
-      <span class="ellipse-red-text">VIEW<br>MENU</span>
+  <section class="rectangle-div">
+    <div class="rect-left">
+      <div class="ellipse-btn">
+        <span class="ellipse-text">RESERVATION</span>
+      </div>
+      <img class="left-image" src="https://i.postimg.cc/FzLT59vZ/reservation.png" alt="Reservation Image">
     </div>
 
-    <div class="video-wrapper">
-      <video class="right-video" autoplay muted loop playsinline>
-        <source src="home-user/menu.mp4" type="video/mp4">
-      </video>
+    <div class="rect-right">
+      <div class="ellipse-red">
+        <span class="ellipse-red-text">VIEW<br>MENU</span>
+      </div>
 
-      <div class="open-block">
-        <span class="open-text">Open Daily&nbsp;&nbsp;&nbsp;09:00 - 22:00</span>
+      <div class="video-wrapper">
+        <video class="right-video" autoplay muted loop playsinline>
+          <source src="home-user/menu.mp4" type="video/mp4">
+        </video>
+
+        <div class="open-block">
+          <span class="open-text">Open Daily&nbsp;&nbsp;&nbsp;09:00 - 22:00</span>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section class="full-banner">
-  <video class="banner-video" autoplay muted loop playsinline>
-    <source src="home-user/banner.mp4" type="video/mp4">
-  </video>
-</section>
-
-<section id="news" class="news-bg-section">
-  <img src="home-user/newsbg.png" class="news-bg" alt="News Background">
-  <img src="https://i.postimg.cc/9XR8qB9h/elis.png" class="elis-floating-logo" alt="Elis Floating Logo">
-
-  <!-- BLOG ITEMS -->
-  <article class="blog-frame blog-1">
-    <img src="https://i.postimg.cc/1Xqvh9SJ/news1.png" class="blog-thumb" alt="News Image 1">
-    <div class="blog-tag tag-lifestyle">Lifestyle</div>
-    <div class="post-date"><span class="posted-text">Published</span><span class="posted-date">02/12/2025</span></div>
-    <h2 class="blog-title">HỘI U50 ‘CHẤT’ CŨNG THÍCH TIỆC TÙNG<br>CUỐI TUẦN Ở NHÀ ELIS!</h2>
-  </article>
-
-  <article class="blog-frame blog-2">
-    <img src="https://i.postimg.cc/hvd2WSnL/news2.png" class="blog-thumb" alt="News Image 2">
-    <div class="blog-tag tag-journey">Journey</div>
-    <div class="post-date"><span class="posted-text">Published</span><span class="posted-date">27/11/2025</span></div>
-    <h2 class="blog-title">HÀNH TRÌNH HỌC HỎI VÀ NIỀM ĐAM MÊ ẨM THỰC CỦA MR. BOSS</h2>
-  </article>
-
-  <article class="blog-frame blog-3">
-    <img src="https://i.postimg.cc/QCTfGXDJ/news3.png" class="blog-thumb" alt="News Image 3">
-    <div class="blog-tag tag-recipe">Recipe</div>
-    <div class="post-date"><span class="posted-text">Published</span><span class="posted-date">15/11/2025</span></div>
-    <h2 class="blog-title">8 LOẠI SALAD ‘CUỐN MIỆNG’ & DỄ LÀM ĐẾN KHÔNG NGỜ - BẬT MÍ BÍ MẬT</h2>
-  </article>
-
-  <article class="blog-frame blog-4">
-    <img src="https://i.postimg.cc/PJwSstHb/news4.png" class="blog-thumb" alt="News Image 4">
-    <div class="blog-tag tag-voucher">Voucher</div>
-    <div class="post-date"><span class="posted-text">Published</span><span class="posted-date">02/12/2025</span></div>
-    <h2 class="blog-title">VOUCHER HOT HIT CỦA THÁNG BLACK FRIDAY 11/2025</h2>
-  </article>
-
-<a href="news.html" class="ellipse-blog">
-  <div class="ellipse-text">VIEW<br>MORE</div>
-</a>
-
-  <div class="rectangle-news-overlay"></div>
-
-  <div class="insta-1">
-    <video class="insta-video" autoplay muted loop playsinline>
-      <source src="home-user/insta.mp4" type="video/mp4">
+  <section class="full-banner">
+    <video class="banner-video" autoplay muted loop playsinline>
+      <source src="home-user/banner.mp4" type="video/mp4">
     </video>
-  </div>
+  </section>
 
-  <div class="follow-btn">
-    <div class="ellipse-outline-follow"></div>
-    <div class="follow-text">FOLLOW<br>INSTAGRAM</div>
-  </div>
+  <section id="news" class="news-bg-section">
+    <img src="home-user/newsbg.png" class="news-bg" alt="News Background">
+    <img src="https://i.postimg.cc/9XR8qB9h/elis.png" class="elis-floating-logo" alt="Elis Floating Logo">
 
-  <div class="elisffavorite">@elis.ffavorite</div>
-</section>
+    <article class="blog-frame blog-1">
+      <img src="https://i.postimg.cc/1Xqvh9SJ/news1.png" class="blog-thumb" alt="News Image 1">
+      <div class="blog-tag tag-lifestyle">Lifestyle</div>
+      <div class="post-date"><span class="posted-text">Published</span><span class="posted-date">02/12/2025</span></div>
+      <h2 class="blog-title">HỘI U50 ‘CHẤT’ CŨNG THÍCH TIỆC TÙNG<br>CUỐI TUẦN Ở NHÀ ELIS!</h2>
+    </article>
 
-<section class="news-extra-banner">
-  <video class="news-extra-video" autoplay muted loop playsinline>
-    <source src="home-user/banner.mp4" type="video/mp4">
-  </video>
-</section>
+    <article class="blog-frame blog-2">
+      <img src="https://i.postimg.cc/hvd2WSnL/news2.png" class="blog-thumb" alt="News Image 2">
+      <div class="blog-tag tag-journey">Journey</div>
+      <div class="post-date"><span class="posted-text">Published</span><span class="posted-date">27/11/2025</span></div>
+      <h2 class="blog-title">HÀNH TRÌNH HỌC HỎI VÀ NIỀM ĐAM MÊ ẨM THỰC CỦA MR. BOSS</h2>
+    </article>
 
-<section class="hiring-banner">
-  <img src="https://i.postimg.cc/y6gQSTZt/hiring.png" alt="Hiring Banner">
-</section>
+    <article class="blog-frame blog-3">
+      <img src="https://i.postimg.cc/QCTfGXDJ/news3.png" class="blog-thumb" alt="News Image 3">
+      <div class="blog-tag tag-recipe">Recipe</div>
+      <div class="post-date"><span class="posted-text">Published</span><span class="posted-date">15/11/2025</span></div>
+      <h2 class="blog-title">8 LOẠI SALAD ‘CUỐN MIỆNG’ & DỄ LÀM ĐẾN KHÔNG NGỜ - BẬT MÍ BÍ MẬT</h2>
+    </article>
 
+    <article class="blog-frame blog-4">
+      <img src="https://i.postimg.cc/PJwSstHb/news4.png" class="blog-thumb" alt="News Image 4">
+      <div class="blog-tag tag-voucher">Voucher</div>
+      <div class="post-date"><span class="posted-text">Published</span><span class="posted-date">02/12/2025</span></div>
+      <h2 class="blog-title">VOUCHER HOT HIT CỦA THÁNG BLACK FRIDAY 11/2025</h2>
+    </article>
+
+  <a href="news.html" class="ellipse-blog">
+    <div class="ellipse-text">VIEW<br>MORE</div>
+  </a>
+
+    <div class="rectangle-news-overlay"></div>
+
+    <div class="insta-1">
+      <video class="insta-video" autoplay muted loop playsinline>
+        <source src="home-user/insta.mp4" type="video/mp4">
+      </video>
+    </div>
+
+    <div class="follow-btn">
+      <div class="ellipse-outline-follow"></div>
+      <div class="follow-text">FOLLOW<br>INSTAGRAM</div>
+    </div>
+
+    <div class="elisffavorite">@elis.ffavorite</div>
+  </section>
+
+  <section class="news-extra-banner">
+    <video class="news-extra-video" autoplay muted loop playsinline>
+      <source src="home-user/banner.mp4" type="video/mp4">
+    </video>
+  </section>
+
+  <section class="hiring-banner">
+    <img src="https://i.postimg.cc/y6gQSTZt/hiring.png" alt="Hiring Banner">
+  </section>
+
+</main>
 <footer class="footer-logo">
   <img src="https://i.postimg.cc/7PGsTNz6/chuvahinh.png" alt="Footer Logo">
 
-  <!-- RIGHT SIDE: Column + Social -->
   <div class="footer-right">
 
-    <!-- LEFT COLUMN -->
     <div class="footer-column">
       <a href="#" class="footer-link">Menu</a>
       <a href="#" class="footer-link">News</a>
@@ -145,7 +156,6 @@
       <a href="#" class="footer-link">Career</a>
     </div>
 
-    <!-- SOCIAL SECTION -->
     <div class="social-block">
       <div class="follow-us">Follow us!</div>
 
@@ -158,7 +168,6 @@
   </div>
 </footer>
 
-<!-- FOOTER BOTTOM INFO -->
 <div class="footer-info">
   <div class="footer-left">
     <span><strong>Our home:</strong> 128A Nguyễn Khánh Toàn, Cầu Giấy, Hà Nội</span>
@@ -171,6 +180,5 @@
   </div>
 </div>
 
-<script src="script.js"></script>
 </body>
 </html>

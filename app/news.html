@@ -1,30 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script src="script.js" defer></script>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>News | Elis’ Favorite</title>
 
   <!-- FONT & CSS -->
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="news.css" data-page-style>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
-<!-- ⚠️ Header luôn dạng màu vì trang này KHÔNG phải homepage -->
 <body class="sticky-header">
 
   <!-- HEADER -->
-  <header id="header">
-    <img id="logo" class="logo" src="https://i.postimg.cc/7b4MF0XW/logo-colored.png" alt="Elis Logo" />
-    <nav>
-      <a href="menu.html">Menu</a>
-      <a href="news.html" class="active">News</a>
-      <a href="aboutus.html">About Us</a>
-      <a href="login.html">Login</a>
-    </nav>
-  </header>
+<header id="header">
+  <a href="index.html" class="logo-link">
+    <img
+      id="logo"
+      class="logo"
+      src="https://i.postimg.cc/7b4MF0XW/logo-colored.png"
+      alt="Elis Logo"
+    />
+  </a>
 
+  <nav>
+    <a href="menu.html">Menu</a>
+    <a href="news.html"class="active">News</a>
+    <a href="aboutus.html">About Us</a>
+    <a href="login.html">Login</a>
+  </nav>
+</header>
+
+<main id="content">
+
+<section class="menu-page">
   <!-- BẮT ĐẦU VÙNG NEWS PAGE -->
   <div class="news-page">
 
@@ -83,10 +96,10 @@
       <span class="news-date">27/10/2025</span>
     </div>
 
-    <div class="news-card">
-      <img src="" alt="">
-      <h3 class="news-title"></h3>
-      <span class="news-date"></span>
+    <div class="news-card is-empty">
+      <div class="empty-placeholder">
+        Coming soon
+      </div>
     </div>
 
   </div>
@@ -139,16 +152,16 @@
       <span class="news-date">01/10/2025</span>
     </div>
 
-    <div class="news-card">
-      <img src="" alt="">
-      <h3 class="news-title"></h3>
-      <span class="news-date"></span>
+    <div class="news-card is-empty">
+      <div class="empty-placeholder">
+        Coming soon
+      </div>
     </div>
 
   </div>
 
 </section>
-
+</main>
   <!-- HẾT VÙNG NEWS PAGE -->
 
   <!-- FOOTER -->

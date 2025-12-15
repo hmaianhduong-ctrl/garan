@@ -18,6 +18,19 @@ body {
   font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
+/* LOGIC PAGE TRANSITION (FADE) */
+body {
+  opacity: 1;
+  /* Sử dụng hiệu ứng Nảy/Mượt hơn và tăng thời gian một chút (0.5s) */
+  transition: opacity 0.5s cubic-bezier(0.42, 0, 0.58, 1);
+}
+
+/* Khi JS xóa class 'page-loaded' (trước khi chuyển trang) */
+body:not(.page-loaded) {
+  opacity: 0;
+}
+
+
 /* =========================
    HEADER
 ========================= */
@@ -43,7 +56,7 @@ header.scrolled {
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
 }
 
-/* Sticky page (menu, blog, etc.) */
+/* Sticky page (menu, blog, etc.) - KHÔNG DÙNG header.scrolled TRÊN body.sticky-header */
 body.sticky-header header {
   background: #ffffff;
   box-shadow: 0 2px 10px rgba(0,0,0,0.08);
@@ -54,11 +67,6 @@ body.sticky-header header {
   width: 200px;
   height: 60px;
   object-fit: contain;
-}
-
-/* đổi logo khi sticky */
-body.sticky-header #logo {
-  content: url('https://i.postimg.cc/7b4MF0XW/logo-colored.png');
 }
 
 /* NAV */
@@ -98,10 +106,20 @@ header nav a::after {
   background: #BA3801;
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform 0.35s ease;
+  /* Giữ nguyên cubic-bezier cho hiệu ứng bouncy */
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); 
 }
 
-header nav a.clicked::after {
+/* Thêm hiệu ứng HOVER cho gạch chân */
+header nav a:hover::after {
+    transform: scaleX(1);
+}
+
+nav a.active {
+  color: #ba3801;
+}
+
+nav a.active::after {
   transform: scaleX(1);
 }
 

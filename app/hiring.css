@@ -1,0 +1,117 @@
+
+/* ===========================
+   HIRING PAGE
+=========================== */
+
+.hiring-wrapper {
+  max-width: 1200px;
+  margin: 120px auto;
+  padding: 0 20px;
+}
+
+/* Subheader chính */
+.hiring-subheader {
+  font-size: 30px;
+  font-weight: 600;
+  font-style: italic;
+  color: #ba3801;
+  margin-bottom: 80px;
+  text-align: left;
+}
+
+/* 3 column */
+.hiring-columns {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+/* 1 column */
+.hiring-col {
+  width: 30%;
+  color: #000;
+  font-size: 15px;
+  line-height: 1.3;
+}
+
+.hiring-col:nth-child(1) {
+  animation-delay: 0.15s;
+}
+
+.hiring-col:nth-child(2) {
+  animation-delay: 0.25s;
+}
+
+.hiring-col:nth-child(3) {
+  animation-delay: 0.35s;
+}
+
+
+/* Subheader 3 */
+.hiring-title {
+  font-size: 20px;
+  font-weight: 900;
+  color: #ba3801;
+  margin-bottom: 18px;
+}
+
+/* Bold group titles */
+.hiring-bold {
+  font-weight: 750;
+  margin: 13px 0 8px;
+  color: #ba3801;
+}
+
+/* List */
+.hiring-list {
+  font-weight:400;
+  color: #ba3801;
+  padding-left: 22px;
+  margin-bottom: 13px;
+
+}
+
+.hiring-list li {
+  margin-bottom: 4px;
+}
+
+/* Mobile responsive */
+@media (max-width: 900px) {
+  .hiring-columns {
+    flex-direction: column;
+  }
+  
+  .hiring-col {
+    width: 100%;
+  }
+}
+
+/* ===== APPLY CONTACT INFO ===== */
+.hiring-contact {
+  width: 100%;
+  margin-top: 46px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; /* 🎯 canh phải */
+  gap: 10px;
+}
+
+.email-hrelisfavoritegmailc {
+  width: 956px;
+  height: auto;
+  font-size: 20px;
+  font-weight: 600;
+  color: #ba3801;
+  text-align: right;
+  line-height: 1.35;
+}
+
+.ng-vin-gi {
+  width: 383px;
+  height: auto;
+  font-size: 16px;
+  color: #ba3801;
+  text-align: right;
+  font-style: italic;
+}
+
