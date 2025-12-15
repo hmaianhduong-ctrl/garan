@@ -1,0 +1,106 @@
+{
+  "id": "769a6c71-085e-49b8-b4b1-094e09f4b500",
+  "version": "2.0",
+  "name": "Dashboard_Interaction_Only_TITLE_CHECK",
+  "url": "http://127.0.0.1:5500",
+  "tests": [
+    {
+      "id": "18f5c357-190b-483f-9562-1b1548e67a4e",
+      "name": "Dashboard_Interaction_Check_FINAL",
+      "commands": [
+        {
+          "id": "e44d0818-8772-4d2b-b8b1-094e09f4b500",
+          "comment": "1. Mở trang Dashboard",
+          "command": "open",
+          "target": "/dashboard.html",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "31e34c9c-b570-4e3a-967a-18f6c310c3b0",
+          "comment": "2. CHỜ BUỘC: Tạm dừng dài 3s để đảm bảo tất cả script bên ngoài đã tải và DOM đã ổn định.",
+          "command": "pause",
+          "target": "3000",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "c76f6b15-2882-45e0-94a1-026858e945c5",
+          "comment": "3. Kiểm tra tiêu đề trang Dashboard",
+          "command": "assertTitle",
+          "target": "Dashboard | Elis Favorite CMS",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "62e1c79a-a82f-4100-b615-51529d8b7a69",
+          "comment": "4. Kiểm tra nút Export data",
+          "command": "assertText",
+          "target": "id=export-button",
+          "targets": [
+            [
+              "id=export-button",
+              "id"
+            ]
+          ],
+          "value": "Export data"
+        },
+        {
+          "id": "421f6492-c437-4d6b-b892-3c224214227f",
+          "comment": "5. TƯƠNG TÁC: Click vào avatar để mở dropdown Log Out",
+          "command": "click",
+          "target": "id=user-avatar",
+          "targets": [
+            [
+              "id=user-avatar",
+              "id"
+            ]
+          ],
+          "value": ""
+        },
+        {
+          "id": "18f5c357-190b-483f-9562-1b1548e67a4e",
+          "comment": "6. Điều hướng: Click vào link 'Posts'",
+          "command": "click",
+          "target": "xpath=//nav/a[text()='Posts']",
+          "targets": [
+            [
+              "linkText=Posts",
+              "linkText"
+            ]
+          ],
+          "value": ""
+        },
+        {
+          "id": "52f75475-472d-4876-b6b6-3e4701258169",
+          "comment": "7. CHỜ: Đảm bảo trang Posts đã tải (2s)",
+          "command": "pause",
+          "target": "2000",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "90d1f4d9-d055-4670-8774-8d9609c1352e",
+          "comment": "8. KIỂM TRA ĐIỀU HƯỚNG: Xác nhận Title của trang mới là Posts",
+          "command": "assertTitle",
+          "target": "Posts | Elis Favorite CMS",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    }
+  ],
+  "suites": [
+    {
+      "id": "a78734a7-8f5b-4395-8e79-5e76a1622998",
+      "name": "Default Suite",
+      "persistSession": false,
+      "parallel": false,
+      "timeout": 300,
+      "tests": [
+        "18f5c357-190b-483f-9562-1b1548e67a4e"
+      ]
+    }
+  ],
+  "configs": {}
+}

@@ -1,0 +1,47 @@
+name: CI Check (Lint & Build)
+
+# Robot sẽ chạy khi có ai đó Push code hoặc tạo Pull Request
+on:
+  push:
+    branches: [ "main", "backend-api", "admin-ui", "public-viewer" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-lint:
+    runs-on: ubuntu-latest # Chạy trên máy ảo Linux
+
+    steps:
+    # 1. Tải code
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    # 2. Cài đặt Node.js
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20' # Phiên bản Node bạn đang dùng
+        cache: 'npm'
+
+    # 3. Cài đặt thư viện (như npm install)
+    - name: Install Dependencies
+      run: npm ci
+
+    # 4. Tạo Prisma Client (Để code không bị lỗi thiếu Type)
+    - name: Generate Prisma Client
+      run: npx prisma generate
+
+    # 5. Kiểm tra lỗi cú pháp (Lint)
+    # - name: Run Linter
+    #  run: npm run lint
+
+    # 6. Thử Build dự án (Kiểm tra lỗi biên dịch Next.js)
+    - name: Run Build
+      run: npm run build
+      # Cung cấp biến môi trường GIẢ để Build không bị crash
+      env:
+        DATABASE_URL: "mysql://mock_user:mock_password@localhost:3306/mock_db"
+        AUTH_SECRET: "mock_secret_for_build"
+        GOOGLE_CLIENT_ID: "mock_google_id"
+        GOOGLE_CLIENT_SECRET: "mock_google_secret"
+        # update ci

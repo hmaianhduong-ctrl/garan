@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Elis Favorite CMS</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+              extend: {
+                colors: {
+                    'primary': '#BA3801', 
+                    'accent': '#FFEDA8',
+                },
+                fontFamily: {
+                    sans: ['Plus Jakarta Sans', 'sans-serif'],
+                },
+              }
+            }
+        }
+    </script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        /* Đảm bảo font được áp dụng cho toàn bộ body */
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        /* Chiều cao cố định cho biểu đồ */
+        .chart-container {
+            height: 350px;
+        }
+        /* Màu cho icon Date picker (chỉ hoạt động trên một số trình duyệt) */
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(1);
+            cursor: pointer;
+        }
+
+        /* ************************************************
+         * CSS ĐIỀU CHỈNH VỊ TRÍ OVERLAP
+         * ************************************************
+         */
+        .overlap-stats {
+            /* ĐIỀU CHỈNH: Tăng độ dịch chuyển âm lên -100px để 4 thẻ nhấc lên cao hơn */
+            margin-top: -100px; 
+            position: relative; 
+            z-index: 20; 
+        }
+        
+        /* ************************************************
+         * CSS BỔ SUNG: Biểu tượng mắt cho Recent Posts
+         * ************************************************
+         */
+        /* Áp dụng position: relative và padding cho số lượt xem */
+        .col-span-12.lg\:col-span-4 ul li span.text-gray-700 {
+            position: relative;
+            padding-left: 18px; /* Tạo không gian cho icon */
+        }
+
+        /* Sử dụng pseudo-element ::before để chèn icon mắt */
+        .col-span-12.lg\:col-span-4 ul li span.text-gray-700::before {
+            content: "\f06e"; /* Font Awesome icon code cho 'eye' */
+            font-family: 'Font Awesome 6 Free'; /* Khai báo sử dụng font icon */
+            font-weight: 900; /* Dùng phiên bản Solid để hiển thị */
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 14px; /* Kích thước nhỏ */
+            color: #BA3801; /* Màu Primary */
+            opacity: 0.6; /* Giảm opacity theo yêu cầu */
+        }
+
+        /* ************************************************
+         * CSS BỔ SUNG: Dịch chuyển danh sách Recent Posts 
+         * ************************************************
+         */
+        /* Áp dụng khoảng cách trên (margin-top) cho danh sách bài viết */
+        .col-span-12.lg\:col-span-4 ul.space-y-4 {
+            margin-top: 50px; /* Điều chỉnh giá trị này để đẩy xuống vừa ý */
+        }
+        
+        /* ************************************************
+         * PHẦN CSS CỦA HEADER (GIỮ NGUYÊN)
+         * ************************************************
+         */
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            box-sizing: border-box;
+            transition: background-color 0.4s ease, box-shadow 0.4s ease;
+            background: transparent;
+            z-index: 1000;
+        }
+
+        header.scrolled {
+            background: #ffffff;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+        }
+
+        .logo {
+            width: 200px;
+            height: 60px;
+            object-fit: contain;
+            transition: filter 0.4s ease;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 66px;
+        }
+
+        nav a {
+            font-size: 22px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: #fff;
+            text-transform: uppercase;
+            font-weight: 300;
+            text-decoration: none;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            transition: color 0.4s ease;
+        }
+
+        header.scrolled nav a {
+            color: #ba3801;
+        }
+
+        /* PAGE using sticky-header -> header luôn trắng */
+        body.sticky-header #header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+
+        body.sticky-header #header nav a {
+            color: #ba3801;
+        }
+
+        body.sticky-header #logo {
+            content: url('https://i.postimg.cc/7b4MF0XW/logo-colored.png');
+        }
+
+        /* --------------------------------- */
+        /* START: AVATAR & DROPDOWN STYLES */
+        /* --------------------------------- */
+
+        .user-menu-container {
+            position: relative;
+            height: 40px;
+            display: flex;
+            align-items: center;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            cursor: pointer;
+            border: 2px solid #fff;
+            transition: border-color 0.4s ease;
+        }
+
+        header.scrolled .user-avatar {
+            border-color: #ba3801;
+        }
+
+        .logout-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 10px;
+            background-color: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            border-radius: 8px;
+            min-width: 150px;
+            padding: 5px 0;
+            z-index: 1001;
+            
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+        }
+
+        .logout-dropdown.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .logout-link {
+            font-size: 14px;
+            font-weight: 600;
+            color: #ba3801 !important;
+            padding: 8px 16px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 5px; /* ĐIỀU CHỈNH: Giảm khoảng cách giữa icon và text */
+            text-transform: uppercase;
+        }
+        
+        /* ĐIỀU CHỈNH: Kích thước icon Log Out */
+        .logout-link svg {
+            width: 16px;
+            height: 16px;
+            min-width: 16px;
+            min-height: 16px;
+        }
+        
+        /* ĐIỀU CHỈNH: Chiều rộng nét vẽ trong SVG */
+        .logout-link svg path {
+            stroke-width: 2; /* Giữ nguyên 2 (hoặc có thể thử 1.5) */
+        }
+
+        .logout-link:hover {
+            background-color: #ffeda8;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+    <header id="header">
+        <img id="logo" class="logo" src="https://i.postimg.cc/7b4MF0XW/logo-colored.png" alt="Elis Logo" />
+        <nav>
+            <a href="posts.html">Posts</a>
+            <a href="comments.html" class="active">Comments</a>
+            <a href="media.html">Media</a>
+            
+            <div id="user-menu" class="user-menu-container">
+                <img id="user-avatar" class="user-avatar" 
+                      src="https://i.postimg.cc/VvFj0vXz/admin-avatar.jpg" 
+                      alt="User Avatar" 
+                      title="Click để Log out" />
+                
+                <div id="logout-dropdown" class="logout-dropdown">
+                    <a href="login.html" class="logout-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                        </svg>
+                        LOG OUT
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main class="font-sans">
+        <div class="bg-primary text-white pt-24 pb-8"> 
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-sm opacity-80">Dashboard / Views</p>
+                        <h1 class="text-5xl font-extrabold mt-1">Welcome back, Boss</h1>
+                        <p class="text-lg mt-2 opacity-90">Great to have you back. Let's check the performance and schedule the next hit!</p>
+                    </div>
+                    <div class="flex flex-col items-end space-y-2 text-sm">
+                        <p class="text-sm opacity-80" id="current-date">Ngày hiện tại</p>
+                        <div class="flex space-x-3">
+                            <div class="relative flex items-center bg-gray-800 text-white py-2 px-3 rounded-lg text-sm">
+                                <label for="export-date" class="mr-2 opacity-80">Showing:</label>
+                                <input type="date" id="export-date" value="2025-12-11" 
+                                        class="bg-transparent text-white p-0 border-none focus:ring-0 cursor-pointer w-32" />
+                            </div>
+                            
+                            <button id="export-button" class="bg-gray-800 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded-lg flex items-center transition-colors">
+                                <svg class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                                Export data
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 grid grid-cols-4 gap-6 overlap-stats"> 
+                    <div class="bg-white p-6 rounded-xl shadow-xl transition-transform duration-300 hover:scale-[1.02]" data-aos="fade-up" data-aos-delay="100">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-sm font-medium text-gray-500">Total Published Posts</h3>
+                            <div class="p-2 bg-primary/20 text-primary rounded-lg">
+                                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                            </div>
+                        </div>
+                        <p class="mt-1 text-4xl font-extrabold text-gray-900" id="total-posts">10</p>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-xl shadow-xl transition-transform duration-300 hover:scale-[1.02]" data-aos="fade-up" data-aos-delay="200">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-sm font-medium text-gray-500">Total Views</h3>
+                            <div class="p-2 bg-primary/20 text-primary rounded-lg">
+                                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                            </div>
+                        </div>
+                        <p class="mt-1 text-4xl font-extrabold text-gray-900" id="total-views">3,171</p>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-xl shadow-xl transition-transform duration-300 hover:scale-[1.02]" data-aos="fade-up" data-aos-delay="300">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-sm font-medium text-gray-500">Total Comments</h3>
+                            <div class="p-2 bg-primary/20 text-primary rounded-lg">
+                                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
+                            </div>
+                        </div>
+                        <p class="mt-1 text-4xl font-extrabold text-gray-900" id="total-comments">56</p>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-xl shadow-xl transition-transform duration-300 hover:scale-[1.02]" data-aos="fade-up" data-aos-delay="400">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-sm font-medium text-gray-500">Total Reactions</h3>
+                            <div class="p-2 bg-primary/20 text-primary rounded-lg">
+                                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                            </div>
+                        </div>
+                        <p class="mt-1 text-4xl font-extrabold text-gray-900" id="total-reactions">1,240</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-16">
+            <div class="grid grid-cols-12 gap-6">
+                <div class="col-span-12 lg:col-span-8">
+                    <div class="bg-white p-6 rounded-xl shadow-lg h-[450px]" data-aos="fade-right">
+                        <div class="flex justify-between items-center mb-4">
+                            <div>
+                                <h2 class="text-lg font-semibold text-gray-900">Views overtime</h2>
+                                <span class="text-sm text-gray-500">Thống kê số lượt xem trong 30 ngày gần nhất</span>
+                            </div>
+                            <div class="flex items-center space-x-4">
+                                <span class="text-xs font-semibold text-gray-600 flex items-center">
+                                    <span class="w-2 h-2 bg-primary rounded-full mr-1"></span> View
+                                </span>
+                                <span class="text-xs font-semibold text-gray-600 flex items-center">
+                                    <span class="w-2 h-2 border border-dashed border-accent rounded-full mr-1"></span> Like
+                                </span>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="viewsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-span-12 lg:col-span-4">
+                    <div class="bg-accent/70 p-6 rounded-xl shadow-lg h-[450px]" data-aos="fade-left">
+                        <div class="flex justify-between items-center mb-4">
+                            <h2 class="text-lg font-semibold text-gray-900">Recent Posts</h2>
+                            <a href="posts.html" class="text-sm font-semibold text-primary hover:text-primary/80 transition-colors">
+                        </div>
+                        <ul id="recent-posts-list" class="space-y-4">
+                            </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Khởi tạo AOS và cập nhật ngày tháng
+        AOS.init({
+            duration: 1000,
+            once: true,
+        });
+        document.getElementById('current-date').innerText = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+    </script>
+
+	<script src="api-dashboard.js"></script>
+	<script src="dashboard.js"></script>
+
+</body>
+</html>

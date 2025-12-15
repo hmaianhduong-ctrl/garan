@@ -1,0 +1,1252 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Posts | Elis Favorite CMS</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#BA3801', 
+                        'accent': '#FFEDA8',
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        /* Đảm bảo font được áp dụng cho toàn bộ body */
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        /* ************************************************
+        * CSS TÙY CHỈNH CHO TRANG POSTS
+        * ************************************************
+        */
+
+        /* Style cho trạng thái bài viết */
+        .status-tag {
+            display: inline-flex;
+            padding: 4px 8px;
+            border-radius: 9999px; /* rounded-full */
+            font-size: 0.75rem; /* text-xs */
+            font-weight: 700; /* font-bold */
+            text-transform: uppercase;
+        }
+
+        .status-DRAFT {
+            background-color: #f3f4f6; /* bg-gray-100 */
+            color: #4b5563; /* text-gray-700 */
+        }
+
+        .status-PUBLISHED {
+            background-color: #BA380120; /* primary/20 */
+            color: #BA3801; /* primary */
+        }
+
+        .status-SCHEDULED {
+            background-color: #FFEDA850; /* accent/50 */
+            color: #927500; /* Màu vàng đậm hơn */
+        }
+
+        /* Style cho các nút hành động trong bảng */
+        .action-btn {
+            padding: 6px;
+            border-radius: 6px;
+            transition: background-color 0.2s;
+            margin-right: 4px; /* Khoảng cách giữa các nút */
+        }
+
+        .action-btn:last-child {
+            margin-right: 0;
+        }
+
+        .action-btn.edit-btn {
+            color: #10b981; /* Màu xanh lá (Emerald) */
+        }
+
+        .action-btn.edit-btn:hover {
+            background-color: #d1fae5; /* bg-emerald-100 */
+        }
+
+        .action-btn.delete-btn {
+            color: #ef4444; /* Màu đỏ (Red) */
+        }
+
+        .action-btn.delete-btn:hover {
+            background-color: #fee2e2; /* bg-red-100 */
+        }
+
+        /* Thẻ Tags */
+        .post-tag {
+            display: inline-block;
+            padding: 2px 8px;
+            margin: 2px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            background-color: #BA380115; /* primary nhẹ */
+            color: #BA3801;
+        }
+
+        /* Soạn thảo Nội dung (Content Editor) */
+        .content-block {
+            padding: 12px;
+            margin-bottom: 8px;
+            border-radius: 6px;
+            border: 1px solid #e5e7eb;
+            background-color: white;
+            position: relative;
+        }
+
+        .content-block:hover {
+            border-color: #BA3801;
+        }
+
+        .content-block textarea,
+        .content-block input[type="text"] {
+            border: none;
+            padding: 0;
+            outline: none;
+            resize: none;
+            width: 100%;
+            font-family: inherit;
+        }
+
+        .content-block .block-controls {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            display: none;
+        }
+
+        .content-block:hover .block-controls {
+            display: block;
+        }
+
+        .block-controls button {
+            background: #fff;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 4px 6px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .block-controls button:hover {
+            background: #f3f4f6;
+        }
+
+        .content-image-preview {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            margin-top: 8px;
+        }
+
+        /* ------------------------------------------------ */
+        /* PHẦN CSS CỦA HEADER (GIỮ NGUYÊN CSS GỐC CỦA BẠN) */
+        /* ------------------------------------------------ */
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            /* GIỮ NGUYÊN padding: 0 30px; */
+            padding: 0 30px; 
+            box-sizing: border-box;
+            transition: background-color 0.4s ease, box-shadow 0.4s ease;
+            
+            /* Dùng màu trắng cứng cho trang Post */
+            background: white; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            z-index: 1000;
+        }
+
+        .logo {
+            width: 200px;
+            height: 60px;
+            object-fit: contain;
+            transition: filter 0.4s ease;
+            /* Dùng logo màu cho trang không có scroll effect */
+            content: url('https://i.postimg.cc/7b4MF0XW/logo-colored.png'); 
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            /* GIỮ NGUYÊN gap: 66px; */
+            gap: 66px; 
+        }
+
+        nav a {
+            font-size: 22px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            /* Màu mặc định cho link trong header trắng */
+            color: #ba3801; 
+            text-transform: uppercase;
+            font-weight: 300;
+            text-decoration: none;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            transition: color 0.4s ease;
+        }
+
+        /* Đổi màu link active */
+        nav a.active-nav {
+            font-weight: 700;
+            border-bottom: 3px solid #BA3801;
+        }
+
+        /* AVATAR & DROPDOWN STYLES */
+        .user-menu-container {
+            position: relative;
+            height: 40px;
+            display: flex;
+            align-items: center;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            cursor: pointer;
+            /* Đổi màu border phù hợp với nền trắng */
+            border: 2px solid #ba3801; 
+            transition: border-color 0.4s ease;
+        }
+
+        .logout-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 10px;
+            background-color: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            border-radius: 8px;
+            min-width: 150px;
+            padding: 5px 0;
+            z-index: 1001;
+            
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+        }
+
+        .logout-dropdown.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .logout-link {
+            font-size: 14px;
+            font-weight: 600;
+            color: #ba3801 !important;
+            padding: 8px 16px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-transform: uppercase;
+        }
+
+        .logout-link:hover {
+            background-color: #ffeda8;
+        }
+    </style>
+    </head>
+<body class="bg-gray-50 min-h-screen sticky-header">
+
+    <header id="header">
+        <a href="dashboard.html">
+             <img id="logo" class="logo" src="https://i.postimg.cc/7b4MF0XW/logo-colored.png" alt="Elis Logo" />
+        </a>
+        <nav>
+            <a href="posts.html" class="active-nav">Posts</a> 
+            <a href="comments.html">Comments</a>
+            <a href="media.html">Media</a>
+            
+            <div id="user-menu" class="user-menu-container">
+                <img id="user-avatar" class="user-avatar" 
+                    src="https://i.postimg.cc/VvFj0vXz/admin-avatar.jpg" 
+                    alt="User Avatar" 
+                    title="Click để Log out" />
+                
+                <div id="logout-dropdown" class="logout-dropdown">
+                    <a href="login.html" class="logout-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                             <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                        </svg>
+                        LOG OUT
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main class="font-sans pt-24 pb-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="flex justify-between items-center mb-6">
+                <div>
+                    <p class="text-sm opacity-80 text-gray-600">Quản lý nội dung</p>
+                    <h1 class="text-4xl font-extrabold text-primary">All Posts</h1>
+                </div>
+                <button id="add-post-btn" class="bg-primary hover:bg-primary/90 text-white font-semibold py-3 px-6 rounded-xl shadow-md flex items-center transition-colors">
+                    <i class="fas fa-plus mr-2"></i>
+                    Tạo bài viết mới
+                </button>
+            </div>
+
+            <div class="flex space-x-4 mb-6">
+                <input type="text" id="search-input" placeholder="Tìm kiếm theo Tiêu đề..."
+                        class="flex-grow p-3 border border-gray-300 rounded-lg focus:border-primary focus:ring-primary/50">
+                
+                <select id="status-filter" class="p-3 border border-gray-300 rounded-lg bg-white focus:border-primary focus:ring-primary/50">
+                    <option value="all">Tất cả Trạng thái</option>
+                    <option value="DRAFT">Bản nháp</option>
+                    <option value="PUBLISHED">Đã xuất bản</option>
+                    <option value="SCHEDULED">Lên lịch</option>
+                </select>
+                <select id="tag-filter" class="p-3 border border-gray-300 rounded-lg bg-white focus:border-primary focus:ring-primary/50">
+                    <option value="all">Tất cả Tags</option>
+                    <option value="Lifestyle">Lifestyle</option>
+                    <option value="Journey">Journey</option>
+                    <option value="Recipe">Recipe</option>
+                    <option value="Voucher">Voucher</option>
+                </select>
+            </div>
+            
+            <div class="bg-white shadow-xl rounded-xl overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider w-1/4">
+                                Title / Slug
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
+                                Tags
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
+                                Status
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
+                                Views / Comments
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
+                                Published Date
+                            </th>
+                            <th class="px-6 py-3 text-center text-xs font-bold text-gray-500 uppercase tracking-wider">
+                                Actions
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="posts-table-body" class="bg-white divide-y divide-gray-200">
+                        </tbody>
+                </table>
+                
+                <div id="no-data-message" class="hidden text-center py-10 text-gray-500 font-semibold">
+                    Không tìm thấy bài viết nào.
+                </div>
+            </div>
+            
+        </div>
+    </main>
+
+    <div id="post-modal" class="fixed inset-0 bg-gray-900 bg-opacity-75 z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-4xl p-8 max-h-[90vh] overflow-y-auto">
+            <h2 id="modal-title" class="text-2xl font-bold mb-6 text-primary">Tạo Bài Viết Mới</h2>
+            <form id="post-form" class="space-y-4">
+                <input type="hidden" id="post-id">
+                
+                <div>
+                    <label for="title" class="block text-sm font-medium text-gray-700">Tiêu đề</label>
+                    <input type="text" id="title" required class="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:border-primary focus:ring-primary/50">
+                </div>
+                
+                <div>
+                    <label for="description" class="block text-sm font-medium text-gray-700">Mô tả ngắn (Description)</label>
+                    <textarea id="description" rows="2" required class="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:border-primary focus:ring-primary/50"></textarea>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Tags (Thẻ thể loại) - BẮT BUỘC CHỌN 1 TAG</label>
+                    <div id="tag-checkboxes" class="flex flex-wrap gap-3">
+                        </div>
+                </div>
+
+                <div>
+                    <label for="thumbnail" class="block text-sm font-medium text-gray-700">Thumbnail URL (Mô phỏng)</label>
+                    <div class="flex space-x-3 mt-1">
+                        <input type="url" id="thumbnail" placeholder="Dán Ex: https://i.postimg.cc/image.jpg" class="block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:border-primary focus:ring-primary/50">
+                        <button type="button" id="browse-media-btn" class="flex-shrink-0 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-md transition-colors text-sm">
+                            <i class="fas fa-images mr-1"></i> Chọn từ Thư viện
+                        </button>
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Nội dung (Content Editor)</label>
+                    <div id="content-editor" class="bg-gray-100 p-4 border border-gray-300 rounded-md shadow-inner space-y-3">
+                        <div id="content-blocks-container" class="space-y-3">
+                            </div>
+
+                        <div class="flex justify-center pt-2 border-t border-gray-200">
+                            <button type="button" onclick="addContentBlock('paragraph')" class="text-gray-600 hover:text-primary px-3 py-1 text-sm font-medium">
+                                <i class="fas fa-paragraph mr-1"></i> Đoạn văn
+                            </button>
+                            <button type="button" onclick="addContentBlock('heading')" class="text-gray-600 hover:text-primary px-3 py-1 text-sm font-medium">
+                                <i class="fas fa-heading mr-1"></i> Tiêu đề phụ
+                            </button>
+                            <button type="button" onclick="addContentBlock('image')" class="text-gray-600 hover:text-primary px-3 py-1 text-sm font-medium">
+                                <i class="fas fa-image mr-1"></i> Hình ảnh
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <label for="published-at" class="block text-sm font-medium text-gray-700">Ngày/Giờ Xuất Bản (Lên lịch)</label>
+                    <input type="datetime-local" id="published-at" class="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:border-primary focus:ring-primary/50">
+                </div>
+
+                <div class="flex justify-end pt-4 space-x-3">
+                    <button type="button" id="close-modal-btn" class="px-4 py-2 text-gray-600 border border-gray-300 rounded-md hover:bg-gray-100 transition-colors">
+                        Cancel
+                    </button>
+                    <button type="submit" class="px-4 py-2 bg-primary text-white rounded-md font-semibold hover:bg-primary/90 transition-colors">
+                        Lưu Bài Viết
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <div id="media-modal" class="fixed inset-0 bg-gray-900 bg-opacity-75 z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-3xl p-6 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4 border-b pb-3">
+                <h2 class="text-xl font-bold text-primary">Chọn ảnh từ Thư viện</h2>
+                <button type="button" id="close-media-modal-btn" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <div id="media-gallery" class="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                </div>
+            <div class="text-center mt-6">
+                 <p class="text-sm text-gray-500 italic">Để thêm ảnh mới, vui lòng truy cập trang <a href="media.html" class="text-primary font-semibold hover:underline">Media</a>.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Các Tags cố định
+        const POST_TAGS = ["Lifestyle", "Journey", "Recipe", "Voucher"];
+
+        // Dữ liệu MOCK cho các bài viết (Mô phỏng Database)
+        let mockPosts = [
+            { 
+                id: 1, 
+                title: "Tuyệt đỉnh ẩm thực đường phố Việt Nam", 
+                slug: "am-thuc-duong-pho-vn", 
+                description: "Khám phá những món ăn ngon nhất và trải nghiệm văn hóa ẩm thực độc đáo của Việt Nam.", 
+                content: [
+                    { type: 'heading', text: 'Phở - Món ăn quốc hồn quốc túy' },
+                    { type: 'paragraph', text: 'Phở là một món ăn truyền thống của Việt Nam, đồng thời được xem là một trong những món ăn tiêu biểu nhất cho nền ẩm thực Việt. Phở truyền thống thường là phở bò hoặc phở gà, với nước dùng ngọt thanh, bánh phở mềm và các loại rau thơm.' },
+                    { type: 'image', url: 'https://i.postimg.cc/k47g213n/phovn.jpg', caption: 'Phở bò thơm ngon.' },
+                    { type: 'heading', text: 'Bánh Mì - Sự kết hợp hoàn hảo' },
+                    { type: 'paragraph', text: 'Bánh mì là một loại thức ăn nhanh nổi tiếng, được mệnh danh là một trong những món sandwich ngon nhất thế giới. Với vỏ bánh giòn rụm và nhân đa dạng (thịt nướng, chả lụa, pate...), bánh mì dễ dàng chinh phục mọi thực khách.' },
+                ], 
+                thumbnail: "https://i.postimg.cc/g0K53M1K/thumb1.jpg", 
+                status: "PUBLISHED", 
+                publishedAt: "2025-12-05T10:00:00", 
+                authorId: 1,
+                authorName: "Boss Admin",
+                views: 312,
+                commentsCount: 15,
+                tags: ["Recipe"] // Cập nhật: Chỉ còn 1 tag
+            },
+            { 
+                id: 2, 
+                title: "Hướng dẫn tối ưu SEO cho người mới bắt đầu", 
+                slug: "toi-uu-seo-newbie", 
+                description: "Các bước cơ bản để tăng traffic tự nhiên cho blog của bạn.", 
+                content: [
+                    { type: 'paragraph', text: 'SEO (Search Engine Optimization) là quá trình tối ưu hóa website để đạt được thứ hạng cao hơn trong kết quả tìm kiếm. Đây là một kỹ năng quan trọng cho bất kỳ blogger nào.' },
+                    { type: 'heading', text: 'Nghiên cứu từ khóa' },
+                    { type: 'paragraph', text: 'Luôn bắt đầu bằng việc tìm hiểu những gì người dùng đang tìm kiếm. Sử dụng các công cụ nghiên cứu từ khóa để tìm ra các từ khóa có lượng tìm kiếm cao và độ cạnh tranh thấp.' }
+                ],
+                thumbnail: "https://i.postimg.cc/T3YjX84t/thumb2.jpg", 
+                status: "DRAFT", 
+                publishedAt: null, 
+                authorId: 1,
+                authorName: "Boss Admin",
+                views: 0,
+                commentsCount: 0,
+                tags: ["Lifestyle"] // Cập nhật: Chỉ còn 1 tag
+            },
+            { 
+                id: 3, 
+                title: "Kế hoạch ra mắt sản phẩm mới Q1/2026", 
+                slug: "ke-hoach-san-pham-q1", 
+                description: "Chiến lược marketing và phân phối cho quý đầu năm sau.", 
+                content: [
+                    { type: 'paragraph', text: 'Việc ra mắt sản phẩm cần một chiến lược bài bản từ A đến Z. Đảm bảo mọi bộ phận đều đồng bộ về mục tiêu và timeline.' },
+                    { type: 'paragraph', text: 'Giai đoạn 1: Pre-launch buzz (Tạo tiếng vang trước ra mắt)' },
+                ], 
+                thumbnail: null, 
+                status: "SCHEDULED", 
+                publishedAt: "2026-01-15T09:30:00", 
+                authorId: 2,
+                authorName: "Eli Reviewer",
+                views: 50,
+                commentsCount: 2,
+                tags: ["Voucher"] // Cập nhật: Chỉ còn 1 tag
+            },
+        ];
+
+        // Dữ liệu MOCK cho Media Library
+        const mockMedia = [
+            { id: 101, url: 'https://i.postimg.cc/L8gYp4t2/media-1.jpg', name: 'hamburger-cheese.jpg' },
+            { id: 102, url: 'https://i.postimg.cc/Gpd2Nf0C/media-2.jpg', name: 'salad-fresh.jpg' },
+            { id: 103, url: 'https://i.postimg.cc/1X9S34QZ/media-3.jpg', name: 'steak-plate.jpg' },
+            { id: 104, url: 'https://i.postimg.cc/k47g213n/phovn.jpg', name: 'pho-vietnam.jpg' },
+            { id: 105, url: 'https://i.postimg.cc/W3sL831w/media-5.jpg', name: 'coffee-cup.jpg' },
+            { id: 106, url: 'https://i.postimg.cc/W12p6B33/media-6.jpg', name: 'pasta-dish.jpg' },
+        ];
+
+
+        // Lấy tham chiếu đến các phần tử DOM
+        const postsTableBody = document.getElementById('posts-table-body');
+        const postModal = document.getElementById('post-modal');
+        const mediaModal = document.getElementById('media-modal');
+        const postForm = document.getElementById('post-form');
+        const modalTitle = document.getElementById('modal-title');
+        const addPostBtn = document.getElementById('add-post-btn');
+        const closeModalBtn = document.getElementById('close-modal-btn');
+        const closeMediaModalBtn = document.getElementById('close-media-modal-btn');
+        const browseMediaBtn = document.getElementById('browse-media-btn');
+        const searchInput = document.getElementById('search-input');
+        const statusFilter = document.getElementById('status-filter');
+        const tagFilter = document.getElementById('tag-filter');
+        const contentBlocksContainer = document.getElementById('content-blocks-container');
+        const tagRadioButtonsContainer = document.getElementById('tag-checkboxes'); // Đổi tên biến cho rõ ràng hơn
+        
+        let targetElementId = ''; // Biến để lưu trữ ID của input cần điền URL ảnh (thumbnail hoặc content image block)
+
+
+        /**
+         * Chuyển đổi trạng thái (status) thành tag HTML
+         * @param {string} status 
+         * @returns {string} HTML tag
+         */
+        function getStatusTag(status) {
+            let text = status;
+            if (status === 'DRAFT') text = 'Bản nháp';
+            if (status === 'PUBLISHED') text = 'Đã XB';
+            if (status === 'SCHEDULED') text = 'Lên lịch';
+
+            return `<span class="status-tag status-${status}">${text}</span>`;
+        }
+        
+        /**
+         * Chuyển đổi mảng tags thành HTML
+         * @param {Array<string>} tags 
+         * @returns {string} HTML tags
+         */
+        function getTagsHtml(tags) {
+            // Cập nhật: Chỉ hiển thị tag đầu tiên do đã chuyển sang đơn chọn
+            if (!tags || tags.length === 0) return '<span class="text-xs text-gray-400">Không có tag</span>';
+            // return tags.map(tag => `<span class="post-tag">${tag}</span>`).join('');
+            return `<span class="post-tag">${tags[0]}</span>`;
+        }
+
+        /**
+         * Hàm Render danh sách bài viết
+         * @param {Array} postsToRender 
+         */
+        function renderPosts(postsToRender = mockPosts) {
+            postsTableBody.innerHTML = '';
+            
+            if (postsToRender.length === 0) {
+                document.getElementById('no-data-message').classList.remove('hidden');
+                return;
+            }
+
+            document.getElementById('no-data-message').classList.add('hidden');
+            
+            postsToRender.forEach(post => {
+                const publishedDate = post.publishedAt 
+                    ? new Date(post.publishedAt).toLocaleString('vi-VN') 
+                    : 'N/A';
+                
+                const row = `
+                    <tr id="post-${post.id}" class="hover:bg-gray-50 transition-colors">
+                        <td class="px-6 py-4">
+                            <div class="text-sm font-semibold text-gray-900 line-clamp-1">${post.title}</div>
+                            <div class="text-xs text-gray-500">${post.slug}</div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                            ${getTagsHtml(post.tags)}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            ${getStatusTag(post.status)}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                            <span class="font-bold text-primary">${post.views.toLocaleString()}</span> views<br>
+                            ${post.commentsCount} comments
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                            ${publishedDate}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
+                            <button onclick="handleEditPost(${post.id})" class="action-btn edit-btn" title="Sửa bài">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button onclick="handlePublishToggle(${post.id}, '${post.status}')" class="action-btn ${post.status === 'PUBLISHED' ? 'text-gray-500 hover:bg-gray-200' : 'text-primary hover:bg-accent'}" title="${post.status === 'PUBLISHED' ? 'Unpublish' : 'Publish/Schedule'}">
+                                <i class="fas ${post.status === 'PUBLISHED' ? 'fa-eye-slash' : 'fa-paper-plane'}"></i>
+                            </button>
+                            <button onclick="handleDeletePost(${post.id})" class="action-btn delete-btn" title="Xóa bài">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+                postsTableBody.insertAdjacentHTML('beforeend', row);
+            });
+        }
+
+        /**
+         * Hàm Render Modal Media Library
+         */
+        function renderMediaModal() {
+            const gallery = document.getElementById('media-gallery');
+            gallery.innerHTML = '';
+            
+            mockMedia.forEach(media => {
+                const item = document.createElement('div');
+                item.className = 'cursor-pointer hover:shadow-lg rounded-lg overflow-hidden transition-shadow border-2 border-transparent hover:border-primary media-item';
+                item.innerHTML = `
+                    <img src="${media.url}" alt="${media.name}" class="w-full h-24 object-cover">
+                `;
+                item.onclick = () => selectMedia(media.url);
+                gallery.appendChild(item);
+            });
+        }
+
+        /**
+         * Xử lý chọn ảnh từ Media Library
+         * @param {string} url URL của ảnh được chọn
+         */
+        function selectMedia(url) {
+            if (targetElementId) {
+                document.getElementById(targetElementId).value = url;
+                // Cập nhật preview cho content block image nếu có
+                const blockElement = document.getElementById(targetElementId).closest('.content-block');
+                if (blockElement) {
+                    const index = blockElement.getAttribute('data-index');
+                    updateImagePreview(targetElementId, `block-${blockElement.id.split('-').slice(1,2).join('-')}-${index}-preview`);
+                }
+            }
+            closeMediaModal();
+        }
+
+        /**
+         * Hàm mở Modal Media Library
+         * @param {string} targetId ID của input sẽ nhận URL ảnh
+         */
+        function openMediaModal(targetId) {
+            targetElementId = targetId;
+            renderMediaModal();
+            mediaModal.classList.remove('hidden');
+        }
+
+        /**
+         * Hàm đóng Modal Media Library
+         */
+        function closeMediaModal() {
+            mediaModal.classList.add('hidden');
+        }
+
+
+        // *****************************************************************
+        // LOGIC TRÌNH SOẠN THẢO NỘI DUNG ĐƠN GIẢN
+        // *****************************************************************
+
+        /**
+         * Render một khối nội dung (Block)
+         * @param {Object} block - Đối tượng block { type: 'paragraph'/'heading'/'image', text: string (cho P/H) | url: string, caption: string (cho IMG) }
+         * @param {number} index - Index của block trong mảng content
+         */
+        function renderContentBlock(block, index) {
+            // Dùng Date.now() để tạo ID duy nhất cho Block, kết hợp index để dễ dàng truy cập khi lấy data
+            const uniqueBlockIdPart = Date.now();
+            const blockId = `block-${uniqueBlockIdPart}-${index}`;
+            let contentHtml = '';
+            let inputId = '';
+            let inputExtra = '';
+
+            switch (block.type) {
+                case 'paragraph':
+                    inputId = `content-block-text-${uniqueBlockIdPart}-${index}`;
+                    contentHtml = `
+                        <textarea id="${inputId}" rows="2" placeholder="Nhập nội dung đoạn văn..." class="text-base w-full p-2" oninput="autoExpand(this)" required>${block.text || ''}</textarea>
+                    `;
+                    break;
+                case 'heading':
+                    inputId = `content-block-text-${uniqueBlockIdPart}-${index}`;
+                    contentHtml = `
+                        <input type="text" id="${inputId}" placeholder="Nhập tiêu đề phụ (H3)" class="text-xl font-bold w-full p-2" value="${block.text || ''}" required>
+                    `;
+                    break;
+                case 'image':
+                    inputId = `content-block-url-${uniqueBlockIdPart}-${index}`;
+                    inputExtra = `content-block-caption-${uniqueBlockIdPart}-${index}`;
+                    contentHtml = `
+                        <div class="flex space-x-3">
+                            <input type="url" id="${inputId}" placeholder="Dán Link URL ảnh" class="block w-full p-2 border border-gray-300 rounded-md shadow-sm" value="${block.url || ''}" oninput="updateImagePreview('${inputId}', '${blockId}-preview')">
+                            <button type="button" onclick="openMediaModal('${inputId}')" class="flex-shrink-0 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-1 px-3 rounded-md transition-colors text-xs">
+                                <i class="fas fa-images"></i> Chọn
+                            </button>
+                        </div>
+                        <input type="text" id="${inputExtra}" placeholder="Chú thích ảnh (Caption - tùy chọn)" class="block w-full p-2 border border-gray-300 rounded-md shadow-sm mt-2 text-sm" value="${block.caption || ''}">
+                        <div class="text-center mt-3">
+                            <img id="${blockId}-preview" src="${block.url || ''}" alt="Image Preview" class="content-image-preview ${!block.url ? 'hidden' : ''}">
+                        </div>
+                    `;
+                    break;
+            }
+
+            const blockElement = document.createElement('div');
+            blockElement.id = blockId;
+            blockElement.className = 'content-block';
+            blockElement.setAttribute('data-index', uniqueBlockIdPart); // Dùng phần unique ID cho data-index để dễ dàng truy vấn
+            blockElement.setAttribute('data-type', block.type);
+            blockElement.innerHTML = `
+                ${contentHtml}
+                <div class="block-controls space-x-1">
+                    <button type="button" onclick="moveContentBlockUp('${blockId}')" title="Di chuyển lên"><i class="fas fa-arrow-up"></i></button>
+                    <button type="button" onclick="moveContentBlockDown('${blockId}')" title="Di chuyển xuống"><i class="fas fa-arrow-down"></i></button>
+                    <button type="button" onclick="removeContentBlock('${blockId}')" title="Xóa khối"><i class="fas fa-times text-red-500"></i></button>
+                </div>
+            `;
+            
+            contentBlocksContainer.appendChild(blockElement);
+            
+            // Auto expand textarea on render
+            if (block.type === 'paragraph' && block.text) {
+                const textarea = document.getElementById(inputId);
+                if (textarea) autoExpand(textarea);
+            }
+            
+            return blockElement;
+        }
+        
+        // Cập nhật preview ảnh
+        function updateImagePreview(inputId, previewId) {
+            const url = document.getElementById(inputId).value;
+            const preview = document.getElementById(previewId);
+            if (url) {
+                preview.src = url;
+                preview.classList.remove('hidden');
+            } else {
+                preview.src = '';
+                preview.classList.add('hidden');
+            }
+        }
+        
+        // Tự động mở rộng textarea
+        function autoExpand(field) {
+            field.style.height = 'inherit';
+            const computed = window.getComputedStyle(field);
+            const height = parseInt(computed.getPropertyValue('border-top-width'), 10)
+                         + parseInt(computed.getPropertyValue('padding-top'), 10)
+                         + field.scrollHeight
+                         + parseInt(computed.getPropertyValue('padding-bottom'), 10)
+                         + parseInt(computed.getPropertyValue('border-bottom-width'), 10);
+            field.style.height = height + 'px';
+        }
+
+        /**
+         * Thêm một khối nội dung mới vào cuối
+         * @param {string} type - 'paragraph' | 'heading' | 'image'
+         */
+        function addContentBlock(type) {
+            const index = contentBlocksContainer.children.length;
+            const newBlock = { type: type, text: '', url: '', caption: '' };
+            renderContentBlock(newBlock, index);
+        }
+
+        /**
+         * Xóa một khối nội dung
+         * @param {string} blockId 
+         */
+        function removeContentBlock(blockId) {
+            const blockElement = document.getElementById(blockId);
+            if (blockElement) {
+                blockElement.remove();
+                // Sắp xếp lại index sau khi xóa để đảm bảo logic getContentDataFromEditor hoạt động đúng
+                // Tuy nhiên, việc lấy ID từ contentBlock hiện tại đang dựa vào `uniqueBlockIdPart` không phải index mảng
+                // Để đơn giản, ta chỉ cần đảm bảo hàm getContentDataFromEditor dùng DOM traversal
+                // Cập nhật: Hàm getContentDataFromEditor đã chuyển sang dùng DOM traversal.
+            }
+        }
+        
+        /**
+         * Di chuyển khối nội dung lên/xuống
+         * @param {string} blockId 
+         * @param {boolean} up - True để di chuyển lên, False để di chuyển xuống
+         */
+        function moveContentBlock(blockId, up) {
+            const blockElement = document.getElementById(blockId);
+            if (!blockElement) return;
+
+            if (up) {
+                const prevSibling = blockElement.previousElementSibling;
+                if (prevSibling) {
+                    contentBlocksContainer.insertBefore(blockElement, prevSibling);
+                }
+            } else {
+                const nextSibling = blockElement.nextElementSibling;
+                if (nextSibling) {
+                    contentBlocksContainer.insertBefore(nextSibling, blockElement);
+                }
+            }
+        }
+        
+        function moveContentBlockUp(blockId) {
+            moveContentBlock(blockId, true);
+        }
+
+        function moveContentBlockDown(blockId) {
+            moveContentBlock(blockId, false);
+        }
+
+
+        // *****************************************************************
+        // HÀM LẤY DỮ LIỆU TỪ TRÌNH SOẠN THẢO VÀO MẢNG OBJECTS
+        // *****************************************************************
+        function getContentDataFromEditor() {
+            const contentBlocks = [];
+            const blockElements = contentBlocksContainer.children;
+
+            for (let i = 0; i < blockElements.length; i++) {
+                const blockElement = blockElements[i];
+                const type = blockElement.getAttribute('data-type');
+                let blockData = { type };
+
+                // Dùng querySelector thay vì dựa vào index mảng để truy cập input/textarea
+                // Điều này giúp việc xóa/di chuyển block không làm hỏng logic
+                switch (type) {
+                    case 'paragraph':
+                    case 'heading':
+                        const textInput = blockElement.querySelector('textarea, input[type="text"]');
+                        blockData.text = textInput ? textInput.value.trim() : '';
+                        if (blockData.text) contentBlocks.push(blockData);
+                        break;
+                    case 'image':
+                        const urlInput = blockElement.querySelector('input[type="url"]');
+                        const captionInput = blockElement.querySelector('input[placeholder*="Chú thích"]');
+                        blockData.url = urlInput ? urlInput.value.trim() : '';
+                        blockData.caption = captionInput ? captionInput.value.trim() : '';
+                        if (blockData.url) contentBlocks.push(blockData);
+                        break;
+                }
+            }
+            return contentBlocks;
+        }
+
+
+        // *****************************************************************
+        // KHỞI TẠO VÀ ĐÓNG MODAL
+        // *****************************************************************
+
+        /**
+         * Hàm mở Modal ở chế độ Tạo mới
+         */
+        function openCreateModal() {
+            postForm.reset();
+            document.getElementById('post-id').value = '';
+            modalTitle.innerText = 'Tạo Bài Viết Mới';
+            contentBlocksContainer.innerHTML = ''; // Xóa nội dung editor cũ
+            addContentBlock('paragraph'); // Thêm 1 block paragraph mặc định
+            renderTagRadioButtons([]); // Reset tags
+            postModal.classList.remove('hidden');
+        }
+
+        /**
+         * Hàm đóng Modal
+         */
+        function closeModal() {
+            postModal.classList.add('hidden');
+            // Đảm bảo đóng Media Modal nếu nó đang mở
+            closeMediaModal(); 
+        }
+
+        // *****************************************************************
+        // LOGIC LỌC/TÌM KIẾM VÀ CÁC HÀNH ĐỘNG CỦA BẢNG
+        // *****************************************************************
+
+        /**
+         * Hàm xử lý khi submit form (Tạo mới hoặc Cập nhật)
+         * @param {Event} e 
+         */
+        function handleFormSubmit(e) {
+            e.preventDefault();
+
+            const postId = document.getElementById('post-id').value;
+            const title = document.getElementById('title').value;
+            const description = document.getElementById('description').value;
+            const thumbnail = document.getElementById('thumbnail').value || null;
+            const publishedAt = document.getElementById('published-at').value || null;
+            
+            const content = getContentDataFromEditor(); // Lấy dữ liệu nội dung từ editor
+            
+            // Cập nhật: Lấy Tags đã chọn (Radio Button)
+            const selectedTagElement = document.querySelector('#tag-checkboxes input[name="tags"]:checked');
+            // Nếu không có tag nào được chọn, form sẽ bị chặn bởi required, nhưng ta vẫn kiểm tra 
+            const selectedTags = selectedTagElement ? [selectedTagElement.value] : []; 
+
+            // Kiểm tra nội dung (Tối thiểu 1 block)
+            if (content.length === 0) {
+                alert('Nội dung bài viết không được để trống. Vui lòng thêm ít nhất một khối nội dung.');
+                return;
+            }
+
+            const newPostData = {
+                title,
+                description,
+                content,
+                thumbnail,
+                publishedAt,
+                tags: selectedTags, // Đã cập nhật
+                slug: title.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, ''), // Tạo slug đơn giản
+                // Giả lập các trường còn thiếu
+                authorId: 1, 
+                authorName: "Boss Admin",
+                views: postId ? mockPosts.find(p => p.id == postId).views : 0,
+                commentsCount: postId ? mockPosts.find(p => p.id == postId).commentsCount : 0,
+                // Trạng thái sẽ được cập nhật lại trong logic dưới đây
+            };
+            
+            // Xác định Status mới (Publish/Schedule/Draft)
+            newPostData.status = determinePostStatus(newPostData.publishedAt, postId ? mockPosts.find(p => p.id == postId).status : null);
+
+
+            if (postId) {
+                // Cập nhật (Edit)
+                const index = mockPosts.findIndex(p => p.id == postId);
+                if (index !== -1) {
+                    mockPosts[index] = { ...mockPosts[index], ...newPostData };
+                    // Trong thực tế, bạn sẽ gọi API PUT/PATCH ở đây
+                    console.log("Cập nhật bài viết:", mockPosts[index]);
+                    alert(`Đã cập nhật bài viết ID: ${postId}`);
+                }
+            } else {
+                // Tạo mới (Create)
+                const newId = Math.max(...mockPosts.map(p => p.id)) + 1;
+                const newPost = { id: newId, ...newPostData };
+                
+                // Bài mới tạo:
+                // Nếu có publishedAt trong tương lai: SCHEDULED. 
+                // Nếu không có: DRAFT (Mặc định: đã xử lý ở determinePostStatus)
+                
+                mockPosts.push(newPost);
+                // Trong thực tế, bạn sẽ gọi API POST ở đây
+                console.log("Tạo bài viết mới:", newPost);
+                alert(`Đã tạo bài viết ID: ${newId}`);
+            }
+
+            closeModal();
+            applyFiltersAndRender();
+        }
+        
+        /**
+         * Xác định trạng thái của bài viết dựa trên publishedAt
+         * @param {string | null} publishedAt 
+         * @param {string | null} currentStatus
+         * @returns {string} DRAFT | SCHEDULED | PUBLISHED
+         */
+        function determinePostStatus(publishedAt, currentStatus) {
+            if (currentStatus === 'PUBLISHED') {
+                // Giữ nguyên trạng thái PUBLISHED khi sửa, trừ khi gỡ lịch/bỏ publishedAt
+                if (!publishedAt) return 'DRAFT';
+                return 'PUBLISHED'; // Nếu đã published thì vẫn là published
+            }
+            
+            if (publishedAt) {
+                const publishDate = new Date(publishedAt).getTime();
+                if (publishDate > Date.now()) {
+                    return 'SCHEDULED';
+                } else {
+                    return 'PUBLISHED'; // Đặt lịch trong quá khứ hoặc hiện tại -> PUBLISHED
+                }
+            }
+            return 'DRAFT';
+        }
+
+        /**
+         * Hàm xử lý khi bấm nút Edit
+         * @param {number} id 
+         */
+        function handleEditPost(id) {
+            const post = mockPosts.find(p => p.id === id);
+            if (!post) return;
+
+            modalTitle.innerText = `Sửa Bài Viết ID: ${id}`;
+            
+            // Gán dữ liệu vào form
+            document.getElementById('post-id').value = post.id;
+            document.getElementById('title').value = post.title;
+            document.getElementById('description').value = post.description;
+            document.getElementById('thumbnail').value = post.thumbnail || '';
+            
+            // Render Tags (Lấy tag đầu tiên vì đã chuyển sang đơn chọn)
+            renderTagRadioButtons(post.tags.length > 0 ? [post.tags[0]] : []);
+
+            // Xử lý PublishedAt
+            if (post.publishedAt) {
+                const date = new Date(post.publishedAt);
+                const localISOString = new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toISOString().slice(0, 16);
+                document.getElementById('published-at').value = localISOString;
+            } else {
+                document.getElementById('published-at').value = '';
+            }
+
+            // Render Content Editor
+            contentBlocksContainer.innerHTML = '';
+            post.content.forEach((block, index) => renderContentBlock(block, index));
+            if (post.content.length === 0) {
+                addContentBlock('paragraph'); // Đảm bảo luôn có 1 block để bắt đầu
+            }
+
+            postModal.classList.remove('hidden');
+        }
+
+        /**
+         * Hàm render các Radio Buttons Tags
+         * @param {Array<string>} selectedTags - Các tags đã được chọn (chỉ quan tâm đến phần tử đầu tiên)
+         */
+        function renderTagRadioButtons(selectedTags) {
+            tagRadioButtonsContainer.innerHTML = '';
+            const selectedTag = selectedTags && selectedTags.length > 0 ? selectedTags[0] : null;
+
+            POST_TAGS.forEach(tag => {
+                const isChecked = tag === selectedTag;
+                const radio = document.createElement('div');
+                radio.className = 'flex items-center';
+                // Cập nhật: Dùng type="radio" và thêm required vào tag đầu tiên để đảm bảo tính hợp lệ của form.
+                // Thêm required vào tất cả radio button cùng tên sẽ làm form không thể submit trừ khi 1 cái được chọn.
+                const requiredAttr = 'required'; // Không cần thêm vào từng cái, chỉ cần đảm bảo 1 cái được chọn
+
+                radio.innerHTML = `
+                    <input type="radio" id="tag-${tag}" name="tags" value="${tag}" ${isChecked ? 'checked' : ''} class="w-4 h-4 text-primary border-gray-300 rounded-full focus:ring-primary/50" ${requiredAttr}>
+                    <label for="tag-${tag}" class="ml-2 text-sm font-medium text-gray-700">${tag}</label>
+                `;
+                tagRadioButtonsContainer.appendChild(radio);
+            });
+        }
+
+
+        /**
+         * Hàm xử lý Publish / Unpublish
+         * @param {number} id 
+         * @param {string} currentStatus 
+         */
+        function handlePublishToggle(id, currentStatus) {
+            const post = mockPosts.find(p => p.id === id);
+            if (!post) return;
+
+            if (currentStatus === 'PUBLISHED') {
+                // Unpublish -> Draft
+                post.status = 'DRAFT';
+                post.publishedAt = null;
+                alert(`Đã Unpublish bài viết: "${post.title}"`);
+                // Thực tế: Gọi API PATCH để cập nhật status và publishedAt=null
+            } else {
+                // Draft/Scheduled -> PUBLISH NGAY (hoặc Schedule)
+                if (post.publishedAt) {
+                    const publishDate = new Date(post.publishedAt);
+                    if (publishDate.getTime() > Date.now()) {
+                        // Có lịch hẹn trong tương lai -> Chỉ đổi status thành SCHEDULED
+                        post.status = 'SCHEDULED';
+                        alert(`Đã lên lịch xuất bản bài viết: "${post.title}" vào ${publishDate.toLocaleString()}`);
+                        // Thực tế: Gọi API PATCH để cập nhật status (SCHEDULED)
+                    } else {
+                        // Đặt lịch trong quá khứ/hiện tại -> Publish ngay
+                        post.status = 'PUBLISHED';
+                        post.publishedAt = new Date().toISOString();
+                        alert(`🎉 Bài viết "${post.title}" đã được PUBLISH!`);
+                        mockDashboardUpdate(post);
+                    }
+                } else {
+                    // Publish ngay lập tức (Không có lịch hẹn)
+                    post.status = 'PUBLISHED';
+                    post.publishedAt = new Date().toISOString();
+                    alert(`🎉 Bài viết "${post.title}" đã được PUBLISH!`);
+                    mockDashboardUpdate(post);
+                }
+            }
+            
+            applyFiltersAndRender();
+        }
+
+        /**
+         * Hàm xử lý Delete
+         * @param {number} id 
+         */
+        function handleDeletePost(id) {
+            if (confirm(`Bạn có chắc chắn muốn xóa bài viết ID ${id}? (Hành động này không thể hoàn tác)`)) {
+                // Thực tế: Gọi API DELETE
+                mockPosts = mockPosts.filter(p => p.id !== id);
+                alert(`Đã xóa bài viết ID: ${id}`);
+                applyFiltersAndRender();
+            }
+        }
+
+        /**
+         * Áp dụng Lọc và Tìm kiếm
+         */
+        function applyFiltersAndRender() {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            const filterStatus = statusFilter.value;
+            const filterTag = tagFilter.value; // Lấy giá trị filter Tag
+
+            let filteredPosts = mockPosts;
+
+            // 1. Lọc theo trạng thái
+            if (filterStatus !== 'all') {
+                filteredPosts = filteredPosts.filter(post => post.status === filterStatus);
+            }
+
+            // 2. Lọc theo Tag
+            if (filterTag !== 'all') {
+                // Cập nhật: Chỉ cần kiểm tra tag đầu tiên do đã chuyển sang đơn chọn
+                filteredPosts = filteredPosts.filter(post => post.tags && post.tags.length > 0 && post.tags[0] === filterTag);
+            }
+
+            // 3. Tìm kiếm theo Tiêu đề/Slug
+            if (searchTerm) {
+                filteredPosts = filteredPosts.filter(post => 
+                    post.title.toLowerCase().includes(searchTerm) || 
+                    post.slug.toLowerCase().includes(searchTerm)
+                );
+            }
+            
+            // Sắp xếp: Mới nhất lên đầu (theo ID hoặc publishedAt)
+            filteredPosts.sort((a, b) => b.id - a.id); 
+
+            renderPosts(filteredPosts);
+        }
+
+        // === LOGIC TÍCH HỢP DASHBOARD (MOCK) ===
+        function mockDashboardUpdate(newPost) {
+            const storedPosts = localStorage.getItem('mockRecentPosts');
+            let posts = storedPosts ? JSON.parse(storedPosts) : [];
+            
+            const storedStats = localStorage.getItem('mockStats');
+            let stats = storedStats ? JSON.parse(storedStats) : { totalPosts: 0, totalViews: 0, totalComments: 0, totalReactions: 0 };
+            
+            // 1. Cập nhật bài viết mới vào danh sách
+            if (!posts.find(p => p.id === newPost.id)) {
+                posts.push({
+                    id: newPost.id,
+                    title: newPost.title,
+                    views: newPost.views,
+                    publishedDate: newPost.publishedAt.split('T')[0] 
+                });
+                
+                // 2. Cập nhật số liệu thống kê nếu là bài mới
+                stats.totalPosts += 1;
+            }
+            
+            localStorage.setItem('mockRecentPosts', JSON.stringify(posts));
+            localStorage.setItem('mockStats', JSON.stringify(stats));
+        }
+        // === KẾT THÚC LOGIC TÍCH HỢP DASHBOARD ===
+
+        // === LOGIC XỬ LÝ HEADER VÀ AVATAR DROP DOWN (Giữ nguyên) ===
+        function initializeHeaderInteractions() {
+            const avatar = document.getElementById('user-avatar');
+            const dropdown = document.getElementById('logout-dropdown');
+            
+            if (avatar && dropdown) {
+                avatar.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    dropdown.classList.toggle('show');
+                });
+
+                document.addEventListener('click', (event) => {
+                    if (dropdown.classList.contains('show') && !avatar.contains(event.target) && !dropdown.contains(event.target)) {
+                        dropdown.classList.remove('show');
+                    }
+                });
+            }
+        }
+
+
+        // Khởi tạo tất cả sự kiện khi DOM đã tải xong
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Khởi tạo danh sách ban đầu
+            applyFiltersAndRender();
+            
+            // 2. Gắn sự kiện cho nút/form
+            addPostBtn.addEventListener('click', openCreateModal);
+            closeModalBtn.addEventListener('click', closeModal);
+            postForm.addEventListener('submit', handleFormSubmit);
+            
+            // Gắn sự kiện cho nút mở Media Modal
+            browseMediaBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                openMediaModal('thumbnail');
+            });
+            
+            // Gắn sự kiện cho nút đóng Media Modal
+            closeMediaModalBtn.addEventListener('click', closeMediaModal);
+            
+            // 3. Gắn sự kiện cho bộ lọc/tìm kiếm
+            searchInput.addEventListener('input', applyFiltersAndRender);
+            statusFilter.addEventListener('change', applyFiltersAndRender);
+            tagFilter.addEventListener('change', applyFiltersAndRender); // Gắn sự kiện cho Tag Filter
+
+            // 4. Khởi tạo Header Logic
+            initializeHeaderInteractions();
+            
+            // Xuất ra global scope để có thể dùng trong HTML onclick=""
+            window.handleEditPost = handleEditPost;
+            window.handlePublishToggle = handlePublishToggle;
+            window.handleDeletePost = handleDeletePost;
+            window.openMediaModal = openMediaModal; // Cho phép dùng trong content editor
+            window.addContentBlock = addContentBlock;
+            window.removeContentBlock = removeContentBlock;
+            window.moveContentBlockUp = moveContentBlockUp;
+            window.moveContentBlockDown = moveContentBlockDown;
+            window.updateImagePreview = updateImagePreview;
+            window.autoExpand = autoExpand;
+        });
+
+    </script>
+    </body>
+</html>

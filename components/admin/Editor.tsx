@@ -6,7 +6,7 @@ import dynamic from 'next/dynamic';
 const ReactQuill = dynamic(() => import('react-quill'), { 
   ssr: false,
   loading: () => <p>Loading Editor...</p> // Hiển thị khi đang tải
-});
+}) as any;
 
 interface EditorProps {
   value: string;
