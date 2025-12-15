@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comments | Elis Favorite CMS</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#BA3801', 
+                        'accent': '#FFEDA8',
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .status-HIDDEN { display: inline-flex; padding: 4px 8px; border-radius: 9999px; font-size: 0.75rem; font-weight: 700; background-color: #fca5a5; color: #7f1d1d; text-transform: uppercase; }
+        .status-VISIBLE { display: inline-flex; padding: 4px 8px; border-radius: 9999px; font-size: 0.75rem; font-weight: 700; background-color: #d1fae5; color: #065f46; text-transform: uppercase; }
+        .action-btn { padding: 6px; border-radius: 6px; transition: background-color 0.2s; margin-right: 4px; }
+        .action-btn:last-child { margin-right: 0; }
+        .action-btn.toggle-hide-btn { color: #f59e0b; }
+        .action-btn.toggle-hide-btn:hover { background-color: #fef3c7; }
+        .action-btn.delete-btn { color: #ef4444; }
+        .action-btn.delete-btn:hover { background-color: #fee2e2; }
+        
+        /* HEADER CSS */
+        header { position: fixed; top: 0; left: 0; width: 100%; height: 72px; display: flex; align-items: center; justify-content: space-between; padding: 0 30px; box-sizing: border-box; transition: background-color 0.4s ease, box-shadow 0.4s ease; background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.08); z-index: 1000; }
+        .logo { width: 200px; height: 60px; object-fit: contain; transition: filter 0.4s ease; content: url('https://i.postimg.cc/7b4MF0XW/logo-colored.png'); }
+        nav { display: flex; align-items: center; gap: 66px; }
+        nav a { font-size: 22px; font-family: 'Plus Jakarta Sans', sans-serif; color: #ba3801; text-transform: uppercase; font-weight: 300; text-decoration: none; height: 40px; display: flex; align-items: center; transition: color 0.4s ease; }
+        nav a.active-nav { font-weight: 700; border-bottom: 3px solid #BA3801; }
+        .user-menu-container { position: relative; height: 40px; display: flex; align-items: center; }
+        .user-avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; cursor: pointer; border: 2px solid #ba3801; transition: border-color 0.4s ease; }
+        .logout-dropdown { position: absolute; top: 100%; right: 0; margin-top: 10px; background-color: white; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); border-radius: 8px; min-width: 150px; padding: 5px 0; z-index: 1001; opacity: 0; visibility: hidden; transform: translateY(-10px); transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s; }
+        .logout-dropdown.show { opacity: 1; visibility: visible; transform: translateY(0); }
+        .logout-link { font-size: 14px; font-weight: 600; color: #ba3801 !important; padding: 8px 16px; width: 100%; display: flex; align-items: center; gap: 8px; text-transform: uppercase; }
+        .logout-link:hover { background-color: #ffeda8; }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen sticky-header">
+
+    <header id="header">
+        <a href="dashboard.html">
+             <img id="logo" class="logo" src="https://i.postimg.cc/7b4MF0XW/logo-colored.png" alt="Elis Logo" />
+        </a>
+        <nav>
+            <a href="posts.html">Posts</a> 
+            <a href="comments.html" class="active-nav">Comments</a>
+            <a href="media.html">Media</a>
+            
+            <div id="user-menu" class="user-menu-container">
+                <img id="user-avatar" class="user-avatar" 
+                    src="https://i.postimgimg.cc/VvFj0vXz/admin-avatar.jpg" 
+                    alt="User Avatar" 
+                    title="Click để Log out" />
+                
+                <div id="logout-dropdown" class="logout-dropdown">
+                    <a href="login.html" class="logout-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                             <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                        </svg>
+                        LOG OUT
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="font-sans pt-24 pb-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="flex justify-between items-center mb-6">
+                <div>
+                    <p class="text-sm opacity-80 text-gray-600">Quản lý tương tác</p>
+                    <h1 class="text-4xl font-extrabold text-primary">All Comments</h1>
+                </div>
+            </div>
+
+            <div class="flex space-x-4 mb-6">
+                <input type="text" id="search-input" placeholder="Tìm kiếm theo Nội dung, Tác giả hoặc Bài viết..."
+                        class="flex-grow p-3 border border-gray-300 rounded-lg focus:ring-primary/50 focus:border-primary">
+                
+                <select id="post-filter" class="p-3 border border-gray-300 rounded-lg bg-white focus:ring-primary/50 focus:border-primary">
+                    <option value="all">Tất cả Bài viết</option>
+                    </select>
+                
+                <select id="status-filter" class="p-3 border border-gray-300 rounded-lg bg-white focus:ring-primary/50 focus:border-primary">
+                    <option value="all">Tất cả Trạng thái</option>
+                    <option value="VISIBLE">Đang hiển thị</option>
+                    <option value="HIDDEN">Đã ẩn</option>
+                </select>
+            </div>
+            
+            <div class="bg-white shadow-xl rounded-xl overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider w-1/3">
+                                Nội dung / Tác giả
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider w-1/4">
+                                Bài viết
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
+                                Ngày
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
+                                Trạng thái
+                            </th>
+                            <th class="px-6 py-3 text-center text-xs font-bold text-gray-500 uppercase tracking-wider">
+                                Actions
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="comments-table-body" class="bg-white divide-y divide-gray-200">
+                        </tbody>
+                </table>
+                
+                <div id="no-data-message" class="hidden text-center py-10 text-gray-500 font-semibold">
+                    Không tìm thấy bình luận nào.
+                </div>
+            </div>
+        </div>
+    </main>
+
+<script>
+    const API_URL = '/api/comments';
+    
+    // --- 1. HÀM API ---
+    const commentsApi = {
+        getAll: async (search = '', postId = 'all', status = 'all') => {
+            const params = new URLSearchParams();
+            if (search) params.append('search', search);
+            if (postId !== 'all') params.append('postId', postId);
+            if (status !== 'all') params.append('status', status);
+
+            try {
+                const res = await fetch(`${API_URL}?${params.toString()}`, { cache: 'no-store' });
+                return await res.json();
+            } catch (e) { return []; }
+        },
+        toggleHide: async (id, currentStatus) => { /* ...code cũ giữ nguyên... */ 
+             /* Bạn copy lại nội dung toggleHide cũ vào đây */
+             const res = await fetch(`${API_URL}/${id}`, { method: 'PATCH', body: JSON.stringify({ isHidden: !currentStatus }) });
+             return res.ok;
+        },
+        delete: async (id) => { /* ...code cũ giữ nguyên... */
+             /* Bạn copy lại nội dung delete cũ vào đây */
+             const res = await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+             return res.ok;
+        }
+    };
+
+    // --- 2. HÀM MỚI: TẢI DANH SÁCH BÀI VIẾT VÀO DROPDOWN ---
+    async function loadPostOptions() {
+        try {
+            const res = await fetch('/api/posts/dropdown'); // Gọi API vừa tạo ở Bước 1
+            const posts = await res.json();
+            
+            const select = document.getElementById('post-filter');
+            
+            // Giữ lại option đầu tiên là "Tất cả bài viết"
+            select.innerHTML = '<option value="all">Tất cả Bài viết</option>';
+            
+            posts.forEach(post => {
+                const option = document.createElement('option');
+                option.value = post.id; // Giá trị gửi lên server là ID (số)
+                option.textContent = post.title; // Hiển thị là Tiêu đề
+                select.appendChild(option);
+            });
+        } catch (err) {
+            console.error("Không tải được danh sách bài viết", err);
+        }
+    }
+
+    // --- 3. LOGIC GIAO DIỆN ---
+    async function fetchAndRender() {
+        const search = document.getElementById('search-input').value;
+        const post = document.getElementById('post-filter').value;
+        const status = document.getElementById('status-filter').value;
+
+        // Khi chọn bài viết cụ thể, giá trị post sẽ là ID (VD: 1, 2)
+        const comments = await commentsApi.getAll(search, post, status);
+        renderComments(comments);
+    }
+
+    function renderComments(comments) {
+        /* ...Code render cũ của bạn giữ nguyên... */
+        const tbody = document.getElementById('comments-table-body');
+        tbody.innerHTML = '';
+        if (!comments || comments.length === 0) { document.getElementById('no-data-message').classList.remove('hidden'); return; }
+        document.getElementById('no-data-message').classList.add('hidden');
+
+        comments.forEach(c => {
+            const isHidden = c.isHidden;
+            const statusBadge = isHidden ? '<span class="status-HIDDEN">Đã ẩn</span>' : '<span class="status-VISIBLE">Hiển thị</span>';
+            const iconEye = isHidden ? 'fa-eye' : 'fa-eye-slash';
+            
+            const row = `
+                <tr class="hover:bg-gray-50 transition-colors">
+                    <td class="px-6 py-4">
+                        <div class="text-sm font-semibold">${c.content}</div>
+                        <div class="text-xs text-gray-500">Bởi: ${c.author}</div>
+                    </td>
+                    <td class="px-6 py-4 text-sm">${c.postTitle}</td>
+                    <td class="px-6 py-4 text-sm">${new Date(c.createdAt).toLocaleString('vi-VN')}</td>
+                    <td class="px-6 py-4 text-sm">${statusBadge}</td>
+                    <td class="px-6 py-4 text-center">
+                        <button onclick="handleToggle(${c.id}, ${isHidden})" class="action-btn toggle-hide-btn"><i class="fas ${iconEye}"></i></button>
+                        <button onclick="handleDelete(${c.id})" class="action-btn delete-btn"><i class="fas fa-trash-alt"></i></button>
+                    </td>
+                </tr>`;
+            tbody.insertAdjacentHTML('beforeend', row);
+        });
+    }
+
+    // --- SỰ KIỆN ---
+    window.handleToggle = async (id, s) => { if(await commentsApi.toggleHide(id, s)) fetchAndRender(); };
+    window.handleDelete = async (id) => { if(confirm('Xóa?')) if(await commentsApi.delete(id)) fetchAndRender(); };
+
+    document.addEventListener('DOMContentLoaded', () => {
+        // 1. Tải danh sách bài viết trước
+        loadPostOptions();
+        
+        // 2. Tải danh sách comment
+        fetchAndRender();
+        
+        document.getElementById('search-input').addEventListener('input', fetchAndRender);
+        document.getElementById('post-filter').addEventListener('change', fetchAndRender);
+        document.getElementById('status-filter').addEventListener('change', fetchAndRender);
+    });
+</script>
+</body>
+</html>

@@ -23,7 +23,7 @@ model Post {
   title       String
   slug        String    @unique
   description String
-  content     String
+  content     String     @db.Text
   thumbnail   String?
   status      String    // Draft, Published, Scheduled
   publishedAt DateTime?

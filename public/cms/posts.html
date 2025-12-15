@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Posts | Elis Favorite CMS</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#BA3801', 
+                        'accent': '#FFEDA8',
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+
+        /* --- CSS CHO TRẠNG THÁI --- */
+        .status-tag { display: inline-flex; padding: 4px 8px; border-radius: 9999px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+        .status-DRAFT { background-color: #f3f4f6; color: #4b5563; } 
+        .status-PUBLISHED { background-color: #d1fae5; color: #059669; } 
+        .status-SCHEDULED { background-color: #FFEDA850; color: #927500; }
+
+        /* --- CSS CHO NÚT ACTION --- */
+        .action-btn { padding: 6px; border-radius: 6px; transition: background-color 0.2s; margin-right: 4px; }
+        .action-btn:last-child { margin-right: 0; }
+        .action-btn.edit-btn { color: #10b981; }
+        .action-btn.edit-btn:hover { background-color: #d1fae5; }
+        .action-btn.delete-btn { color: #ef4444; }
+        .action-btn.delete-btn:hover { background-color: #fee2e2; }
+
+        /* --- CSS CHO TAGS --- */
+        .post-tag { display: inline-block; padding: 2px 8px; margin: 2px; border-radius: 4px; font-size: 0.7rem; font-weight: 600; background-color: #BA380115; color: #BA3801; }
+
+        /* --- CSS CHO CONTENT EDITOR --- */
+        .content-block { padding: 12px; margin-bottom: 8px; border-radius: 6px; border: 1px solid #e5e7eb; background-color: white; position: relative; }
+        .content-block:hover { border-color: #BA3801; }
+        .content-block textarea, .content-block input[type="text"] { border: none; padding: 0; outline: none; resize: none; width: 100%; font-family: inherit; }
+        .content-block .block-controls { position: absolute; top: 4px; right: 4px; display: none; }
+        .content-block:hover .block-controls { display: block; }
+        .block-controls button { background: #fff; border: 1px solid #ccc; border-radius: 4px; padding: 4px 6px; font-size: 0.75rem; cursor: pointer; }
+        .block-controls button:hover { background: #f3f4f6; }
+        .content-image-preview { max-width: 100%; height: auto; max-height: 200px; object-fit: contain; border-radius: 4px; margin-top: 8px; background-color: #f9fafb; border: 1px dashed #d1d5db; }
+
+        /* --- HEADER STYLES --- */
+        header { position: fixed; top: 0; left: 0; width: 100%; height: 72px; display: flex; align-items: center; justify-content: space-between; padding: 0 30px; background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.08); z-index: 1000; }
+        .logo { width: 200px; height: 60px; object-fit: contain; content: url('https://i.postimg.cc/7b4MF0XW/logo-colored.png'); }
+        nav { display: flex; align-items: center; gap: 66px; }
+        nav a { font-size: 22px; color: #ba3801; text-transform: uppercase; font-weight: 300; text-decoration: none; height: 40px; display: flex; align-items: center; transition: color 0.4s ease; }
+        nav a.active-nav { font-weight: 700; border-bottom: 3px solid #BA3801; }
+        
+        .user-menu-container { position: relative; height: 40px; display: flex; align-items: center; }
+        .user-avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #ba3801; cursor: pointer; }
+        .logout-dropdown { position: absolute; top: 100%; right: 0; margin-top: 10px; background-color: white; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); border-radius: 8px; min-width: 150px; padding: 5px 0; z-index: 1001; opacity: 0; visibility: hidden; transform: translateY(-10px); transition: all 0.3s ease; }
+        .logout-dropdown.show { opacity: 1; visibility: visible; transform: translateY(0); }
+        .logout-link { font-size: 14px; font-weight: 600; color: #ba3801 !important; padding: 8px 16px; width: 100%; display: flex; align-items: center; gap: 8px; text-transform: uppercase; }
+        .logout-link:hover { background-color: #ffeda8; }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen sticky-header">
+
+    <header id="header">
+        <a href="dashboard.html"><img id="logo" class="logo" src="https://i.postimg.cc/7b4MF0XW/logo-colored.png" alt="Elis Logo" /></a>
+        <nav>
+            <a href="posts.html" class="active-nav">Posts</a> 
+            <a href="comments.html">Comments</a>
+            <a href="media.html">Media</a>
+            
+            <div id="user-menu" class="user-menu-container">
+                <img id="user-avatar" class="user-avatar" src="https://i.postimg.cc/VvFj0vXz/admin-avatar.jpg" alt="User Avatar" />
+                <div id="logout-dropdown" class="logout-dropdown">
+                    <a href="login.html" class="logout-link">
+                        <i class="fas fa-sign-out-alt"></i> LOG OUT
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="font-sans pt-24 pb-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="flex justify-between items-center mb-6">
+                <div>
+                    <p class="text-sm opacity-80 text-gray-600">Quản lý nội dung</p>
+                    <h1 class="text-4xl font-extrabold text-primary">All Posts</h1>
+                </div>
+                <button id="add-post-btn" class="bg-primary hover:bg-primary/90 text-white font-semibold py-3 px-6 rounded-xl shadow-md flex items-center transition-colors">
+                    <i class="fas fa-plus mr-2"></i> Tạo bài viết mới
+                </button>
+            </div>
+
+            <div class="flex space-x-4 mb-6">
+                <input type="text" id="search-input" placeholder="Tìm kiếm theo Tiêu đề..." class="flex-grow p-3 border border-gray-300 rounded-lg focus:border-primary focus:ring-primary/50">
+                <select id="status-filter" class="p-3 border border-gray-300 rounded-lg bg-white focus:border-primary focus:ring-primary/50">
+                    <option value="all">Tất cả Trạng thái</option>
+                    <option value="DRAFT">Bản nháp</option>
+                    <option value="PUBLISHED">Đã xuất bản</option>
+                    <option value="SCHEDULED">Lên lịch</option>
+                </select>
+                <select id="tag-filter" class="p-3 border border-gray-300 rounded-lg bg-white focus:border-primary focus:ring-primary/50">
+                    <option value="all">Tất cả Tags</option>
+                    <option value="Lifestyle">Lifestyle</option>
+                    <option value="Journey">Journey</option>
+                    <option value="Recipe">Recipe</option>
+                    <option value="Voucher">Voucher</option>
+                </select>
+            </div>
+            
+            <div class="bg-white shadow-xl rounded-xl overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider w-1/4">Title / Slug</th>
+                            <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Tags</th>
+                            <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Status</th>
+                            <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Views / Comments</th>
+                            <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Published Date</th>
+                            <th class="px-6 py-3 text-center text-xs font-bold text-gray-500 uppercase tracking-wider">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="posts-table-body" class="bg-white divide-y divide-gray-200"></tbody>
+                </table>
+                <div id="no-data-message" class="hidden text-center py-10 text-gray-500 font-semibold">Không tìm thấy bài viết nào.</div>
+            </div>
+        </div>
+    </main>
+
+    <div id="post-modal" class="fixed inset-0 bg-gray-900 bg-opacity-75 z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-4xl p-8 max-h-[90vh] overflow-y-auto">
+            <h2 id="modal-title" class="text-2xl font-bold mb-6 text-primary">Tạo Bài Viết Mới</h2>
+            <form id="post-form" class="space-y-4">
+                <input type="hidden" id="post-id">
+                
+                <div>
+                    <label for="title" class="block text-sm font-medium text-gray-700">Tiêu đề</label>
+                    <input type="text" id="title" required class="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:border-primary focus:ring-primary/50">
+                </div>
+                
+                <div>
+                    <label for="description" class="block text-sm font-medium text-gray-700">Mô tả ngắn</label>
+                    <textarea id="description" rows="2" required class="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:border-primary focus:ring-primary/50"></textarea>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Tags (Chọn 1)</label>
+                    <div id="tag-checkboxes" class="flex flex-wrap gap-3"></div>
+                </div>
+
+                <div>
+                    <label for="thumbnail" class="block text-sm font-medium text-gray-700">Thumbnail URL</label>
+                    <div class="flex space-x-3 mt-1">
+                        <input type="url" id="thumbnail" placeholder="Ex: https://i.postimg.cc/image.jpg" class="block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:border-primary focus:ring-primary/50"
+                            oninput="document.getElementById('thumbnail-preview').src = this.value || 'https://via.placeholder.com/600x300?text=No+Image'; document.getElementById('thumbnail-preview').classList.remove('hidden')">
+                        
+                        <button type="button" id="browse-media-btn" class="flex-shrink-0 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-md transition-colors text-sm">
+                            <i class="fas fa-images mr-1"></i> Chọn ảnh
+                        </button>
+                    </div>
+                    <div class="mt-2">
+                         <img id="thumbnail-preview" src="" class="h-32 w-auto object-cover rounded-md border hidden" onerror="this.src='https://via.placeholder.com/600x300?text=Error'">
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Nội dung (Content Editor)</label>
+                    <div id="content-editor" class="bg-gray-100 p-4 border border-gray-300 rounded-md shadow-inner space-y-3">
+                        <div id="content-blocks-container" class="space-y-3"></div>
+
+                        <div class="flex justify-center pt-2 border-t border-gray-200 gap-2">
+                            <button type="button" onclick="window.addContentBlock('paragraph')" class="text-gray-600 hover:text-primary px-3 py-1 text-sm font-medium bg-white border rounded"><i class="fas fa-paragraph mr-1"></i> Đoạn văn</button>
+                            <button type="button" onclick="window.addContentBlock('heading')" class="text-gray-600 hover:text-primary px-3 py-1 text-sm font-medium bg-white border rounded"><i class="fas fa-heading mr-1"></i> Tiêu đề phụ</button>
+                            <button type="button" onclick="window.addContentBlock('image')" class="text-gray-600 hover:text-primary px-3 py-1 text-sm font-medium bg-white border rounded"><i class="fas fa-image mr-1"></i> Hình ảnh</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <label for="published-at" class="block text-sm font-medium text-gray-700">Ngày/Giờ Xuất Bản (Lên lịch)</label>
+                    <input type="datetime-local" id="published-at" class="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:border-primary focus:ring-primary/50">
+                </div>
+
+                <div class="flex justify-end pt-4 space-x-3">
+                    <button type="button" id="close-modal-btn" class="px-4 py-2 text-gray-600 border border-gray-300 rounded-md hover:bg-gray-100 transition-colors">Cancel</button>
+                    <button type="submit" class="px-4 py-2 bg-primary text-white rounded-md font-semibold hover:bg-primary/90 transition-colors">Lưu Bài Viết</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <div id="media-modal" class="fixed inset-0 bg-gray-900 bg-opacity-75 z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-3xl p-6 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4 border-b pb-3">
+                <h2 class="text-xl font-bold text-primary">Chọn ảnh từ Thư viện</h2>
+                <button type="button" id="close-media-modal-btn" class="text-gray-500 hover:text-gray-700"><i class="fas fa-times text-xl"></i></button>
+            </div>
+            <div id="media-gallery" class="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"></div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { postsApi, POST_TAGS } from './api/api-posts.js'; 
+
+        // --- GLOBAL VARIABLES & DOM ---
+        let allPosts = []; 
+        const postsTableBody = document.getElementById('posts-table-body');
+        const postModal = document.getElementById('post-modal');
+        const mediaModal = document.getElementById('media-modal');
+        const postForm = document.getElementById('post-form');
+        const modalTitle = document.getElementById('modal-title');
+        const contentBlocksContainer = document.getElementById('content-blocks-container');
+        const tagRadioButtonsContainer = document.getElementById('tag-checkboxes');
+        let targetElementId = ''; 
+
+        // --- HELPERS HTML GENERATION ---
+        function getStatusTag(status) {
+            let text = status;
+            if (status === 'DRAFT') text = 'Bản nháp';
+            if (status === 'PUBLISHED') text = 'Đã XB';
+            if (status === 'SCHEDULED') text = 'Lên lịch';
+            return `<span class="status-tag status-${status}">${text}</span>`;
+        }
+        
+        function getTagsHtml(tags) {
+            if (!tags || tags.length === 0) return '<span class="text-xs text-gray-400">Không có tag</span>';
+            const tag = Array.isArray(tags) ? tags[0] : tags;
+            return `<span class="post-tag">${tag}</span>`;
+        }
+
+        // --- RENDER FUNCTIONS ---
+        function renderPosts(posts) {
+            postsTableBody.innerHTML = '';
+            if (!posts || posts.length === 0) {
+                document.getElementById('no-data-message').classList.remove('hidden');
+                return;
+            }
+            document.getElementById('no-data-message').classList.add('hidden');
+            
+            posts.forEach(post => {
+                const publishedDate = post.publishedAt ? new Date(post.publishedAt).toLocaleString('vi-VN') : '---';
+                const views = post.views || 0;
+                const comments = post.commentsCount || 0;
+                const thumbSrc = post.thumbnail || 'https://via.placeholder.com/150?text=No+Img';
+
+                const row = `
+                    <tr id="post-${post.id}" class="hover:bg-gray-50 transition-colors">
+                        <td class="px-6 py-4">
+                            <div class="flex items-center">
+                                <img class="h-10 w-10 rounded-lg object-cover mr-3 border bg-gray-100" 
+                                     src="${thumbSrc}" 
+                                     onerror="this.src='https://via.placeholder.com/150?text=Error'">
+                                <div>
+                                    <div class="text-sm font-semibold text-gray-900 line-clamp-1">${post.title}</div>
+                                    <div class="text-xs text-gray-500">${post.slug}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">${getTagsHtml(post.tags)}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">${getStatusTag(post.status)}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                            <span class="font-bold text-primary">${views}</span> views<br>
+                            ${comments} comments
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">${publishedDate}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
+                            <button onclick="window.handleEditPost(${post.id})" class="action-btn edit-btn" title="Sửa"><i class="fas fa-edit"></i></button>
+                            <button onclick="window.handlePublishToggle(${post.id}, '${post.status}')" class="action-btn ${post.status === 'PUBLISHED' ? 'text-green-600 hover:bg-green-100' : 'text-primary'}" title="Đổi trạng thái"><i class="fas ${post.status === 'PUBLISHED' ? 'fa-eye-slash' : 'fa-paper-plane'}"></i></button>
+                            <button onclick="window.handleDeletePost(${post.id})" class="action-btn delete-btn" title="Xóa"><i class="fas fa-trash-alt"></i></button>
+                        </td>
+                    </tr>
+                `;
+                postsTableBody.insertAdjacentHTML('beforeend', row);
+            });
+        }
+
+        // --- DATA LOADING & FILTERING ---
+        async function loadData() {
+            try {
+                postsTableBody.innerHTML = '<tr><td colspan="6" class="text-center py-4">Đang tải...</td></tr>';
+                allPosts = await postsApi.getPosts(); 
+                applyFiltersAndRender();
+            } catch (error) {
+                console.error(error);
+                alert('Lỗi tải danh sách bài viết');
+            }
+        }
+
+        function applyFiltersAndRender() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase().trim();
+            const filterStatus = document.getElementById('status-filter').value;
+            const filterTag = document.getElementById('tag-filter').value;
+
+            let filtered = allPosts;
+
+            if (filterStatus !== 'all') filtered = filtered.filter(p => p.status === filterStatus);
+            if (filterTag !== 'all') filtered = filtered.filter(p => p.tags && p.tags.includes(filterTag));
+            if (searchTerm) filtered = filtered.filter(p => p.title.toLowerCase().includes(searchTerm) || p.slug.includes(searchTerm));
+
+            renderPosts(filtered);
+        }
+
+        // --- EDITOR LOGIC (BLOCKS) - ĐÃ CẬP NHẬT NÚT CHỌN ẢNH ---
+        function renderContentBlock(block, index) {
+            const id = Date.now() + index; 
+            const blockId = `block-${id}`;
+            let html = '';
+
+            const controls = `
+                <div class="block-controls space-x-1">
+                    <button type="button" onclick="window.moveContentBlock('${blockId}', true)"><i class="fas fa-arrow-up"></i></button>
+                    <button type="button" onclick="window.moveContentBlock('${blockId}', false)"><i class="fas fa-arrow-down"></i></button>
+                    <button type="button" onclick="document.getElementById('${blockId}').remove()"><i class="fas fa-times text-red-500"></i></button>
+                </div>`;
+
+            if (block.type === 'paragraph') {
+                html = `<textarea class="block-content text-base w-full p-2" rows="3" placeholder="Đoạn văn...">${block.text || ''}</textarea>`;
+            } else if (block.type === 'heading') {
+                html = `<input type="text" class="block-content text-xl font-bold w-full p-2" placeholder="Tiêu đề phụ..." value="${block.text || ''}">`;
+            } else if (block.type === 'image') {
+                html = `
+                    <label class="block text-xs font-bold text-gray-500 mb-1">Đường dẫn ảnh:</label>
+                    <div class="flex space-x-2 mb-2">
+                        <input type="url" class="block-url w-full p-2 border border-gray-300 rounded focus:border-primary focus:ring-primary/50" placeholder="https://..." value="${block.url || ''}" onchange="this.parentElement.nextElementSibling.src = this.value || ''">
+                        <button type="button" onclick="window.openMediaModalForInput(this.previousElementSibling)" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold px-3 py-2 rounded text-sm whitespace-nowrap"><i class="fas fa-images mr-1"></i> Chọn</button>
+                    </div>
+                    <img src="${block.url || ''}" class="content-image-preview w-full h-auto max-h-64 object-contain rounded border bg-gray-50 ${!block.url ? 'hidden' : ''}" onerror="this.classList.add('hidden')">
+                    <input type="text" class="block-caption w-full p-2 mt-2 text-sm border-t border-gray-200 focus:outline-none" placeholder="Chú thích ảnh (Caption)..." value="${block.caption || ''}">
+                `;
+            }
+
+            const div = document.createElement('div');
+            div.className = 'content-block';
+            div.id = blockId;
+            div.setAttribute('data-type', block.type);
+            div.innerHTML = html + controls;
+            contentBlocksContainer.appendChild(div);
+        }
+
+        function getContentData() {
+            const blocks = [];
+            contentBlocksContainer.querySelectorAll('.content-block').forEach(el => {
+                const type = el.getAttribute('data-type');
+                if(type === 'paragraph' || type === 'heading') {
+                    const val = el.querySelector('.block-content').value;
+                    if(val) blocks.push({ type, text: val });
+                } else if (type === 'image') {
+                    const url = el.querySelector('.block-url').value;
+                    const cap = el.querySelector('.block-caption').value;
+                    if(url) blocks.push({ type, url, caption: cap });
+                }
+            });
+            return blocks;
+        }
+
+        // --- FORM HANDLING ---
+        postForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = postForm.querySelector('button[type="submit"]');
+            const originalText = btn.innerText;
+            btn.innerText = 'Đang lưu...'; btn.disabled = true;
+
+            try {
+                const id = document.getElementById('post-id').value;
+                const tagInput = document.querySelector('input[name="tags"]:checked');
+                
+                const data = {
+                    title: document.getElementById('title').value,
+                    description: document.getElementById('description').value,
+                    thumbnail: document.getElementById('thumbnail').value,
+                    publishedAt: document.getElementById('published-at').value || null,
+                    tags: tagInput ? [tagInput.value] : [],
+                    content: getContentData(), 
+                    status: id ? undefined : 'DRAFT'
+                };
+
+                if (data.publishedAt) {
+                     const pubTime = new Date(data.publishedAt).getTime();
+                     if (pubTime > Date.now()) data.status = 'SCHEDULED';
+                     else if (!id) data.status = 'PUBLISHED'; 
+                }
+
+                await postsApi.savePost(data, id || null); 
+                
+                alert('Lưu thành công!');
+                window.closeModal();
+                loadData(); 
+
+            } catch (err) {
+                alert('Lỗi: ' + err.message);
+            } finally {
+                btn.innerText = originalText; btn.disabled = false;
+            }
+        });
+
+        // --- WINDOW EXPORTS ---
+        window.addContentBlock = (type) => renderContentBlock({ type }, Date.now());
+        
+        window.moveContentBlock = (id, up) => {
+            const el = document.getElementById(id);
+            if (up && el.previousElementSibling) el.parentNode.insertBefore(el, el.previousElementSibling);
+            if (!up && el.nextElementSibling) el.parentNode.insertBefore(el.nextElementSibling, el);
+        };
+
+        window.openCreateModal = () => {
+            postForm.reset();
+            document.getElementById('post-id').value = '';
+            modalTitle.innerText = 'Tạo Bài Viết Mới';
+            contentBlocksContainer.innerHTML = '';
+            // Reset ảnh thumbnail xem trước
+            document.getElementById('thumbnail').value = '';
+            const preview = document.getElementById('thumbnail-preview');
+            preview.src = '';
+            preview.classList.add('hidden');
+
+            window.addContentBlock('paragraph');
+            renderTagRadioButtons([]);
+            postModal.classList.remove('hidden');
+        };
+
+        window.closeModal = () => {
+            postModal.classList.add('hidden');
+            mediaModal.classList.add('hidden');
+        };
+
+        window.handleEditPost = async (id) => {
+            try {
+                const post = await postsApi.getPostById(id);
+                if(!post) return;
+
+                modalTitle.innerText = 'Sửa Bài Viết';
+                document.getElementById('post-id').value = post.id;
+                document.getElementById('title').value = post.title;
+                document.getElementById('description').value = post.description || '';
+                
+                // --- UPDATE THUMBNAIL INPUT & PREVIEW ---
+                const thumb = post.thumbnail || '';
+                document.getElementById('thumbnail').value = thumb;
+                const thumbPreview = document.getElementById('thumbnail-preview');
+                if (thumb) {
+                    thumbPreview.src = thumb;
+                    thumbPreview.classList.remove('hidden');
+                } else {
+                    thumbPreview.classList.add('hidden');
+                }
+                
+                document.getElementById('published-at').value = post.publishedAt ? new Date(post.publishedAt).toISOString().slice(0,16) : '';
+                
+                renderTagRadioButtons(post.tags);
+
+                contentBlocksContainer.innerHTML = '';
+                let content = post.content;
+                if (typeof content === 'string') {
+                    try { content = JSON.parse(content); } catch(e) { content = []; }
+                }
+                if (Array.isArray(content) && content.length > 0) {
+                    content.forEach((b, i) => renderContentBlock(b, i));
+                } else {
+                    window.addContentBlock('paragraph');
+                }
+
+                postModal.classList.remove('hidden');
+            } catch (e) { console.error(e); alert('Lỗi lấy bài viết'); }
+        };
+
+        window.handleDeletePost = async (id) => {
+            if(confirm('Chắc chắn xóa bài viết này?')) {
+                await postsApi.deletePost(id); 
+                document.getElementById(`post-${id}`).remove();
+                allPosts = allPosts.filter(p => p.id !== id);
+            }
+        };
+
+        // --- TOGGLE PUBLISH ---
+        window.handlePublishToggle = async (id, currentStatus) => {
+            const newStatus = currentStatus === 'PUBLISHED' ? 'DRAFT' : 'PUBLISHED';
+            const payload = {
+                status: newStatus,
+                publishedAt: newStatus === 'PUBLISHED' ? new Date().toISOString() : null
+            };
+
+            try {
+                const response = await fetch(`/api/posts/${id}`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                if (!response.ok) throw new Error('Không thể cập nhật');
+                loadData();
+            } catch (error) {
+                console.error(error);
+                alert('Lỗi: ' + error.message);
+            }
+        };
+
+        // --- MEDIA MODAL LOGIC (REAL API) ---
+        async function renderMediaGallery() {
+            const g = document.getElementById('media-gallery');
+            g.innerHTML = '<div class="col-span-full text-center py-10 text-gray-500"><i class="fas fa-spinner fa-spin mr-2"></i>Đang tải thư viện ảnh...</div>';
+
+            try {
+                // GỌI API LẤY ẢNH TỪ DATABASE
+                const res = await fetch('/api/media', { cache: 'no-store' });
+                if (!res.ok) throw new Error('Lỗi tải media');
+                
+                const mediaList = await res.json();
+                g.innerHTML = '';
+
+                if (!mediaList || mediaList.length === 0) {
+                    g.innerHTML = '<div class="col-span-full text-center py-10 text-gray-500">Chưa có ảnh nào. Hãy sang trang Media để upload.</div>';
+                    return;
+                }
+
+                mediaList.forEach(media => {
+                    const div = document.createElement('div');
+                    div.className = 'cursor-pointer border-2 border-transparent hover:border-primary rounded-lg overflow-hidden relative group h-24 bg-gray-100';
+                    div.innerHTML = `
+                        <img src="${media.url}" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
+                        <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors"></div>
+                    `;
+
+                    div.onclick = () => {
+                        const url = media.url;
+                        if(targetElementId) {
+                            if(typeof targetElementId === 'string') {
+                                const el = document.getElementById(targetElementId);
+                                if(el) {
+                                    el.value = url;
+                                    if(targetElementId === 'thumbnail') {
+                                        const preview = document.getElementById('thumbnail-preview');
+                                        preview.src = url;
+                                        preview.classList.remove('hidden');
+                                    }
+                                }
+                            } else {
+                                targetElementId.value = url;
+                                targetElementId.onchange && targetElementId.onchange(); 
+                            }
+                        }
+                        mediaModal.classList.add('hidden');
+                    };
+                    g.appendChild(div);
+                });
+
+            } catch (error) {
+                console.error("Lỗi tải thư viện ảnh:", error);
+                g.innerHTML = '<div class="col-span-full text-center text-red-500">Không thể kết nối đến thư viện Media.</div>';
+            }
+        }
+        
+        window.openMediaModalForInput = (inputEl) => {
+            targetElementId = inputEl;
+            renderMediaGallery();
+            mediaModal.classList.remove('hidden');
+        }
+        
+        document.getElementById('browse-media-btn').onclick = () => {
+            targetElementId = 'thumbnail';
+            renderMediaGallery();
+            mediaModal.classList.remove('hidden');
+        };
+        document.getElementById('close-media-modal-btn').onclick = () => mediaModal.classList.add('hidden');
+
+
+        // --- INIT ---
+        function renderTagRadioButtons(selectedTags) {
+            tagRadioButtonsContainer.innerHTML = '';
+            const selected = (selectedTags && selectedTags.length) ? selectedTags[0] : null;
+            POST_TAGS.forEach(tag => {
+                const checked = tag === selected ? 'checked' : '';
+                const html = `
+                    <div class="flex items-center">
+                        <input type="radio" id="tag-${tag}" name="tags" value="${tag}" ${checked} class="w-4 h-4 text-primary focus:ring-primary/50" required>
+                        <label for="tag-${tag}" class="ml-2 text-sm font-medium text-gray-700">${tag}</label>
+                    </div>`;
+                tagRadioButtonsContainer.insertAdjacentHTML('beforeend', html);
+            });
+        }
+
+        // --- EVENTS ---
+        document.getElementById('add-post-btn').addEventListener('click', window.openCreateModal);
+        document.getElementById('close-modal-btn').addEventListener('click', window.closeModal);
+        document.getElementById('search-input').addEventListener('input', applyFiltersAndRender);
+        document.getElementById('status-filter').addEventListener('change', applyFiltersAndRender);
+        document.getElementById('tag-filter').addEventListener('change', applyFiltersAndRender);
+
+        const avatar = document.getElementById('user-avatar');
+        const dropdown = document.getElementById('logout-dropdown');
+        avatar.onclick = (e) => { e.stopPropagation(); dropdown.classList.toggle('show'); };
+        document.onclick = (e) => { if(!avatar.contains(e.target)) dropdown.classList.remove('show'); };
+
+        // START
+        loadData();
+    </script>
+</body>
+</html>
