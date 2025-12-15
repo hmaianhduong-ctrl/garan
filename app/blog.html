@@ -95,11 +95,15 @@
   </div>
 
   <!-- RECOMMEND SECTION -->
-  <div class="blog-recommend-wrapper">
-    <div class="back-to-library">
-      <span>BACK TO</span>
-      <span>LIBRARY</span>
-    </div>
+<div class="blog-recommend-wrapper">
+  
+  <a href="news.html" class="back-to-library">
+    <span>BACK TO</span>
+    <span>LIBRARY</span>
+  </a>
+
+  <div class="blog-recommend-inner" id="recommendContainer"></div>
+</div>
 
     <div class="blog-recommend-inner" id="recommendContainer"></div>
   </div>
@@ -156,7 +160,7 @@
 <script>
   async function loadBlog() {
     const params = new URLSearchParams(window.location.search);
-    const slug = params.get("post");
+    const slug = params.get("slug"); 
 
     const res = await fetch("blogs.json");
     const blogs = await res.json();
@@ -165,6 +169,8 @@
 
     if (!blog) {
       document.querySelector("#blogTitle").textContent = "Post not found";
+      document.querySelector("#blogDescription").style.display = 'none';
+      document.querySelector(".blog-meta").style.display = 'none';
       return;
     }
 
@@ -174,11 +180,16 @@
 
     document.querySelector("#blogTitle").textContent = blog.title;
     document.querySelector("#blogDescription").textContent = blog.description;
+    
+    // Xử lý Tag, đảm bảo class tag-name cũng đúng
     document.querySelector("#blogTag").textContent = blog.tag;
+    document.querySelector("#blogTag").className = `blog-tag blog-tag-single tag-${blog.tag.toLowerCase()}`;
+    
     document.querySelector("#blogDate").textContent = blog.date;
 
     // CONTENT RENDER
     const container = document.querySelector("#blogContent");
+    container.innerHTML = ''; // Dọn dẹp nội dung cũ nếu AJAX gọi lại
 
     blog.content.forEach(block => {
 
@@ -203,6 +214,7 @@
         el.src = block.value;
       } else if (block.type === "list") {
         el = document.createElement("ul");
+        el.className = "blog-list";
         const items = block.items || block.value || [];
         items.forEach(item => {
           const li = document.createElement("li");
@@ -215,17 +227,17 @@
     });
 
     /* ============================
-       RECOMMEND (ĐÃ SỬA VÀO ĐÂY)
+       RECOMMEND
        ============================ */
     const recommendBox = document.querySelector("#recommendContainer");
+    recommendBox.innerHTML = ''; // Dọn dẹp recommend cũ nếu AJAX gọi lại
 
     blogs
       .filter(b => b.slug !== slug)
       .slice(0, 3)
       .forEach(b => {
         recommendBox.innerHTML += `
-          <a href="blog.html?post=${b.slug}" class="bcard">
-
+          <a href="blog.html?slug=${b.slug}" class="bcard"> 
             <div class="bcard-thumb-wrapper">
               <img src="${b.thumbnail}" alt="" class="bcard-thumb">
             </div>
@@ -244,38 +256,13 @@
           </a>
         `;
       });
-    /* ============================
-   LIKE BUTTON TOGGLE
-============================ */
-const likeBtn = document.getElementById("likeBtn");
-const likeCount = document.getElementById("likeCount");
-
-let liked = false; // trạng thái ban đầu
-
-likeBtn.addEventListener("click", () => {
-  liked = !liked;
-
-  if (liked) {
-    // đổi icon sang solid
-    likeBtn.innerHTML = `<i class="fa-solid fa-thumbs-up"></i>`;
-
-    // tăng số like
-    likeCount.textContent = parseInt(likeCount.textContent) + 1;
-
-  } else {
-    // đổi lại icon regular
-    likeBtn.innerHTML = `<i class="fa-regular fa-thumbs-up"></i>`;
-
-    // giảm số like
-    likeCount.textContent = parseInt(likeCount.textContent) - 1;
-  }
-});
-
   }
 
-  loadBlog();
+  // Hàm này được gọi khi DOMContentLoaded (lần tải đầu tiên) và bởi script.js (AJAX)
+  function initBlogPageLogic() {
+      loadBlog();
+      // Logic nút Like đã được xử lý bởi initLikeButton() trong script.js
+  }
+  
+  document.addEventListener("DOMContentLoaded", initBlogPageLogic);
 </script>
-
-
-</body>
-</html>

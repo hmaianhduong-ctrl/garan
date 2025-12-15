@@ -614,3 +614,18 @@
     align-items: center;
     z-index: 20;
 }
+
+/* Thêm vào home.css hoặc base.css */
+.blog-frame {
+  /* Giữ các thuộc tính cũ, và thêm 2 thuộc tính này: */
+  text-decoration: none; /* Loại bỏ gạch chân cho link */
+  display: block; /* Quan trọng: để link chiếm toàn bộ khối article */
+  cursor: pointer;
+  /* (Các style vị trí cũ: position: absolute, top, width, height, background, box-shadow, overflow) */
+}
+
+/* Đảm bảo chữ bên trong link vẫn giữ màu */
+.blog-frame .blog-title {
+  color: #ba3801; /* Giữ nguyên màu tiêu đề */
+}
+

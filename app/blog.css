@@ -499,3 +499,10 @@
   color: #ba3801;
   font-size: 14px;
 }
+
+.back-to-library {
+    text-decoration: none; 
+    cursor: pointer;
+    
+    transition: all 0.3s ease;
+}

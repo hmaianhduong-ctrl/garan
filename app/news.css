@@ -72,6 +72,8 @@
 }
 
 
+
+
 /* Card đầu tiên có border trái */
 .news-card:first-child {
   border-right: 1px solid #BA3801;
@@ -88,7 +90,7 @@
   padding: 12px; /* tạo khoảng cách khỏi border */
   display: flex;
   flex-direction: column;
-  align-items: center; /* canh giữa ảnh */
+  align-items: center;
 }
 
 /* Title */
@@ -130,6 +132,41 @@
   inset: 12px;
   border: 1px #BA3801;
   pointer-events: none;
+}
+
+.empty-placeholder {
+  font-size: 16px;
+  font-style: italic;
+  color: #BA3801;
+}
+/* Thêm/Chỉnh sửa trong news.css */
+.news-grid .news-card {
+    /* Đảm bảo link hiển thị như một khối để chiếm hết diện tích */
+    display: block; 
+    /* Loại bỏ gạch chân mặc định của thẻ <a> */
+    text-decoration: none; 
+    cursor: pointer;
+    /* Giữ nguyên các thuộc tính hiển thị khác (width, height, margin, v.v.) */
+}
+
+/* Đảm bảo tiêu đề trong link vẫn giữ màu */
+.news-card .news-title {
+    color: #ba3801; /* Hoặc màu chữ bạn đang dùng cho tiêu đề */
+}
+.news-card.is-empty {
+  border-top: 1px solid #BA3801;
+  border-bottom: 1px solid #BA3801;
+  
+  /* ✅ SỬ DỤNG FLEXBOX TẠI ĐÂY để căn giữa nội dung */
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  
+  min-height: 260px; 
+  opacity: 0.4;
+  
+  /* Quan trọng: Đảm bảo nó chiếm đủ chiều rộng */
+  width: 100%;
 }
 
 .empty-placeholder {
