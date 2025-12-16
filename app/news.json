@@ -1,0 +1,73 @@
+{
+  "Lifestyle": [
+    {
+      "title": "HỘI U50 ‘CHẤT’ CŨNG THÍCH TIỆC TÙNG CUỐI TUẦN Ở NHÀ ELIS!",
+      "date": "02/12/2025",
+      "image": "news-user/library/lifestyle1.png",
+      "slug": "hoi-u50-chat-cung-thich-tiec-tung"
+    },
+    {
+      "title": "BẠN NHỎ ĐẾN NHÀ ELIS THƯỜNG XUYÊN NHƯ MỘT THÀNH VIÊN GIA ĐÌNH",
+      "date": "02/11/2025",
+      "image": "news-user/library/lifestyle2.png",
+      "slug": "ban-nho-den-nha-elis-thuong-xuyen"
+    },
+    {
+      "title": "TIỆC TÙNG CÙNG ĐỒNG NGHIỆP SAU GIỜ LÀM CHƯA BAO GIỜ FUN ĐẾN VẬY!",
+      "date": "02/10/2025",
+      "image": "news-user/library/lifestyle3.png",
+      "slug": "tiec-tung-cung-dong-nghiep"
+    }
+  ],
+
+  "Journey": [
+    {
+      "title": "HÀNH TRÌNH HỌC HỎI VÀ NIỀM ĐAM MÊ ẨM THỰC CỦA MR. BOSS",
+      "date": "27/11/2025",
+      "image": "news-user/library/journey1.png",
+      "slug": "hanh-trinh-hoc-hoi-va-niem-dam-me-am-thuc-cua-mr-boss"
+    },
+    {
+      "title": "NGUYÊN LIỆU TRONG BẾP CỦA TÔI XUẤT PHÁT TỪ NÔNG TRẠI CỦA BỐ MẸ",
+      "date": "27/10/2025",
+      "image": "news-user/library/journey2.png",
+      "slug": "nguyen-lieu-trong-bep-xuat-phat-tu-nong-trai"
+    }
+  ],
+
+  "Recipe": [
+    {
+      "title": "8 LOẠI SALAD ‘CUỐN MIỆNG’ & DỄ LÀM ĐẾN KHÔNG NGỜ - BẬT MÍ BÍ MẬT",
+      "date": "15/11/2025",
+      "image": "news-user/library/recipe1.png",
+      "slug": "8-loai-salad-cuon-mieng-de-lam-den-khong-ngo-bat-mi-bi-mat"
+    },
+    {
+      "title": "CÁCH LÀM SỐT CÀ CHUA SỆT ĐẸP - NGON CHUẨN VỊ RESTAURANT",
+      "date": "15/10/2025",
+      "image": "news-user/library/recipe2.png",
+      "slug": "cach-lam-sot-ca-chua-set-dep"
+    },
+    {
+      "title": "SỐT PHÔ MAI CHANH DÂY SIÊU CUỐN - BÉO NGẬY CHUA NGỌT ĐƯA VỊ",
+      "date": "15/09/2025",
+      "image": "news-user/library/recipe3.png",
+      "slug": "sot-pho-mai-chanh-day-sieu-cuon"
+    }
+  ],
+
+  "Voucher": [
+    {
+      "title": "VOUCHER HOT HIT CỦA THÁNG BLACK FRIDAY 11/2025",
+      "date": "01/11/2025",
+      "image": "news-user/library/voucher1.png",
+      "slug": "voucher-hot-hit-black-friday-11-2025"
+    },
+    {
+      "title": "HI OCTOBER! NHÀ ELIS LẠI REFILL ĐẦY ẮP COMBO GIẢM SÂU",
+      "date": "01/10/2025",
+      "image": "news-user/library/voucher2.png",
+      "slug": "hi-october-nha-elis-lai-refill-day-ap-combo"
+    }
+  ]
+}

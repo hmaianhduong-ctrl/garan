@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script src="script.js" defer></script>
+	
+	<script src="script.js" defer></script>
+  	<script src="news.js" defer></script>
+  
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,13 +13,13 @@
   <!-- FONT & CSS -->
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="base.css">
-  <link rel="stylesheet" href="news.css" data-page-style>
+  <link rel="stylesheet" href="news.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
 <body class="sticky-header">
 
-  <!-- HEADER -->
+<!-- HEADER -->
 <header id="header">
   <a href="index.html" class="logo-link">
     <img
@@ -29,150 +32,45 @@
 
   <nav>
     <a href="menu.html">Menu</a>
-    <a href="news.html"class="active">News</a>
+    <a href="news.html" class="active">News</a>
     <a href="aboutus.html">About Us</a>
     <a href="login.html">Login</a>
   </nav>
 </header>
 
 <main id="content">
-
 <section class="menu-page">
-  <!-- BẮT ĐẦU VÙNG NEWS PAGE -->
-  <div class="news-page">
+<div class="news-page">
 
-<!-- PAGE TITLE -->
-<section class="news-title-section">
-  <h1 class="flavors-stories">Flavors & stories</h1>
-</section>
+  <!-- PAGE TITLE -->
+  <section class="news-title-section">
+    <h1 class="flavors-stories">Flavors & stories</h1>
+  </section>
 
-<section class="news-tags">
+  <!-- TAGS + NEWS -->
+  <section class="news-tags">
 
-  <!-- =======================
-       LIFESTYLE
-  ======================== -->
-  <div class="tag-item tag-lifestyle">Lifestyle</div>
-  <div class="news-divider"></div>
-
-  <div class="news-grid">
-
-<a class="news-card" href="blog.html?slug=hoi-u50-chat-cung-thich-tiec-tung">
-      <img src="news-user/library/lifestyle1.png" alt="">
-      <h3 class="news-title">HỘI U50 ‘CHẤT’ CŨNG THÍCH TIỆC TÙNG CUỐI TUẦN Ở NHÀ ELIS!</h3>
-      <span class="news-date">02/12/2025</span>
-    </a>
-
-    <div class="news-card">
-      <img src="news-user/library/lifestyle2.png" alt="">
-      <h3 class="news-title">BẠN NHỎ ĐẾN NHÀ ELIS THƯỜNG XUYÊN NHƯ MỘT THÀNH VIÊN GIA ĐÌNH</h3>
-      <span class="news-date">02/11/2025</span>
+    <!-- 🔹 TAG LIST (UI – theo mockup) -->
+    <div class="tag-list" id="tag-list">
+      <!-- JS render tag items here -->
     </div>
 
-    <div class="news-card">
-      <img src="news-user/library/lifestyle3.png" alt="">
-      <h3 class="news-title">TIỆC TÙNG CÙNG ĐỒNG NGHIỆP SAU GIỜ LÀM CHƯA BAO GIỜ FUN ĐẾN VẬY!</h3>
-      <span class="news-date">02/10/2025</span>
+    <!-- 🔹 NEWS CONTENT (render theo tag) -->
+    <div id="news-container">
+      <!-- JS render news sections here -->
     </div>
 
-  </div>
+  </section>
 
-  <!-- =======================
-       JOURNEY
-  ======================== -->
-  <div class="tag-item tag-journey">Journey</div>
-  <div class="news-divider"></div>
-
-  <div class="news-grid">
-
-<a class="news-card" href="blog.html?slug=hanh-trinh-hoc-hoi-va-niem-dam-me-am-thuc-cua-mr-boss">
-      <img src="news-user/library/journey1.png" alt="">
-      <h3 class="news-title">HÀNH TRÌNH HỌC HỎI VÀ NIỀM ĐAM MÊ ẨM THỰC CỦA MR. BOSS</h3>
-      <span class="news-date">27/11/2025</span>
-    </a>
-
-    <div class="news-card">
-      <img src="news-user/library/journey2.png" alt="">
-      <h3 class="news-title">NGUYÊN LIỆU TRONG BẾP CỦA TÔI XUẤT PHÁT TỪ NÔNG TRẠI CỦA BỐ MẸ</h3>
-      <span class="news-date">27/10/2025</span>
-    </div>
-
-    <div class="news-card is-empty">
-      <div class="empty-placeholder">
-        Coming soon
-      </div>
-    </div>
-
-  </div>
-
-  <!-- =======================
-       RECIPE
-  ======================== -->
-  <div class="tag-item tag-recipe">Recipe</div>
-  <div class="news-divider"></div>
-
-  <div class="news-grid">
-
-<a class="news-card" href="blog.html?slug=8-loai-salad-cuon-mieng-de-lam-den-khong-ngo-bat-mi-bi-mat">
-      <img src="news-user/library/recipe1.png" alt="">
-      <h3 class="news-title">8 LOẠI SALAD ‘CUỐN MIỆNG’ & DỄ LÀM ĐẾN KHÔNG NGỜ - BẬT MÍ BÍ MẬT</h3>
-      <span class="news-date">15/11/2025</span>
-    </a>
-    <div class="news-card">
-      <img src="news-user/library/recipe2.png" alt="">
-      <h3 class="news-title">CÁCH LÀM SỐT CÀ  CHUA SỆT ĐẸP - NGON CHUẨN  VỊ RESTAURANT</h3>
-      <span class="news-date">15/10/2025</span>
-    </div>
-
-    <div class="news-card">
-      <img src="news-user/library/recipe3.png" alt="">
-      <h3 class="news-title">SỐT PHÔ MAI CHANH DÂY SIÊU CUỐN - BÉO NGẬY CHUA NGỌT ĐƯA VỊ</h3>
-      <span class="news-date">15/09/2025</span>
-    </div>
-
-  </div>
-
-  <!-- =======================
-       VOUCHER
-  ======================== -->
-  <div class="tag-item tag-voucher">Voucher</div>
-  <div class="news-divider"></div>
-
-  <div class="news-grid">
-
- <a class="news-card" href="blog.html?slug=voucher-hot-hit-black-friday-11-2025">
-      <img src="news-user/library/voucher1.png" alt="">
-      <h3 class="news-title">VOUCHER HOT HIT CỦA THÁNG BLACK FRIDAY 11/ 2025</h3>
-      <span class="news-date">01/11/2025</span>
-    </a>
-
-    <div class="news-card">
-      <img src="news-user/library/voucher2.png" alt="">
-      <h3 class="news-title">HI OCTOBER! NHÀ ELIS LẠI REFILL ĐẦY ẮP COMBO GIẢM SÂU</h3>
-      <span class="news-date">01/10/2025</span>
-    </div>
-
-    <div class="news-card is-empty">
-      <div class="empty-placeholder">
-        Coming soon
-      </div>
-    </div>
-
-  </div>
-
+</div>
 </section>
 </main>
-  <!-- HẾT VÙNG NEWS PAGE -->
 
-  <!-- FOOTER -->
-
-
+<!-- FOOTER -->
 <footer class="footer-logo">
   <img src="https://i.postimg.cc/7PGsTNz6/chuvahinh.png" alt="Footer Logo">
 
-  <!-- RIGHT SIDE: Column + Social -->
   <div class="footer-right">
-
-    <!-- LEFT COLUMN -->
     <div class="footer-column">
       <a href="menu.html" class="footer-link">Menu</a>
       <a href="news.html" class="footer-link">News</a>
@@ -180,10 +78,8 @@
       <a href="hiring.html" class="footer-link">Career</a>
     </div>
 
-    <!-- SOCIAL SECTION -->
     <div class="social-block">
       <div class="follow-us">Follow us!</div>
-
       <div class="social-icons">
         <i class="fa-brands fa-instagram"></i>
         <i class="fa-brands fa-youtube"></i>
@@ -193,7 +89,6 @@
   </div>
 </footer>
 
-<!-- FOOTER BOTTOM INFO -->
 <div class="footer-info">
   <div class="footer-left">
     <span><strong>Our home:</strong> 128A Nguyễn Khánh Toàn, Cầu Giấy, Hà Nội</span>
@@ -202,10 +97,18 @@
   </div>
 
   <div class="footer-right-text">
-    <span>@ 2025 Elis’ Favorite</span>
+    <span>© 2025 Elis’ Favorite</span>
   </div>
 </div>
 
+<!-- 🔹 NEWS CARD TEMPLATE -->
+<template id="news-card-template">
+  <a class="news-card">
+    <img />
+    <h3 class="news-title"></h3>
+    <span class="news-date"></span>
+  </a>
+</template>
 
 </body>
 </html>
