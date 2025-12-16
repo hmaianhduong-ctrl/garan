@@ -7,38 +7,120 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+//////////////////////////////////////////////////
+// ENUMS
+//////////////////////////////////////////////////
+
+enum UserRole {
+  ADMIN
+  USER
+}
+
+enum PostStatus {
+  DRAFT
+  SCHEDULED
+  PUBLISHED
+}
+
+enum ReactionType {
+  LIKE
+}
+
+//////////////////////////////////////////////////
+// MODELS
+//////////////////////////////////////////////////
+
 model User {
-  id        Int       @id @default(autoincrement())
-  name      String
-  email     String    @unique
-  password  String
-  role      String
-  createdAt DateTime  @default(now())
+  id       Int      @id @default(autoincrement())
+  name     String
+  email    String   @unique
+  password String
+  role     UserRole @default(USER)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   posts     Post[]
   comments  Comment[]
+  reactions Reaction[]
 }
 
 model Post {
-  id          Int       @id @default(autoincrement())
+  id          Int        @id @default(autoincrement())
   title       String
-  slug        String    @unique
+  slug        String     @unique
   description String
-  content     String     @db.Text
+  // QUAN TRỌNG: Thêm @db.Text để lưu nội dung bài viết dài
+  content     String     @db.Text 
   thumbnail   String?
-  status      String    // Draft, Published, Scheduled
+  status      PostStatus @default(DRAFT)
+
   publishedAt DateTime?
   createdAt   DateTime  @default(now())
-  authorId    Int
-  author      User      @relation(fields: [authorId], references: [id])
-  comments    Comment[]
+  updatedAt   DateTime  @updatedAt
+
+  authorId Int
+  author   User @relation(fields: [authorId], references: [id])
+
+  commentsLocked Boolean   @default(false)
+  comments       Comment[]
+
+  views     View[]
+  reactions Reaction[]
+  tags      Tag[]
 }
 
 model Comment {
-  id        Int       @id @default(autoincrement())
-  content   String
-  createdAt DateTime  @default(now())
+  id       Int     @id @default(autoincrement())
+  content  String
+  isHidden Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  postId Int
+  post   Post @relation(fields: [postId], references: [id])
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+}
+
+model Media {
+  id  Int    @id @default(autoincrement())
+  url String
+
+  altText  String?
+  mimeType String?
+  width    Int?
+  height   Int?
+  fileSize Int?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model View {
+  id        Int      @id @default(autoincrement())
   postId    Int
-  post      Post      @relation(fields: [postId], references: [id])
-  userId    Int
-  user      User      @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+
+  post Post @relation(fields: [postId], references: [id])
+}
+
+model Reaction {
+  id     Int          @id @default(autoincrement())
+  type   ReactionType
+  postId Int
+  userId Int?
+
+  post Post  @relation(fields: [postId], references: [id])
+  user User? @relation(fields: [userId], references: [id])
+}
+
+// Model Tag (Đã xóa slug để khớp với API Code)
+model Tag {
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  
+  posts Post[]
 }

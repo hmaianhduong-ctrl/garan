@@ -1,8 +1,7 @@
-export const dynamic = 'force-dynamic';
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { generateSlug, validatePostData } from '@/lib/utils';
-import { sendDiscordNotification } from '@/lib/discord'; // <--- IMPORT HÀM CỦA BẠN
+import { sendDiscordNotification } from '@/lib/discord';
 
 // 1. GET: Lấy danh sách bài viết
 export async function GET(request: Request) {
@@ -11,7 +10,7 @@ export async function GET(request: Request) {
       orderBy: { createdAt: 'desc' }, 
       include: {
         author: { select: { id: true, name: true } },
-        tags: { select: { name: true } },
+        tags: true, // Lấy toàn bộ object Tag
         _count: { select: { comments: true, views: true } }
       }
     });
@@ -29,6 +28,7 @@ export async function GET(request: Request) {
         authorName: post.author?.name || "Admin",
         views: post._count.views, 
         commentsCount: post._count.comments,
+        // Map tags lấy name
         tags: post.tags.map(t => t.name)
     }));
 
@@ -54,11 +54,11 @@ export async function POST(request: Request) {
     const errorMsg = validatePostData(body);
     if (errorMsg) return NextResponse.json({ error: errorMsg }, { status: 400 });
 
-    // Tự động tìm User
+    // Tự động tìm User (Logic của bạn)
     let author = await prisma.user.findFirst();
     if (!author) {
         author = await prisma.user.create({
-            data: { email: "admin_auto@system.com", name: "System Admin", role: "ADMIN" }
+            data: { email: "admin_auto@system.com", name: "System Admin", role: "ADMIN", password: "hashed_password_here" }
         });
     }
 
@@ -83,10 +83,12 @@ export async function POST(request: Request) {
         description: body.description || "",
         publishedAt: publishedAtValue,
         author: { connect: { id: author.id } },
+        
+        // --- SỬA LOGIC TAGS (QUAN TRỌNG) ---
         tags: {
             connectOrCreate: (body.tags || []).map((tag: string) => ({
                 where: { name: tag },
-                create: { name: tag, slug: generateSlug(tag) }
+                create: { name: tag } // <--- BỎ SLUG Ở ĐÂY VÌ MODEL TAG KHÔNG CÒN SLUG
             })),
         },
       },
@@ -96,20 +98,16 @@ export async function POST(request: Request) {
       }
     });
 
-    // --- GỌI HÀM DISCORD TỪ LIB CỦA BẠN ---
+    // --- GỌI HÀM DISCORD ---
     if (newPost.status === 'PUBLISHED') {
-        // Chuẩn bị dữ liệu giống mockPost của bạn
         const postDataForDiscord = {
             title: newPost.title,
             description: newPost.description,
             slug: newPost.slug,
             authorName: newPost.author?.name || "Admin",
-            // Gửi thêm mấy cái này, nếu hàm trong lib của bạn có dùng thì nó hiện, không thì thôi
             thumbnail: newPost.thumbnail, 
             tags: newPost.tags.map(t => t.name).join(", ")
         };
-        
-        // Chạy ngầm (không await) để web phản hồi nhanh
         sendDiscordNotification(postDataForDiscord).catch(console.error);
     }
         

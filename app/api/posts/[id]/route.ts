@@ -2,13 +2,13 @@ export const dynamic = 'force-dynamic';
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { generateSlug } from '@/lib/utils';
-import { sendDiscordNotification } from '@/lib/discord'; // <--- IMPORT
+import { sendDiscordNotification } from '@/lib/discord';
 
 // 1. GET: Lấy chi tiết bài viết
-export async function GET(request: Request, { params }: { params: Promise<{ id: string }> }) {
+export async function GET(request: Request, props: { params: Promise<{ id: string }> }) {
     try {
-        const { id: idString } = await params;
-        const id = parseInt(idString);
+        const params = await props.params;
+        const id = parseInt(params.id);
         if (isNaN(id)) return NextResponse.json({ error: "ID không hợp lệ" }, { status: 400 });
 
         try { await prisma.view.create({ data: { postId: id } }); } catch (e) {}
@@ -17,7 +17,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ id: 
             where: { id },
             include: {
                 author: { select: { id: true, name: true } },
-                tags: { select: { name: true } },
+                tags: true,
                 _count: { select: { comments: true, views: true } }
             }
         });
@@ -44,10 +44,10 @@ export async function GET(request: Request, { params }: { params: Promise<{ id: 
 }
 
 // 2. HÀM UPDATE CHUNG
-async function updateHandler(request: Request, params: Promise<{ id: string }>) {
+async function updateHandler(request: Request, props: { params: Promise<{ id: string }> }) {
     try {
-        const { id: idString } = await params;
-        const id = parseInt(idString);
+        const params = await props.params;
+        const id = parseInt(params.id);
         if (isNaN(id)) return NextResponse.json({ error: "ID không hợp lệ" }, { status: 400 });
 
         const body = await request.json();
@@ -83,23 +83,24 @@ async function updateHandler(request: Request, params: Promise<{ id: string }>) 
                 status: body.status,
                 description: body.description,
                 publishedAt: publishedAtValue,
+                
+                // --- SỬA LOGIC TAGS (QUAN TRỌNG) ---
                 tags: Array.isArray(body.tags) ? {
-                    set: [],
+                    set: [], // Xóa kết nối cũ
                     connectOrCreate: body.tags.map((tag: string) => ({
                         where: { name: tag },
-                        create: { name: tag, slug: generateSlug(tag) }
+                        create: { name: tag } // <--- BỎ SLUG Ở ĐÂY LUÔN
                     }))
                 } : undefined
             },
             include: {
                 author: { select: { name: true } },
-                tags: { select: { name: true } },
+                tags: true,
                 _count: { select: { comments: true, views: true } }
             }
         });
 
-        // --- GỌI HÀM DISCORD TỪ LIB ---
-        // Chỉ gửi khi bài cũ CHƯA publish, mà bài mới LÀ publish
+        // --- GỌI HÀM DISCORD ---
         if (oldPost.status !== 'PUBLISHED' && updatedPost.status === 'PUBLISHED') {
             const postDataForDiscord = {
                 title: updatedPost.title,
@@ -127,21 +128,31 @@ async function updateHandler(request: Request, params: Promise<{ id: string }>) 
 }
 
 // Export Method
-export async function PATCH(req: Request, { params }: { params: Promise<{ id: string }> }) {
-    return updateHandler(req, params);
+export async function PATCH(req: Request, props: { params: Promise<{ id: string }> }) {
+    return updateHandler(req, props);
 }
-export async function PUT(req: Request, { params }: { params: Promise<{ id: string }> }) {
-    return updateHandler(req, params);
+export async function PUT(req: Request, props: { params: Promise<{ id: string }> }) {
+    return updateHandler(req, props);
 }
 
 // 3. DELETE
-export async function DELETE(request: Request, { params }: { params: Promise<{ id: string }> }) {
+export async function DELETE(request: Request, props: { params: Promise<{ id: string }> }) {
     try {
-        const { id: idString } = await params;
-        const id = parseInt(idString);
+        const params = await props.params;
+        const id = parseInt(params.id);
+        
+        // Xóa dữ liệu liên quan để tránh lỗi khóa ngoại (Foreign Key)
+        // Vì Schema của bạn có thể chưa cấu hình onDelete: Cascade
+        await prisma.comment.deleteMany({ where: { postId: id } });
+        await prisma.view.deleteMany({ where: { postId: id } });
+        await prisma.reaction.deleteMany({ where: { postId: id } });
+
+        // Xóa bài viết
         await prisma.post.delete({ where: { id } });
+        
         return NextResponse.json({ message: "Đã xóa" });
     } catch (error) {
+        console.error("Lỗi xóa bài:", error);
         return NextResponse.json({ error: "Lỗi xóa" }, { status: 500 });
     }
 }
