@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	
-	<script src="script.js" defer></script>
-  	<script src="news.js" defer></script>
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   
 
   <meta charset="UTF-8">
@@ -20,50 +18,31 @@
 <body class="sticky-header">
 
 <!-- HEADER -->
-<header id="header">
-  <a href="index.html" class="logo-link">
-    <img
-      id="logo"
-      class="logo"
-      src="https://i.postimg.cc/7b4MF0XW/logo-colored.png"
-      alt="Elis Logo"
-    />
-  </a>
 
-  <nav>
-    <a href="menu.html">Menu</a>
-    <a href="news.html" class="active">News</a>
-    <a href="aboutus.html">About Us</a>
-    <a href="login.html">Login</a>
-  </nav>
-</header>
+  <div id="header-container"></div>
+
 
 <main id="content">
-<section class="menu-page">
-<div class="news-page">
+  <section class="menu-page">
+    <div class="news-page">
 
-  <!-- PAGE TITLE -->
-  <section class="news-title-section">
-    <h1 class="flavors-stories">Flavors & stories</h1>
-  </section>
+      <section class="news-title-section" id="news-title">
+        <h1 class="flavors-stories">Flavors & stories</h1>
+      </section>
 
-  <!-- TAGS + NEWS -->
-  <section class="news-tags">
 
-    <!-- 🔹 TAG LIST (UI – theo mockup) -->
-    <div class="tag-list" id="tag-list">
-      <!-- JS render tag items here -->
+      <section class="news-tags">
+
+        <div class="tag-list" id="tag-list" role="navigation" aria-label="News categories">
+          </div>
+
+        <div id="news-container">
+          </div>
+
+      </section>
+
     </div>
-
-    <!-- 🔹 NEWS CONTENT (render theo tag) -->
-    <div id="news-container">
-      <!-- JS render news sections here -->
-    </div>
-
   </section>
-
-</div>
-</section>
 </main>
 
 <!-- FOOTER -->
@@ -109,6 +88,8 @@
     <span class="news-date"></span>
   </a>
 </template>
-
+<script src="script.js" defer></script>
+  
+  	<script src="news.js" defer></script>
 </body>
 </html>

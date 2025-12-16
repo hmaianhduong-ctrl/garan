@@ -176,13 +176,14 @@
 }
 
 /* ---------- SKELETON ---------- */
+
+
 .skeleton {
   pointer-events: none;
 }
 
 .skeleton-card {
   background: #f2f2f2;
-  border-radius: 16px;
   overflow: hidden;
 }
 
@@ -217,4 +218,7 @@
 @keyframes shimmer {
   0% { background-position: -200px 0; }
   100% { background-position: 200px 0; }
+}
+.news-skeleton.hidden {
+  display: none;
 }

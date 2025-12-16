@@ -1,9 +1,37 @@
 <header id="header">
-  <img id="logo" class="logo" src="https://i.postimg.cc/7b4MF0XW/logo-colored.png" alt="Elis Logo" />
-  <nav>
-    <a href="menu.html">Menu</a>
-    <a href="news.html" class="active">News</a>
-    <a href="about.html">About Us</a>
-    <a href="login.html">Login</a>
-  </nav>
+  <!-- LOGO -->
+  <a href="index.html" class="logo-link">
+    <img
+      id="logo"
+      class="logo"
+      src="https://i.postimg.cc/7b4MF0XW/logo-colored.png"
+      alt="Elis Logo"
+    />
+  </a>
+
+  <!-- RIGHT SIDE (NAV + LOGIN / AVATAR) -->
+  <div class="header-right">
+
+    <!-- NAVIGATION -->
+    <nav>
+      <a href="menu.html">Menu</a>
+      <a href="news.html">News</a>
+      <a href="aboutus.html">About Us</a>
+    </nav>
+
+    <!-- ACTIONS -->
+    <div class="header-actions">
+      <!-- LOGIN -->
+      <a href="login.html" id="login-link">Login</a>
+
+      <!-- AVATAR (ẨN BAN ĐẦU) -->
+      <div id="user-avatar" class="user-avatar hidden">
+        <img src="https://i.pravatar.cc/40" alt="User Avatar" />
+        <div class="avatar-dropdown hidden">
+          <button id="logout-btn">Logout</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </header>

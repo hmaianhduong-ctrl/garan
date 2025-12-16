@@ -1,3 +1,6 @@
+/* =========================
+   CUSTOM PROPERTIES
+========================= */
 :root{
     --primary:#BA3801;
     --accent:#FFEDA8;
@@ -8,9 +11,15 @@
     --radius:12px;
 }
 
+/* =========================
+   GLOBAL RESET & BASE
+========================= */
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{
-    height:100%;}
+    height:100%;
+        overflow-y: auto; 
+
+}
 body{
     font-family:"Plus Jakarta Sans", sans-serif;
     background:var(--primary);
@@ -19,7 +28,9 @@ body{
     -moz-osx-font-smoothing:grayscale;
 }
 
-/* Loader */
+/* =========================
+   LOADER
+========================= */
 #globalLoader{
     position:fixed; inset:0;
     display:flex; align-items:center; justify-content:center;
@@ -36,27 +47,33 @@ body{
 }
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* Layout */
+/* =========================
+   LAYOUT & PANELS
+========================= */
 .container{
     display:flex;
-    min-height:0vh;
+    min-height:100vh;
 }
 .left-panel{
     flex:0 0 50%;
     max-width:50%;
     min-width:0;
-	overflow-y: auto;
-	scrollbar-width: thin;
-
+    /* Cho phép cuộn khi nội dung Register quá dài */
+    overflow-y: auto; 
+    scrollbar-width: thin;
 }
 .right-panel{
     min-height:100vh;
     flex:0 0 50%;
     max-width:50%;
     min-width:0;
+    position:relative;
+    overflow:hidden;
+    background:#ce4000;
 }
 .login-panel{
-    min-height:100vh;
+    /* Đảm bảo chiều cao tối thiểu 100vh */
+    min-height: 100vh; 
     display:flex;
     flex-direction:column;
     padding-top:16px;
@@ -66,7 +83,9 @@ body{
     justify-content:flex-start;
 }
 
-/* header */
+/* =========================
+   HEADER
+========================= */
 .lp-header{
     display:flex; justify-content:space-between; align-items:center;
     margin-bottom:60px;
@@ -75,38 +94,59 @@ body{
 .register-link{font-size:14px;color:var(--muted)}
 .register-link a{color:var(--accent);text-decoration:none;font-weight:600;margin-left:6px}
 
-/* content */
+
+/* =========================
+   FORM CONTENT
+========================= */
 .login-box{
-    max-width:500px;
+    width:100%;
+    /* 1. KÉO DÀI BOX FORM */
+    max-width:450px; 
     margin:0 auto;
+    padding:0;
 }
 .avatar-icon{
-    width:72px;height:72px;border-radius:50%;background:var(--white);color:var(--primary);
-    display:flex;align-items:center;justify-content:center;font-size:28px;
-    margin:0 auto 10px; box-shadow:0 6px 18px var(--shadow);
+    width:72px;
+    height:72px;
+    border-radius:50%;
+    /* Sử dụng background gradient đẹp hơn */
+    background:linear-gradient(145deg, #ffffff, #ffe9c4); 
+    color:var(--primary);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:28px;
+    /* 2. Điều chỉnh khoảng cách */
+    margin:0 auto 18px; 
+    box-shadow:
+        0 12px 28px rgba(0,0,0,0.18),
+        inset 0 0 0 1px rgba(255,255,255,0.6);
 }
-.title{text-align:center;font-size:28px;font-weight:700;margin-bottom:6px}
-.subtitle{text-align:center;color:var(--muted);margin-bottom:12px}
 
-/* Google login button */
-.google-login{
-    width:100%;height:44px;
-    display:flex;align-items:center;justify-content:center;gap:10px;
-    border-radius:var(--radius);
-    border:1px solid var(--input-border);
-    background:transparent;color:var(--white);
-    cursor:pointer;font-weight:600;
-    margin-bottom:18px;
+.title{
+    text-align:center;
+    font-size:26px;
+    font-weight:700;
+    margin-bottom:4px;
+    letter-spacing:-0.2px;
 }
 
-/* Divider */
-.divider{text-align:center;color:var(--muted);margin:5px 0;font-size:13px}
+.subtitle{
+    text-align:center;
+    color:rgba(255,255,255,0.7);
+    /* 2. Điều chỉnh khoảng cách */
+    margin-bottom:28px; 
+    font-size:14px;
+}
 
-/* INPUT GROUP */
+/* =========================
+   INPUT GROUP
+========================= */
 .input-group{
     display:flex;
     flex-direction:column;
-    margin-bottom:18px;
+    /* 2. Điều chỉnh khoảng cách */
+    margin-bottom:16px; 
     position:relative;
 }
 
@@ -116,7 +156,6 @@ body{
     margin-bottom:6px;
     color:var(--white);
 }
-
 
 .input-group input::placeholder{
     color:rgba(255,255,255,0.6);
@@ -129,15 +168,33 @@ body{
 
 .input-field input {
     width: 100%;
-    height: 50px;
-    padding: 14px 14px 14px 44px; /* chừa chỗ cho icon */
+    height: 44px;
+    padding: 10px 14px 10px 44px;
     border-radius: var(--radius);
     border: 1px solid var(--input-border);
-    background: rgba(255,255,255,0.08);
+
+    /* 3. Thêm hiệu ứng hover/focus */
+    background:rgba(255,255,255,0.12);
+    box-shadow:none; 
+
     color: var(--white);
     font-size: 15px;
     outline: none;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.04) inset;
+
+    transition:
+        border-color .25s ease,
+        box-shadow .25s ease,
+        background .25s ease;
+}
+
+.input-field input:hover{
+    background:rgba(255,255,255,0.14);
+}
+.input-field input:focus{
+    border-color:var(--accent);
+    box-shadow:
+        0 0 0 2px rgba(255,237,168,0.35),
+        0 6px 18px rgba(0,0,0,0.12);
 }
 
 .input-field .icon {
@@ -148,31 +205,35 @@ body{
     color: var(--muted);
     font-size: 14px;
     pointer-events: none;
+    /* 3. Thêm transition cho icon */
+    transition: color .25s ease; 
+}
+.input-field input:focus ~ .icon {
+    color: var(--accent);
 }
 
 
-/* Error */
+/* =========================
+   ERROR / MESSAGE
+========================= */
 .error-message{
     color:var(--accent);
     text-align:center;
-    margin-top:-6px;
-    margin-bottom:10px;
-    opacity:0;transition:opacity .2s;
+    /* 2. Điều chỉnh khoảng cách */
+    margin-top: -6px;
+    margin-bottom: 10px; 
+    opacity:0;
+    transition:opacity .2s;
 }
 .error-message.show{opacity:1}
 
-/* Options row */
-.options-row{
-    display:flex;justify-content:space-between;align-items:center;
-    color:var(--muted);font-size:14px;margin-bottom:18px;
-}
-.remember-me{display:flex;align-items:center;gap:8px}
-.remember-me input{width:16px;height:16px;accent-color:var(--accent)}
-.forgot-password{color:var(--muted);text-decoration:none}
 
-/* Login button */
+/* =========================
+   REGISTER BUTTON (Dùng lại .login-btn)
+========================= */
 .login-btn{
-    max-width: 500px;
+    /* Kéo dài button theo box form */
+    max-width: 450px; 
     width:100%;
     height:44px;
     border-radius:var(--radius);
@@ -184,8 +245,22 @@ body{
     cursor:pointer;
     position:relative;
     overflow:hidden;
+    /* 3. Thêm hiệu ứng tương tác */
+    transition:
+        transform .18s ease,
+        box-shadow .18s ease,
+        background .18s ease;
 }
 
+.login-btn:hover{
+    transform:translateY(-1px);
+    box-shadow:
+        0 14px 32px rgba(129, 7, 7, 0.28);
+}
+
+.login-btn:active{
+    transform:translateY(0);
+}
 .login-btn .btn-text{
     transition:opacity .2s;
 }
@@ -206,7 +281,9 @@ body{
 .login-btn.loading .btn-text{opacity:0}
 .login-btn.loading .loading-spinner{display:block}
 
-/* RIGHT PANEL */
+/* =========================
+   RIGHT PANEL ILLUSTRATION
+========================= */
 .right-panel{
     position:relative;overflow:hidden;background:#ce4000;
 }
@@ -218,19 +295,21 @@ body{
     transform:translateX(6%);
 }
 
-/* Mobile */
+/* =========================
+   RESPONSIVE / ANIMATION
+========================= */
 @media (max-width:1100px){
     .right-panel{display:none}
     .left-panel{flex:1 0 100%;max-width:100%}
     .login-panel{padding:28px 26px}
+    /* Điều chỉnh lại max-width cho mobile */
+    .login-box{max-width: 100%;}
 }
 
 .hidden-opacity{opacity:0;transition:opacity .35s}
 .container:not(.hidden-opacity){opacity:1}
 
-/* =========================================
-   PAGE ENTER ANIMATION (EASE-IN)
-========================================= */
+/* PAGE ENTER ANIMATION */
 .preload-hidden {
     opacity: 0;
     transform: translateY(12px);
@@ -241,27 +320,3 @@ body{
     opacity: 1;
     transform: translateY(0);
 }
-
-.input-field input:focus {
-    border-color: var(--accent);
-    box-shadow: 0 0 0 2px rgba(255,237,168,0.25);
-}
-
-.input-field input:focus + .icon,
-.input-field input:focus ~ .icon {
-    color: var(--accent);
-}
-@import url("login.css");
-
-/* MESSAGE */
-.message{
-    text-align:center;
-    margin-bottom:14px;
-    font-size:14px;
-    opacity:0;
-    transition:opacity .25s;
-}
-
-.message.show{opacity:1}
-.message.error{color:var(--accent)}
-.message.success{color:#b7ffcf}

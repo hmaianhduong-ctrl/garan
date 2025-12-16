@@ -1,361 +1,320 @@
 /* =================================
-   KHAI BÁO CÁC HÀM KHỞI TẠO CHUNG
+   GLOBAL STATE
 ================================= */
 let menuAnimationInterval = null;
 let instaAnimationInterval = null;
 
-// Hàm xử lý cuộn Header/Logo
-function headerScrollHandler() {
-  const header = document.getElementById("header");
-  const logo = document.getElementById("logo");
-  // Sử dụng path tuyệt đối của logo để tránh lỗi khi chuyển trang
-  const logoWhite = "https://i.postimg.cc/dDFmbrnX/logo-white.png"; // Dùng logo trắng của bạn
-  const logoColor = "https://i.postimg.cc/7b4MF0XW/logo-colored.png";
+/* =================================
+   UI READY BARRIER (CỰC QUAN TRỌNG)
+================================= */
+function whenUIReady($root, callback) {
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      const images = $root.find("img").toArray();
 
-  if (!header || !logo) return;
+      if (images.length === 0) {
+        callback();
+        return;
+      }
 
-  if (window.scrollY > 550) {
-    header.classList.add("scrolled");
-    logo.src = logoColor; // Thay bằng logo màu
-  } else {
-    header.classList.remove("scrolled");
-    logo.src = logoWhite; // Thay bằng logo trắng
-  }
-}
-
-// Hàm khởi tạo logic cuộn Header/Logo
-function initHeaderScrollLogic() {
-  const header = document.getElementById("header");
-  const logo = document.getElementById("logo");
-  
-  // ⚠️ Quan trọng: Xóa listener cũ trước
-  window.removeEventListener("scroll", headerScrollHandler);
-
-  const currentPage = window.location.pathname.split("/").pop();
-  const isHomePage = (currentPage === "" || currentPage === "index.html");
-
-  if (!header || !logo) return;
-
-  if (isHomePage) {
-    // ✅ HOME
-    document.body.classList.remove("sticky-header");
-    window.addEventListener("scroll", headerScrollHandler);
-    // Gọi một lần để setup trạng thái ban đầu
-    headerScrollHandler(); 
-  } else {
-    // ✅ PAGE PHỤ (Gán trạng thái cố định ngay)
-    document.body.classList.add("sticky-header");
-    header.classList.add("scrolled");
-    // Sử dụng logo màu cho page phụ để nổi bật trên nền trắng (hoặc bất kỳ nền nào khác)
-    logo.src = "https://i.postimg.cc/7b4MF0XW/logo-colored.png"; 
-  }
-}
-
-// Logic chuyển đổi nút Like (Tách ra để dễ quản lý)
-function likeButtonToggle() {
-    const likeBtn = document.getElementById("likeBtn");
-    const likeCountElm = document.getElementById("likeCount");
-    
-    if (!likeBtn || !likeCountElm) return;
-    
-    // Sử dụng thuộc tính data để lưu trạng thái
-    let liked = likeBtn.dataset.liked === 'true';
-    let likeCount = parseInt(likeCountElm.textContent, 10) || 0;
-    
-    liked = !liked;
-
-    likeBtn.innerHTML = liked
-      ? '<i class="fa-solid fa-thumbs-up"></i>'
-      : '<i class="fa-regular fa-thumbs-up"></i>';
-
-    likeCount += liked ? 1 : -1;
-    likeCountElm.textContent = likeCount;
-    likeBtn.dataset.liked = liked;
-}
-
-// Hàm khởi tạo logic nút Like
-function initLikeButton() {
-  const likeBtn = document.getElementById("likeBtn");
-
-  if (likeBtn) {
-    // Xóa listener cũ và thêm lại
-    likeBtn.removeEventListener("click", likeButtonToggle); 
-    likeBtn.addEventListener("click", likeButtonToggle);
-  }
-}
-
-
-// Hàm khởi tạo logic gạch chân NAV
-function updateNavActiveState() {
-  const navLinks = document.querySelectorAll("header nav a");
-  
-  // Lấy đường dẫn hiện tại, loại bỏ query string
-  let currentPath = window.location.pathname.split("/").pop();
-  currentPath = currentPath.split("?")[0]; 
-
-  navLinks.forEach(link => {
-    const href = link.getAttribute("href");
-    link.classList.remove("active"); 
-
-    // Kiểm tra trang hiện tại và trang mặc định (index.html)
-    if (href === currentPath || (currentPath === "" && href === "index.html")) {
-      link.classList.add("active");
-    }
-    // Xử lý trường hợp news.html có query param (ví dụ: news.html?category=...)
-    if (currentPath.startsWith("news.html") && href === "news.html") {
-         link.classList.add("active");
-    }
+      let loaded = 0;
+      images.forEach(img => {
+        if (img.complete) {
+          loaded++;
+          if (loaded === images.length) callback();
+        } else {
+          img.onload = img.onerror = () => {
+            loaded++;
+            if (loaded === images.length) callback();
+          };
+        }
+      });
+    });
   });
 }
 
+/* =================================
+   HEADER LOGIC
+================================= */
+function headerScrollHandler() {
+  const header = document.getElementById("header");
+  const logo = document.getElementById("logo");
 
-// Hàm dừng các hiệu ứng động khi chuyển trang
-function stopAllAnimations() {
-    if (menuAnimationInterval) {
-        clearInterval(menuAnimationInterval);
-        menuAnimationInterval = null;
-    }
-    if (instaAnimationInterval) {
-        clearInterval(instaAnimationInterval);
-        instaAnimationInterval = null;
-    }
+  if (!header || !logo) return;
+
+  const logoWhite = "https://i.postimg.cc/dDFmbrnX/logo-white.png";
+  const logoColor = "https://i.postimg.cc/7b4MF0XW/logo-colored.png";
+
+  if (window.scrollY > 550) {
+    header.classList.add("scrolled");
+    logo.src = logoColor;
+  } else {
+    header.classList.remove("scrolled");
+    logo.src = logoWhite;
+  }
 }
 
+function initHeaderScrollLogic() {
+  const header = document.getElementById("header");
+  const logo = document.getElementById("logo");
 
-// Hàm xử lý các logic cần chạy lại sau khi nội dung được tải mới
-function handlePageUpdate() {
-    // 1. Cuộn lên đầu trang
-    window.scrollTo(0, 0);
+  window.removeEventListener("scroll", headerScrollHandler);
 
-    // 2. Cập nhật trạng thái Active của Menu NAV
-    updateNavActiveState();
-    
-    // 3. KHỞI TẠO LẠI LOGIC CUỘN HEADER
-    initHeaderScrollLogic();
-    
-    // 4. KHỞI TẠO LẠI NÚT LIKE 
-    initLikeButton(); 
-    
-    // 5. Kích hoạt lại các script nội dung (Animation)
-    initMenuImageAnimation();
-    initInstaImageAnimation();
+  if (!header || !logo) return;
+
+  const page = window.location.pathname.split("/").pop();
+  const isHome = page === "" || page === "index.html";
+
+  if (isHome) {
+    document.body.classList.remove("sticky-header");
+    window.addEventListener("scroll", headerScrollHandler);
+    headerScrollHandler();
+  } else {
+    document.body.classList.add("sticky-header");
+    header.classList.add("scrolled");
+    logo.src = "https://i.postimg.cc/7b4MF0XW/logo-colored.png";
+  }
 }
-
-
-// Hàm Fetch nội dung trang mới (Đã sửa lỗi tải CSS và Fade-in)
-async function fetchPageContent(url, contentArea) {
-    // ⚠️ QUAN TRỌNG: Dừng animation cũ trước khi DOM thay đổi
-    stopAllAnimations(); 
-    
-    try {
-        const response = await fetch(url);
-        const html = await response.text();
-        
-        const parser = new DOMParser();
-        const newDoc = parser.parseFromString(html, 'text/html');
-        
-        const newContent = newDoc.getElementById('content');
-        
-        if (!newContent) {
-            window.location.href = url;
-            return; 
-        }
-
-        // --- Logic Xử lý CSS (Đã tối ưu) ---
-        const currentCSSLink = document.head.querySelector('link[data-page-style]');
-        const newCSSLinkFromDoc = newDoc.head.querySelector('link[data-page-style]');
-
-        let cssLoadPromise = Promise.resolve();
-        let shouldRemoveOldCSS = false;
-
-        if (newCSSLinkFromDoc) {
-            const newHref = newCSSLinkFromDoc.getAttribute("href");
-
-            if (!currentCSSLink || currentCSSLink.href !== newHref) {
-                const newLink = document.createElement("link");
-                newLink.rel = "stylesheet";
-                newLink.href = newHref;
-                newLink.dataset.pageStyle = "true";
-
-                cssLoadPromise = new Promise(resolve => {
-                    newLink.onload = resolve;
-                    newLink.onerror = resolve;
-                    document.head.appendChild(newLink);
-                });
-
-                shouldRemoveOldCSS = true;
-            }
-        }
-
-        await cssLoadPromise;
-
-        // Nếu trang mới không có CSS đặc thù, loại bỏ CSS cũ (nếu có)
-        if (!newCSSLinkFromDoc && currentCSSLink) {
-          currentCSSLink.remove();
-        }
-
-        // Chỉ REMOVE CSS CŨ KHI ĐÃ APPEND CSS MỚI
-        if (shouldRemoveOldCSS && currentCSSLink) {
-            currentCSSLink.remove();
-        }
-        // --- Kết thúc Logic CSS ---
-
-        // 4. THAY THẾ NỘI DUNG
-        contentArea.innerHTML = newContent.innerHTML;
-
-        // 5. Cập nhật URL
-        window.history.pushState({}, '', url);
-
-        // 6. FADE-IN SAU KHI DOM VÀ CSS SẴN SÀNG
-        requestAnimationFrame(() => {
-            document.body.classList.add("page-loaded");
-        });
-
-        // 7. Kích hoạt lại các logic
-        handlePageUpdate();
-
-    } catch (error) {
-        console.error("Lỗi khi tải trang AJAX:", error);
-        window.location.href = url;
-    }
-}
-
 
 /* =================================
-   LOGIC PAGE TRANSITION & DOMContentLoaded
+   NAV + LIKE
 ================================= */
+function updateNavActiveState() {
+  const navLinks = document.querySelectorAll("header nav a");
+  let currentPath = window.location.pathname.split("/").pop().split("?")[0];
 
-// Xử lý nút Back/Forward của trình duyệt
-window.addEventListener('popstate', (e) => {
-    // Chỉ tải lại nếu có sự kiện popstate (người dùng bấm back/forward)
-    const content = document.getElementById('content');
-    if (content) {
-        // Tải nội dung trang hiện tại từ history
-        fetchPageContent(window.location.href, content);
-    } else {
-        window.location.reload();
+  navLinks.forEach(link => {
+    const href = link.getAttribute("href");
+    link.classList.toggle(
+      "active",
+      href === currentPath ||
+      (currentPath === "" && href === "index.html") ||
+      (currentPath.startsWith("news.html") && href === "news.html")
+    );
+  });
+}
+
+function likeButtonToggle() {
+  const btn = document.getElementById("likeBtn");
+  const countElm = document.getElementById("likeCount");
+  if (!btn || !countElm) return;
+
+  let liked = btn.dataset.liked === "true";
+  let count = parseInt(countElm.textContent) || 0;
+
+  liked = !liked;
+  btn.dataset.liked = liked;
+  btn.innerHTML = liked
+    ? '<i class="fa-solid fa-thumbs-up"></i>'
+    : '<i class="fa-regular fa-thumbs-up"></i>';
+  countElm.textContent = count + (liked ? 1 : -1);
+}
+
+function initLikeButton() {
+  const btn = document.getElementById("likeBtn");
+  if (!btn) return;
+  btn.removeEventListener("click", likeButtonToggle);
+  btn.addEventListener("click", likeButtonToggle);
+}
+
+/* =================================
+   ANIMATION CONTROL
+================================= */
+function stopAllAnimations() {
+  if (menuAnimationInterval) clearInterval(menuAnimationInterval);
+  if (instaAnimationInterval) clearInterval(instaAnimationInterval);
+  menuAnimationInterval = instaAnimationInterval = null;
+}
+
+function initMenuImageAnimation() {
+  const img = document.querySelector(".menu-animation");
+  if (!img) return stopAllAnimations();
+
+  const total = 8;
+  const path = "home-user/menu-pic/menu-pic";
+  let frame = 1;
+
+  stopAllAnimations();
+
+  menuAnimationInterval = setInterval(() => {
+    frame = frame % total + 1;
+    img.src = `${path}${frame}.png`;
+  }, 1000);
+}
+
+function initInstaImageAnimation() {
+  const img = document.querySelector(".insta-animation");
+  if (!img) return;
+
+  const total = 9;
+  const path = "home-user/ins-pic/ins";
+  let frame = 1;
+
+  if (instaAnimationInterval) clearInterval(instaAnimationInterval);
+
+  instaAnimationInterval = setInterval(() => {
+    frame = frame % total + 1;
+    img.src = `${path}${frame}.png`;
+  }, 1000);
+}
+
+/* =================================
+   PAGE UPDATE
+================================= */
+function handlePageUpdate() {
+  window.scrollTo(0, 0);
+  updateNavActiveState();
+  initHeaderScrollLogic();
+  initLikeButton();
+  initMenuImageAnimation();
+  initInstaImageAnimation();
+}
+
+/* =================================
+   SPA FETCH CORE (ĐÃ SỬA)
+================================= */
+async function fetchPageContent(url, contentArea) {
+  stopAllAnimations();
+
+  try {
+    // 🔥 Nếu là NEWS → render skeleton NGAY
+    if (url.includes("news.html")) {
+      renderNewsSkeletonImmediately();
     }
-});
 
+    const html = await fetch(url).then(r => r.text());
+    const doc = new DOMParser().parseFromString(html, "text/html");
 
-document.addEventListener("click", e => {
-  const link = e.target.closest("a[href]");
-  if (!link) return; // Không phải là link, bỏ qua
-
-  const url = link.getAttribute("href");
-
-  if (
-    !url ||
-    url.startsWith("#") ||
-    link.target === "_blank" ||
-    url.startsWith("http") ||
-    url.endsWith(".pdf") || 
-    url.endsWith(".zip")
-  ) return;
-
-  // Lấy #content trước khi chuyển trang
-  const content = document.getElementById('content'); 
-  if (!content) {
+    const newContent = doc.getElementById("content");
+    if (!newContent) {
       window.location.href = url;
       return;
-  }
-  
-  e.preventDefault();
+    }
 
-  // 1. Bắt đầu hiệu ứng Fade-out
+    // ✅ Title update ngay
+    document.title =
+      doc.querySelector("title")?.textContent || "Elis’ Favorite";
+
+    // --- CSS handling ---
+    const oldCSS = document.head.querySelector("link[data-page-style]");
+    const newCSS = doc.head.querySelector("link[data-page-style]");
+    let cssPromise = Promise.resolve();
+
+    if (newCSS && (!oldCSS || oldCSS.href !== newCSS.href)) {
+      const link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.href = newCSS.href;
+      link.dataset.pageStyle = "true";
+
+      cssPromise = new Promise(r => {
+        link.onload = r;
+        link.onerror = r;
+        document.head.appendChild(link);
+      });
+    }
+
+    // 🚀 RENDER DOM NGAY – KHÔNG ĐỢI CSS
+    contentArea.innerHTML = newContent.innerHTML;
+    history.pushState({}, "", url);
+
+    document.body.classList.add("page-loaded");
+
+    // ⏳ CSS load ngầm
+    cssPromise.then(() => {
+      if (oldCSS && (!newCSS || oldCSS.href !== newCSS.href)) {
+        oldCSS.remove();
+      }
+    });
+
+    // ✅ ĐỢI UI PAINT XONG RỒI MỚI INIT
+    whenUIReady($("#content"), () => {
+      handlePageUpdate();
+
+      if (url.includes("news.html") && window.initNewsPage) {
+        window.initNewsPage();
+      }
+    });
+
+  } catch (err) {
+    console.error("SPA load error:", err);
+    window.location.href = url;
+  }
+}
+
+/* =================================
+   ROUTING
+================================= */
+document.addEventListener("click", e => {
+  const link = e.target.closest("a[href]");
+  if (!link) return;
+
+  const url = link.getAttribute("href");
+  if (!url || url.startsWith("#") || link.target === "_blank" || url.startsWith("http")) return;
+
+  const content = document.getElementById("content");
+  if (!content) return;
+
+  e.preventDefault();
   document.body.classList.remove("page-loaded");
 
-  // 2. Chuyển hướng sau khi Fade-out hoàn tất (300ms)
-  setTimeout(() => {
-    fetchPageContent(url, content);
-  }, 300);
+setTimeout(() => {
+  if (url.includes("news.html")) {
+    renderNewsSkeletonImmediately();
+  }
+  fetchPageContent(url, content);
+}, 300);
 });
 
+window.addEventListener("popstate", () => {
+  const content = document.getElementById("content");
+  if (content) fetchPageContent(location.href, content);
+});
 
+/* =================================
+   INIT
+================================= */
 document.addEventListener("DOMContentLoaded", () => {
   document.body.classList.add("page-loaded");
   handlePageUpdate();
 });
 
-
 /* =================================
-   LOGIC ANIMATION
+   HEADER LOAD
 ================================= */
+function loadHeader() {
+  const container = document.getElementById("header-container");
+  if (!container) return;
 
-function initMenuImageAnimation() {
-  const img = document.querySelector(".menu-animation");
-  if (!img) {
-    if (menuAnimationInterval) clearInterval(menuAnimationInterval);
-    menuAnimationInterval = null;
-    return;
-  }
-
-  const totalFrames = 8;
-  const framePath = "home-user/menu-pic/menu-pic";
-  let currentFrame = 1;
-
-  // ❌ DỪNG interval cũ nếu có (Quan trọng)
-  if (menuAnimationInterval) {
-    clearInterval(menuAnimationInterval);
-    menuAnimationInterval = null;
-  }
-
-  // ✅ Preload ảnh cho mượt
-  for (let i = 1; i <= totalFrames; i++) {
-    const preloadImg = new Image();
-    preloadImg.src = `${framePath}${i}.png`;
-  }
-
-  // ✅ Tạo interval MỚI
-  menuAnimationInterval = setInterval(() => {
-    currentFrame++;
-    if (currentFrame > totalFrames) {
-      currentFrame = 1;
-    }
-    img.src = `${framePath}${currentFrame}.png`;
-  }, 1000);
+  fetch("header-footer/header.html")
+    .then(r => r.text())
+    .then(html => {
+      container.innerHTML = html;
+      initHeaderScrollLogic();
+      updateNavActiveState();
+    });
 }
 
+document.addEventListener("DOMContentLoaded", loadHeader);
+function renderNewsSkeletonImmediately() {
+  const content = document.getElementById("content");
+  if (!content) return;
 
-function initInstaImageAnimation() {
-  const img = document.querySelector(".insta-animation");
-  if (!img) {
-    if (instaAnimationInterval) clearInterval(instaAnimationInterval);
-    instaAnimationInterval = null;
-    return;
-  }
+  // Nếu đã có skeleton thì không render lại
+  if (content.querySelector(".news-skeleton")) return;
 
-  const totalFrames = 9;
-  const framePath = "home-user/ins-pic/ins";
-  let currentFrame = 1;
+  content.innerHTML = `
+    <section class="news-page">
+      <h1 id="news-title">Tin tức</h1>
 
-  // ❌ Clear interval cũ (Quan trọng)
-  if (instaAnimationInterval) {
-    clearInterval(instaAnimationInterval);
-    instaAnimationInterval = null;
-  }
-
-  // ✅ Preload ảnh
-  for (let i = 1; i <= totalFrames; i++) {
-    const preloadImg = new Image();
-    preloadImg.src = `${framePath}${i}.png`;
-  }
-
-  // ✅ Animation loop
-  instaAnimationInterval = setInterval(() => {
-    currentFrame++;
-    if (currentFrame > totalFrames) currentFrame = 1;
-    img.src = `${framePath}${currentFrame}.png`;
-  }, 1000); 
+      <div class="news-skeleton">
+        ${Array.from({ length: 6 }).map(() => `
+          <div class="skeleton-card">
+            <div class="skeleton-thumb"></div>
+            <div class="skeleton-line"></div>
+            <div class="skeleton-line short"></div>
+          </div>
+        `).join("")}
+      </div>
+    </section>
+  `;
 }
-
-// Xử lý khi người dùng chuyển tab/cửa sổ
-document.addEventListener("visibilitychange", () => {
-  if (document.hidden) {
-    stopAllAnimations();
-  } else {
-    // Khởi tạo lại animation khi tab/cửa sổ được focus lại
-    initMenuImageAnimation();
-    initInstaImageAnimation();
-  }
-});
