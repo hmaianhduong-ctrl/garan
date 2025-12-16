@@ -76,46 +76,6 @@ function initHeaderScrollLogic() {
   }
 }
 
-/* =================================
-   NAV + LIKE
-================================= */
-function updateNavActiveState() {
-  const navLinks = document.querySelectorAll("header nav a");
-  let currentPath = window.location.pathname.split("/").pop().split("?")[0];
-
-  navLinks.forEach(link => {
-    const href = link.getAttribute("href");
-    link.classList.toggle(
-      "active",
-      href === currentPath ||
-      (currentPath === "" && href === "index.html") ||
-      (currentPath.startsWith("news.html") && href === "news.html")
-    );
-  });
-}
-
-function likeButtonToggle() {
-  const btn = document.getElementById("likeBtn");
-  const countElm = document.getElementById("likeCount");
-  if (!btn || !countElm) return;
-
-  let liked = btn.dataset.liked === "true";
-  let count = parseInt(countElm.textContent) || 0;
-
-  liked = !liked;
-  btn.dataset.liked = liked;
-  btn.innerHTML = liked
-    ? '<i class="fa-solid fa-thumbs-up"></i>'
-    : '<i class="fa-regular fa-thumbs-up"></i>';
-  countElm.textContent = count + (liked ? 1 : -1);
-}
-
-function initLikeButton() {
-  const btn = document.getElementById("likeBtn");
-  if (!btn) return;
-  btn.removeEventListener("click", likeButtonToggle);
-  btn.addEventListener("click", likeButtonToggle);
-}
 
 /* =================================
    ANIMATION CONTROL
@@ -165,7 +125,7 @@ function handlePageUpdate() {
   window.scrollTo(0, 0);
   updateNavActiveState();
   initHeaderScrollLogic();
-  initLikeButton();
+
   initMenuImageAnimation();
   initInstaImageAnimation();
 }
@@ -318,3 +278,4 @@ function renderNewsSkeletonImmediately() {
     </section>
   `;
 }
+

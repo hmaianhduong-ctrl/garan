@@ -1,16 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script src="script.js" defer></script>
+
+<script src="script.js" defer></script>
+<script src="login-popup.js" defer></script> 
+<script src="blog.js" defer></script>  
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Blog | Elis’ Favorite</title>
 
-  <!-- FONT & CSS -->
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="base.css">
   <link rel="stylesheet" href="blog.css" data-page-style>
+  
+  <link rel="stylesheet" href="login-popup.css"> 
+  
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
@@ -19,7 +24,6 @@
 <div id="header-container"></div>
 
 <main id="content">
-  <!-- BLOG HERO -->
   <section class="blog-hero">
     <div class="blog-hero-image" id="heroImage"></div>
     <div class="blog-hero-overlay"></div>
@@ -31,10 +35,8 @@
     </p>
   </section>
 
-  <!-- BLOG BODY -->
   <div class="blog-container">
 
-    <!-- META -->
     <div class="blog-meta">
       <span class="blog-tag blog-tag-single" id="blogTag">Loading...</span>
 
@@ -44,10 +46,8 @@
       </div>
     </div>
 
-    <!-- CONTENT OUTPUT -->
     <div id="blogContent"></div>
 
-    <!-- END SECTION -->
     <div class="blog-end-row">
       <p class="blog-end-text">
         Bạn thích bài viết này chứ? Hãy cho chúng mình biết nhé!
@@ -60,7 +60,6 @@
     </div>
   </div>
 
-  <!-- ACTION BUTTONS -->
   <div class="blog-actions">
     <div class="action-block">
       <button class="action-btn like-btn" id="likeBtn">
@@ -77,8 +76,7 @@
     </div>
   </div>
 
-  <!-- RECOMMEND SECTION -->
-<div class="blog-recommend-wrapper">
+  <div class="blog-recommend-wrapper">
   
   <a href="news.html" class="back-to-library">
     <span>BACK TO</span>
@@ -88,10 +86,6 @@
   <div class="blog-recommend-inner" id="recommendContainer"></div>
 </div>
 
-    <div class="blog-recommend-inner" id="recommendContainer"></div>
-  </div>
-
-  <!-- COMMENT SECTION -->
   <div class="comment-wrapper">
     <div class="comment-top">
       <div class="comment-avatar">👤</div>
@@ -105,7 +99,6 @@
     </div>
   </div>
 </main>
-  <!-- FOOTER -->
   <footer class="footer-logo">
     <img src="https://i.postimg.cc/7PGsTNz6/chuvahinh.png" alt="Footer Logo">
 
@@ -140,112 +133,8 @@
     </div>
   </div>
 
-<script>
-  async function loadBlog() {
-    const params = new URLSearchParams(window.location.search);
-    const slug = params.get("slug"); 
+<div id="login-popup-container"></div>
 
-    const res = await fetch("blogs.json");
-    const blogs = await res.json();
 
-    const blog = blogs.find(b => b.slug === slug);
-
-    if (!blog) {
-      document.querySelector("#blogTitle").textContent = "Post not found";
-      document.querySelector("#blogDescription").style.display = 'none';
-      document.querySelector(".blog-meta").style.display = 'none';
-      return;
-    }
-
-    // HERO
-    document.querySelector("#heroImage").style.backgroundImage =
-      `url(${blog.thumbnail})`;
-
-    document.querySelector("#blogTitle").textContent = blog.title;
-    document.querySelector("#blogDescription").textContent = blog.description;
-    
-    // Xử lý Tag, đảm bảo class tag-name cũng đúng
-    document.querySelector("#blogTag").textContent = blog.tag;
-    document.querySelector("#blogTag").className = `blog-tag blog-tag-single tag-${blog.tag.toLowerCase()}`;
-    
-    document.querySelector("#blogDate").textContent = blog.date;
-
-    // CONTENT RENDER
-    const container = document.querySelector("#blogContent");
-    container.innerHTML = ''; // Dọn dẹp nội dung cũ nếu AJAX gọi lại
-
-    blog.content.forEach(block => {
-
-      const text = block.value || block.text || "";
-      let el = null;
-
-      if (block.type === "paragraph") {
-        el = document.createElement("p");
-        el.className = "blog-paragraph";
-        el.innerHTML = text.replace(/\n/g, "<br>");
-      } else if (block.type === "h2") {
-        el = document.createElement("h2");
-        el.className = "blog-subheader";
-        el.textContent = text;
-      } else if (block.type === "h3") {
-        el = document.createElement("h3");
-        el.className = "blog-subsubheader";
-        el.textContent = text;
-      } else if (block.type === "image" && block.value) {
-        el = document.createElement("img");
-        el.className = "blog-image";
-        el.src = block.value;
-      } else if (block.type === "list") {
-        el = document.createElement("ul");
-        el.className = "blog-list";
-        const items = block.items || block.value || [];
-        items.forEach(item => {
-          const li = document.createElement("li");
-          li.textContent = item;
-          el.appendChild(li);
-        });
-      }
-
-      if (el) container.appendChild(el);
-    });
-
-    /* ============================
-       RECOMMEND
-       ============================ */
-    const recommendBox = document.querySelector("#recommendContainer");
-    recommendBox.innerHTML = ''; // Dọn dẹp recommend cũ nếu AJAX gọi lại
-
-    blogs
-      .filter(b => b.slug !== slug)
-      .slice(0, 3)
-      .forEach(b => {
-        recommendBox.innerHTML += `
-          <a href="blog.html?slug=${b.slug}" class="bcard"> 
-            <div class="bcard-thumb-wrapper">
-              <img src="${b.thumbnail}" alt="" class="bcard-thumb">
-            </div>
-
-            <h3 class="bcard-title">${b.title}</h3>
-
-            <div class="bcard-meta">
-              <span class="bcard-tag tag-${b.tag.toLowerCase()}">${b.tag}</span>
-
-              <div class="bcard-date">
-                <span class="date-text">Published</span>
-                <span class="date-value">${b.date}</span>
-              </div>
-            </div>
-
-          </a>
-        `;
-      });
-  }
-
-  // Hàm này được gọi khi DOMContentLoaded (lần tải đầu tiên) và bởi script.js (AJAX)
-  function initBlogPageLogic() {
-      loadBlog();
-      // Logic nút Like đã được xử lý bởi initLikeButton() trong script.js
-  }
-  
-  document.addEventListener("DOMContentLoaded", initBlogPageLogic);
-</script>
+</body>
+</html>

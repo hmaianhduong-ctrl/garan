@@ -358,3 +358,108 @@ body.sticky-header #login-link {
   }
 }
 
+.login-popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.login-popup {
+  background: #fff;
+  padding: 30px 35px; 
+  width: 380px; 
+  border-radius: 16px; 
+  text-align: center;
+  position: relative;
+  
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15); 
+  border: 1px solid #eee; 
+  
+  animation: popupFade 0.25s ease;
+}
+
+.login-popup h3 {
+  color: #BA3801;
+  font-size: 24px; /* Tăng kích thước tiêu đề */
+  font-weight: 700; /* Tăng độ đậm */
+  margin-bottom: 12px; /* Giảm khoảng cách cho gần mô tả hơn */
+}
+
+/* Sửa .login-popup p (Mô tả): */
+.login-popup p {
+  font-size: 14px; /* Tăng nhẹ để dễ đọc hơn */
+  color: #666; /* Màu xám đậm hơn một chút */
+  margin-bottom: 25px; /* Tăng khoảng cách với nút CTA */
+}
+
+.popup-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.btn-login {
+  background: #BA3801;
+  color: #fff;
+  padding: 10px 20px; /* Tăng padding nút */
+  border-radius: 8px; /* Bo tròn hơn */
+  text-decoration: none;
+  font-weight: 600; /* Làm đậm chữ */
+  
+  /* CẢI THIỆN: Transition mượt mà */
+  transition: background-color 0.2s ease, transform 0.1s;
+}
+
+.btn-login:hover {
+  background: #992F00; /* Màu đậm hơn khi hover */
+  transform: translateY(-1px); /* Hiệu ứng nhấc nhẹ */
+}
+
+
+.btn-cancel {
+  background: transparent;
+  border: 1px solid #ccc;
+  padding: 10px 20px; /* Đồng nhất padding */
+  border-radius: 8px; /* Đồng nhất bo tròn */
+  cursor: pointer;
+  color: #555; /* Màu chữ mặc định */
+  
+  /* CẢI THIỆN: Transition mượt mà */
+  transition: border-color 0.2s ease, background-color 0.2s;
+}
+
+.btn-cancel:hover {
+  border-color: #BA3801; /* Đổi màu viền khi hover */
+  background-color: #fff5f2; /* Thêm màu nền nhẹ */
+  color: #BA3801;
+}
+
+.popup-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 28px; /* Kích thước lớn hơn, dễ bấm hơn */
+  color: #aaa; /* Màu xám nhạt */
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px; /* Tăng vùng click */
+  transition: color 0.2s;
+}
+
+.popup-close:hover {
+  color: #666; /* Đậm hơn khi hover */
+}
+
+.hidden {
+  display: none;
+}
+
+@keyframes popupFade {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}

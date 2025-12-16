@@ -175,5 +175,7 @@ document.addEventListener("DOMContentLoaded", () => {
             setTimeout(hideMessage, 4000);
         });
     }
+    
 
 });
+
