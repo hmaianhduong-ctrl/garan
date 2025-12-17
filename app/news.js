@@ -1,6 +1,7 @@
 /* =================================
    NEWS PAGE SCRIPT – CLEAN FINAL
 ================================= */
+const API_BASE = "http://localhost:3000";
 
 let newsDataCache = null;
 window.initNewsPage = function () {
@@ -51,7 +52,7 @@ function processPostsForNewsPage(postsArray) {
 /* ---------- FETCH ---------- */
 async function fetchNewsData() {
   try {
-    const res = await fetch("/api/posts");
+    const res = await fetch(`${API_BASE}/api/posts`);
     if (!res.ok) throw new Error(res.status);
 
     const rawPosts = await res.json();

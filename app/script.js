@@ -9,9 +9,21 @@ let skeletonTimer = null;
    UTILS
 ================================= */
 function updateNavActiveState() {
-  // logic thực tế nếu có
+  const links = document.querySelectorAll("#header nav a");
+  if (!links.length) return;
+
+  const currentPage = location.pathname.split("/").pop();
+
+  links.forEach(link => {
+    link.classList.remove("active");
+    const href = link.getAttribute("href");
+    // Nếu link khớp với trang hiện tại, gắn class active
+    if (href === currentPage) {
+      link.classList.add("active");
+    }
+  });
 }
-document.addEventListener("DOMContentLoaded", loadHeader);
+
 /* =================================
    UI READY BARRIER
 ================================= */
@@ -185,9 +197,9 @@ async function fetchPageContent(url, contentArea) {
     document.title =
       doc.querySelector("title")?.textContent || "Elis’ Favorite";
 
-    if (!url.includes("news.html")) {
+
       contentArea.innerHTML = newContent.innerHTML;
-    }
+    
 
     history.pushState({}, "", url);
     document.body.classList.add("page-loaded");
@@ -195,10 +207,14 @@ async function fetchPageContent(url, contentArea) {
     whenUIReady($("#content"), () => {
       handlePageUpdate();
 
+      // ✅ Update nav link active sau mỗi SPA page load
+      updateNavActiveState();
+
       if (url.includes("news.html") && window.initNewsPage) {
         window.initNewsPage();
       }
     });
+
 
   } catch (err) {
     console.error("SPA error:", err);
@@ -249,9 +265,11 @@ document.addEventListener("click", e => {
    INIT
 ================================= */
 document.addEventListener("DOMContentLoaded", () => {
+  loadHeader();
   document.body.classList.add("page-loaded");
   handlePageUpdate();
 });
+
 
 /* =================================
    HEADER LOAD
