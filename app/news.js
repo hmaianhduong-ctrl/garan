@@ -1,7 +1,8 @@
 /* =================================
    NEWS PAGE SCRIPT – CLEAN FINAL
 ================================= */
-const API_BASE = "http://localhost:3000";
+const API_BASE = "http://localhost:3000"; // Backend Next.js
+const API_POSTS = `${API_BASE}/api/posts`;
 
 let newsDataCache = null;
 window.initNewsPage = function () {
@@ -33,26 +34,31 @@ function processPostsForNewsPage(postsArray) {
   }
 
   postsArray.forEach(post => {
-    const tag = post.tag || "Uncategorized";
+    const tags = Array.isArray(post.tags) && post.tags.length
+      ? post.tags
+      : ["Uncategorized"];
 
-    if (!groupedData[tag]) groupedData[tag] = [];
+    tags.forEach(tagName => {
+      if (!groupedData[tagName]) groupedData[tagName] = [];
 
-    groupedData[tag].push({
-      id: post.id,
-      title: post.title,
-      date: post.publishedAt || post.date,
-      image: post.thumbnail,
-      slug: post.slug
+      groupedData[tagName].push({
+        id: post.id,
+        title: post.title,
+        date: post.publishedAt || post.createdAt,
+        image: post.thumbnail,
+        slug: post.slug
+      });
     });
   });
 
   return groupedData;
 }
 
+
 /* ---------- FETCH ---------- */
 async function fetchNewsData() {
   try {
-    const res = await fetch(`${API_BASE}/api/posts`);
+    const res = await fetch(API_POSTS);
     if (!res.ok) throw new Error(res.status);
 
     const rawPosts = await res.json();
