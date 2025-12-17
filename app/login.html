@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Login to ELIS' FAVORITE</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="login.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+  <!-- GLOBAL LOADER -->
+  <div id="globalLoader" aria-hidden="true">
+    <div class="loader-spinner" role="img" aria-label="Loading"></div>
+  </div>
+
+  <div class="container hidden-opacity" id="pageRoot">
+
+    <!-- LEFT PANEL -->
+    <aside class="left-panel">
+      <div class="login-panel">
+
+        <!-- HEADER -->
+        <header class="lp-header">
+          <div class="logo">
+            <a href="index.html" aria-label="Back to home">
+              <img
+                src="https://res.cloudinary.com/dbysgwcva/image/upload/v1764258621/chutrang_ua9n0i.png"
+                alt="ELIS' FAVORITE"
+              />
+            </a>
+          </div>
+
+          <div class="register-link">
+            <span>Don't have an account?</span>
+            <a href="register.html">Register</a>
+          </div>
+        </header>
+
+        <!-- LOGIN BOX -->
+        <div class="login-box">
+          <div class="avatar-icon">
+            <i class="fas fa-user"></i>
+          </div>
+
+          <h2 class="title">Login to your account</h2>
+          <p class="subtitle">Enter your details to login</p>
+
+          <!-- FORM -->
+          <form id="loginForm" novalidate>
+
+            <div class="input-group">
+              <label class="input-label">Email</label>
+              <div class="input-field">
+                <i class="fas fa-envelope icon"></i>
+                <input type="email" id="email" placeholder="Email" required />
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label class="input-label">Password</label>
+              <div class="input-field">
+                <i class="fas fa-lock icon"></i>
+                <input type="password" id="password" placeholder="Password" required />
+              </div>
+            </div>
+
+            <div class="error-message" id="errorMessage" aria-live="polite"></div>
+
+            <div class="options-row">
+              <label class="remember-me">
+                <input type="checkbox" id="rememberMe" />
+                <span>Remember me</span>
+              </label>
+              <a href="#" class="forgot-password" id="forgotPasswordLink">
+                Forgot password?
+              </a>
+            </div>
+
+            <button type="submit" id="loginButton" class="login-btn">
+              <span class="btn-text">Log in</span>
+              <span class="loading-spinner" aria-hidden="true"></span>
+            </button>
+          </form>
+        </div>
+      </div>
+    </aside>
+
+    <!-- RIGHT PANEL -->
+    <aside class="right-panel">
+      <img
+        src="https://res.cloudinary.com/dbysgwcva/image/upload/v1764259473/user-login_bpanvw.png"
+        class="illustration-img background-img"
+        alt="Background"
+      />
+      <img
+        src="https://res.cloudinary.com/dbysgwcva/image/upload/v1764259289/user-login-elis_wplwo7.png"
+        class="illustration-img foreground-img"
+        alt="Foreground PNG"
+      />
+    </aside>
+
+  </div>
+
+  <script src="login.js"></script>
+</body>
+</html>

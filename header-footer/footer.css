@@ -1,0 +1,101 @@
+/* FOOTER WRAPPER */
+.footer-logo {
+  width: 100%;
+  padding: 120px 0;
+  display: flex;
+  align-items: flex-start;
+  background: #ffffff;
+  transform: translateY(-50px);
+}
+
+/* FOOTER LOGO */
+.footer-logo img {
+  width: 350px;
+  margin-left: 40px;
+}
+
+/* COLUMN: Menu / News / About / Career */
+.footer-column {
+  display: flex;
+  flex-direction: column;
+  gap: 23px;
+  margin-left: 400px;
+}
+
+.footer-link {
+  font-size: 20px;
+  font-weight: 400;
+  color: #ba3801;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.footer-link:hover {
+  opacity: 0.6;
+}
+
+/* SOCIAL BLOCK */
+.social-block {
+  display: flex;
+  flex-direction: column;
+  margin-left: 180px;
+}
+
+.follow-us {
+  font-size: 20px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-style: italic;
+  font-weight: 400;
+  color: #ba3801;
+  margin-bottom: 14px;
+}
+
+/* ICON ROW */
+.social-icons {
+  display: flex;
+  gap: 40px;
+  font-size: 40px;
+  color: #BA3801;
+}
+
+.social-icons i {
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.social-icons i:hover {
+  opacity: 0.6;
+}
+
+.footer-right {
+  display: flex;
+  align-items: flex-start;
+  margin-top: 40px;
+}
+
+/* FOOTER INFO SECTION */
+.footer-info {
+  width: 100%;
+  max-width: 1300px;
+  margin: -20px auto 0 auto;
+  padding: 15px 20px;
+  padding-bottom: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 16px;
+  color: #ba3801;
+}
+
+.footer-left span {
+  margin-right: 25px;
+  white-space: nowrap;
+}
+
+.footer-right-text span {
+  white-space: nowrap;
+  font-weight: 370;
+}

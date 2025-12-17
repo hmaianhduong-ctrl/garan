@@ -1,0 +1,142 @@
+
+
+
+
+.menu-grid-wrapper {
+  position: relative;
+  margin-bottom: 70px; 
+  padding-bottom: 80px;
+  
+}
+
+/* ===== GRID ===== */
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+/* ===== CARD ===== */
+.menu-card {
+  border-top: 1px solid #BA3801;
+  border-bottom: 1px solid #BA3801;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* kẻ đường dọc giữa các cột */
+.menu-card:not(:nth-child(4n)) {
+  border-right: 1px solid #BA3801;
+}
+
+.menu-card img {
+  max-width: 95%;
+  width: 100%;
+  margin: 10px auto 0;
+  object-fit: cover;
+}
+
+/* ===== TITLE ===== */
+.menu-title-section {
+  margin-top: 100px;
+  text-align: center;
+  font-size: 30px;
+  font-weight: 450;
+  color: #ba3801;
+  margin-bottom: 40px;
+}
+
+.menu-title {
+  width: 95%;
+  margin: 10px auto 0;
+  font-size: 17px;
+  color: #ba3801;
+  font-weight: 400;
+  line-height: 1.35;
+}
+
+.menu-price {
+  width: 85%;
+  margin: 10px auto;
+  text-align: right;
+  font-size: 14px;
+  font-style: italic;
+  color: #ba3801;
+}
+
+/* ===== TAG ===== */
+.menu-tag {
+  display: inline-block;
+  width: fit-content;
+  margin-left: 20px;
+  padding: 6px 14px;
+  border-radius: 6px;
+
+  font-size: 20px;
+  font-weight: 500;
+  color: #fff;
+
+  background-color: #d2ac4d;
+  margin-bottom: 17px;
+}
+
+/* ===== NOTE ===== */
+.menu-note {
+  position: absolute;
+  right: 40px;
+  position: absolute;
+  bottom: 25px;
+  max-width: 45%;
+  bottom: 25px;
+  max-width: 500px;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 350;
+  color: #ba3801;
+  text-align: right;
+}
+
+
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1200px) {
+  .menu-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .menu-grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 1200px) {
+  .menu-card {
+    border-right: none;
+  }
+
+  .menu-card:not(:nth-child(2n)) {
+    border-right: 1px solid #BA3801;
+  }
+}
+
+@media (max-width: 640px) {
+  .menu-card {
+    border-right: none;
+  }
+}
+@media (max-width: 1200px) {
+  .menu-note {
+    max-width: 60%;
+  }
+}
+
+@media (max-width: 640px) {
+  .menu-note {
+    position: static;
+    margin-top: 16px;
+    max-width: 100%;
+    text-align: left;
+  }
+}

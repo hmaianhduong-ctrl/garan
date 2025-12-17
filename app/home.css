@@ -1,0 +1,631 @@
+/* HERO TEXT SECTION */
+.hero-text-section {
+  width: 100%;
+  height: 332px;
+  background-color: #ffffff;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  box-sizing: border-box;
+  margin-bottom: 200px;
+}
+
+.hero-inner {
+  width: 100%;
+  max-width: 1311px;
+  padding-top: 189px;
+  padding-left: 24px;
+  padding-right: 24px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.official-supplier-of {
+  display: block;
+  margin: 0 auto;
+  font-size: 70px;
+  line-height: 1.0;
+  font-weight: 600;
+  color: #ba3801;
+  font-style: italic;
+  width: 100%;
+  max-width: 1311px;
+  text-align: center;
+}
+
+.blame-the-chefs {
+  margin: 66px auto 0;
+  font-size: 20px;
+  font-weight: 500;
+  color: #ba3801;
+  max-width: 677px;
+  text-align: center;
+  line-height: 1.3;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .official-supplier-of {
+    font-size: clamp(28px, 6.5vw, 56px);
+    max-width: 90%;
+  }
+
+  .hero-inner {
+    padding-top: 120px;
+  }
+
+  .blame-the-chefs {
+    font-size: 16px;
+    max-width: 90%;
+    margin-top: 36px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-inner {
+    padding-top: 90px;
+  }
+
+  .official-supplier-of {
+    font-size: clamp(22px, 8.5vw, 40px);
+  }
+
+  .blame-the-chefs {
+    font-size: 14px;
+    margin-top: 28px;
+  }
+}
+
+.left-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+.ellipse-outline {
+  width: 194px;
+  height: 123px;
+  border-radius: 50%;
+  border: 2.5px solid #ffeda8;
+  position: absolute;
+}
+
+/* RIGHT SIDE */
+.rect-right {
+  width: 50%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  
+}
+
+/* RECTANGLE RED */
+.rectangle-div {
+  width: 100%;
+  height: 700px;
+  background-color: #ba3801;
+  position: relative;
+  display: flex;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.rect-left {
+  width: 50%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.left-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  z-index: 2;
+}
+
+/* FIX VIDEO FULLSCREEN */
+.video-hero {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.video-hero video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: translate(-50%, -50%);
+}
+
+.right-video {
+  width: 100%;
+  max-width: 440px;
+  height: auto;
+  object-fit: cover;
+}
+
+.open-block {
+  margin-top: 20px;
+}
+
+.open-text {
+  font-size: 15px;
+  font-style: italic;
+  font-weight: 300;
+  color: #ffeda8;
+  text-align: right;
+  line-height: 1;
+}
+
+.video-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: max-content;
+}
+
+
+.open-block {
+  margin-top: 18px;
+}
+
+.ellipse-btn {
+  width: 190px;
+  height: 90px;
+  border-radius: 50%;
+  border: 2.5px solid #ffeda8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  z-index: 10;
+}
+
+.ellipse-text {
+  font-size: 20px;
+  font-weight: 500;
+  color: #ffeda8;
+  letter-spacing: 1px;
+}
+
+.ellipse-red {
+  width: 190px;
+  height: 90px;
+  border-radius: 50%;
+  background-color: #ba3801;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  z-index: 10;
+}
+
+.ellipse-red-text {
+  font-size: 20px;
+  font-weight: 500;
+  color: #ffeda8;
+  text-align: center;
+  line-height: 22px;
+  letter-spacing: 1px;
+}
+
+/* FULLSCREEN BANNER BELOW */
+/* FULLSCREEN BANNER BELOW */
+.full-banner {
+  width: 100%;
+  height: 110px;
+  overflow: hidden;
+  background: transparent;
+}
+
+.banner-track {
+  display: flex;
+  width: max-content;
+  animation: banner-scroll 40s linear infinite;
+}
+
+.banner-track img {
+  height: 110px;
+  width: auto;
+  display: block;
+}
+
+/* KEYFRAMES */
+@keyframes banner-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 768px) {
+  .banner-track {
+    animation-duration: 40s;
+  }
+}
+
+
+.news-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* BACKGROUND */
+.news-bg-section {
+  position: relative;
+  width: 100%;
+}
+
+.news-bg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* BLOG CARDS */
+.blog-frame {
+  position: absolute;
+  top: 325px;
+  width: 378px;
+  height: 500px;
+  background: #ffffff;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
+
+/* POSITIONING CALC */
+:root {
+  --blog-offset: -270px;
+}
+
+.blog-1 {
+  left: calc(25% + var(--blog-offset));
+}
+
+.blog-2 {
+  left: calc(25% + 378px + 30px + var(--blog-offset));
+}
+
+.blog-3 {
+  left: calc(25% + (378px * 2) + (30px * 2) + var(--blog-offset));
+}
+
+.blog-4 {
+  left: calc(25% + (378px * 3) + (30px * 3) + var(--blog-offset));
+}
+
+/* IMAGE */
+.blog-thumb {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 360px;
+  height: 360px;
+  object-fit: cover;
+}
+
+/* TITLE */
+.blog-title {
+  position: absolute;
+  top: 385px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 92%;
+  font-size: 18px;
+  line-height: 25px;
+  font-weight: 400;
+  color: #ba3801;
+  text-align: left;
+}
+
+/* DATE */
+.post-date {
+  position: absolute;
+  top: 455px;
+  right: 15px;
+  display: flex;
+  gap: 7px;
+  font-style: italic;
+}
+
+.posted-text,
+.posted-date {
+  font-size: 14px;
+}
+
+.posted-text {
+  font-weight: 400;
+  color: #a43201;
+  opacity: 0.8;
+}
+
+.posted-date {
+  font-weight: 370;
+  color: #ba3801;
+}
+
+/* TAGS */
+.blog-tag {
+  position: absolute;
+  top: 455px;
+  left: 15px;
+  padding: 3px 10px;
+  border-radius: 6px;
+  display: inline-block;
+  color: white;
+  font-size: 14px;
+  font-weight: 300;
+  font-style: italic;
+}
+
+.tag-lifestyle {
+  background-color: #d2ac4d;
+}
+
+.tag-journey {
+  background-color: #9abfb1;
+}
+
+.tag-recipe {
+  background-color: #a1bb77;
+}
+
+.tag-voucher {
+  background-color: #955033;
+}
+
+/* BLOG BUTTON */
+.ellipse-blog {
+  position: absolute;
+  top: 520px;
+  left: calc(25% + (378px * 2) + (30px * 2) + 390px + var(--blog-offset));
+  transform: translateX(-50%);
+  width: 190px;
+  height: 90px;
+  border-radius: 50%;
+  background-color: #ba3801;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+/* OVERLAY RED */
+.rectangle-news-overlay {
+  position: absolute;
+  top: 900px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1100px;
+  height: 850px;
+  background-color: #ba3801;
+  opacity: 0.87;
+  border-radius: 10px;
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* VIDEO */
+.insta-1 {
+  position: absolute;
+  top: calc(950px + 800px / 2);
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 380px;
+  height: auto;
+  z-index: 10;
+  overflow: hidden;
+}
+
+.insta-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* TEXT */
+.elisffavorite {
+  position: absolute;
+  top: calc(950px + 800px / 2 + 260px);
+  left: calc(50% - 390px / 2);
+  font-size: 15px;
+  color: #ffeda8;
+  font-weight: 270;
+  z-index: 12;
+}
+
+/* BANNER BELOW */
+.news-extra-banner {
+  width: 100%;
+  height: auto;
+  margin-top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.news-extra-video {
+  width: 100%;
+  height: 110px;
+  object-fit: cover;
+}
+
+/* FOLLOW BTN */
+.follow-btn {
+  position: absolute;
+  top: 950px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 194px;
+  height: 123px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 20;
+}
+
+.ellipse-outline-follow {
+  width: 250px;
+  height: 95px;
+  border-radius: 50%;
+  border: 2.5px solid #ffeda8;
+  position: absolute;
+}
+
+.follow-text {
+  font-size: 22px;
+  color: #ffeda8;
+  z-index: 2;
+  text-align: center;
+  line-height: 1.1;
+}
+
+.elis-floating-logo {
+  position: absolute;
+  top: 1410px;
+  right: 30px;
+  width: 430px;
+  height: auto;
+  z-index: 50;
+  pointer-events: none;
+}
+
+/* HIRING BANNER */
+.hiring-banner {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  z-index: auto;
+}
+
+.hiring-banner img {
+  width: 100%;
+  max-width: 1937px;
+  height: auto;
+  display: block;
+}
+
+/* HIRING ELLIPSE BUTTON */
+.ellipse-hiring {
+  position: absolute;
+  bottom: 80px;        /* chỉnh lên/xuống */
+  left: 180px;
+  background-color: #ba3801; 
+  width: 160px;
+  height: 60px;
+
+  border-radius: 50%;
+  border: 2.5px solid #ffeda8;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  text-decoration: none;
+  z-index: 10;
+
+  transition: transform 0.3s ease;
+}
+
+.ellipse-hiring-text {
+  font-size: 16px;
+  font-weight: 500;
+  color: #ffeda8;
+  letter-spacing: 1px;
+}
+
+/* MENU IMAGE ANIMATION */
+.menu-animation {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
+/* Loại bỏ gạch chân cho tất cả các nút dạng link (Thẻ <a>) */
+/* 1. Nút VIEW MORE */
+.ellipse-blog {
+  text-decoration: none; /* Loại bỏ gạch chân */
+}
+
+/* 2. Nút DESCRIPTION (Hiring) */
+.ellipse-hiring {
+  text-decoration: none; /* Loại bỏ gạch chân */
+}
+
+/* 3. Đảm bảo các link trong footer cũng không gạch chân (nếu cần) */
+.footer-column a {
+  text-decoration: none;
+}
+
+/* =======================================
+   SỬA LỖI GẠCH CHÂN VÀ TỐI ƯU CÁC NÚT <a>
+======================================= */
+
+/* 1. Loại bỏ gạch chân cho các nút đã chuyển thành <a> */
+.ellipse-btn,
+.ellipse-red,
+.ellipse-blog,
+.ellipse-hiring,
+.follow-btn {
+  text-decoration: none; 
+}
+
+/* 2. Đảm bảo chữ bên trong các ellipse-btn (RESERVATION) vẫn giữ font màu */
+.ellipse-btn .ellipse-text,
+.ellipse-red .ellipse-red-text {
+    /* Đảm bảo màu chữ vẫn là #ffeda8 */
+    color: #ffeda8; 
+}
+
+/* 3. Đảm bảo khối FOLLOW BUTTON vẫn căn giữa chữ */
+.follow-btn {
+    /* Các thuộc tính cũ của DIV được giữ lại */
+    position: absolute;
+    top: 950px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 194px;
+    height: 123px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 20;
+}
+
+/* Thêm vào home.css hoặc base.css */
+.blog-frame {
+  /* Giữ các thuộc tính cũ, và thêm 2 thuộc tính này: */
+  text-decoration: none; /* Loại bỏ gạch chân cho link */
+  display: block; /* Quan trọng: để link chiếm toàn bộ khối article */
+  cursor: pointer;
+  /* (Các style vị trí cũ: position: absolute, top, width, height, background, box-shadow, overflow) */
+}
+
+/* Đảm bảo chữ bên trong link vẫn giữ màu */
+.blog-frame .blog-title {
+  color: #ba3801; /* Giữ nguyên màu tiêu đề */
+}
+

@@ -1,0 +1,224 @@
+
+.news-title-section {
+  margin-top: 80px; /* đẩy xuống dưới header */
+  text-align: center;
+}
+
+.flavors-stories {
+  font-size: 60px;
+  font-weight: 600;
+  font-style: italic;
+  color: #ba3801;
+  margin-bottom: 30px; /* thêm khoảng cách xuống dưới */
+}
+
+/* TAG LIST SECTION – NEWS PAGE */
+.news-tags {
+  margin-top: 50px;        /* cách title Flavors & Stories */    /* canh lề trái giống footer */
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;  /* mỗi tag xuống hàng */
+  gap: 10px;               /* khoảng cách giữa mỗi tag */
+}
+
+/* Mỗi dòng tag */
+.tag-item {
+  display: inline-block;
+  width: fit-content;
+  margin-bottom: 10px;
+  margin-left: 20px;
+  padding: 5px 12px;
+  border-radius: 6px;
+  font-size: 24px;
+  font-style: normal;
+  color: #fff;
+}
+
+
+/* ============================
+   TAG STYLE — CHỈ CHO NEWS PAGE
+   ============================ */
+/* wrapper căn chung lề */
+.news-page {
+  padding-top: 72px;
+  box-sizing: border-box;
+}
+
+/* grid bắt đầu cách tag 20px => chắc chắn không chạm */
+.news-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin-bottom: 50px; 
+  
+}
+
+
+.news-page .tag-lifestyle { background-color: #d2ac4d; }
+.news-page .tag-journey   { background-color: #9abfb1; }
+.news-page .tag-recipe    { background-color: #a1bb77; }
+.news-page .tag-voucher   { background-color: #955033; }
+
+
+/* Card */
+.news-card img {
+  max-width: 85%;   /* THU NHỎ 1 xíu */
+  width: 100%;
+  display: block;
+  margin: 12px auto 0 auto; /* xuống dưới + canh giữa */
+  object-fit: cover;
+  margin-top: 15px;
+  display: block;
+  border-radius: 0;
+}
+
+
+
+
+/* Card đầu tiên có border trái */
+.news-card:first-child {
+  border-right: 1px solid #BA3801;
+}
+
+/* Card cuối cùng có border phải */
+.news-card:last-child {
+  border-left: 1px solid #BA3801;
+}
+
+.news-card {
+  border-top: 1px solid #BA3801;
+  border-bottom: 1px solid #BA3801;
+  padding: 12px; /* tạo khoảng cách khỏi border */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Title */
+.news-title {
+  width: 85%;
+  margin: 18px auto 0 auto; /* canh giữa + xuống dưới */
+  font-size: 17px;
+  color: #ba3801;
+  font-weight: 400;
+  line-height: 1.35;
+  padding: 0; /* bỏ padding để thẳng với ảnh */
+}
+
+
+
+/* Date */
+.news-date {
+  width: 85%;
+  margin: 15px auto 15px auto;
+  text-align: right;
+  font-size: 14px;
+  font-style: italic;
+  color: #ba3801;
+}
+
+.news-card.is-empty {
+  border-top: 1px solid #BA3801;
+  border-bottom: 1px solid #BA3801;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 260px; /* bằng chiều cao card thường */
+  opacity: 0.4;
+}
+
+.news-card.is-empty::before {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  border: 1px #BA3801;
+  pointer-events: none;
+}
+
+.empty-placeholder {
+  font-size: 16px;
+  font-style: italic;
+  color: #BA3801;
+}
+/* Thêm/Chỉnh sửa trong news.css */
+.news-grid .news-card {
+    /* Đảm bảo link hiển thị như một khối để chiếm hết diện tích */
+    display: block; 
+    /* Loại bỏ gạch chân mặc định của thẻ <a> */
+    text-decoration: none; 
+    cursor: pointer;
+    /* Giữ nguyên các thuộc tính hiển thị khác (width, height, margin, v.v.) */
+}
+
+/* Đảm bảo tiêu đề trong link vẫn giữ màu */
+.news-card .news-title {
+    color: #ba3801; /* Hoặc màu chữ bạn đang dùng cho tiêu đề */
+}
+.news-card.is-empty {
+  border-top: 1px solid #BA3801;
+  border-bottom: 1px solid #BA3801;
+  
+  /* ✅ SỬ DỤNG FLEXBOX TẠI ĐÂY để căn giữa nội dung */
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  
+  min-height: 260px; 
+  opacity: 0.4;
+  
+  /* Quan trọng: Đảm bảo nó chiếm đủ chiều rộng */
+  width: 100%;
+}
+
+.empty-placeholder {
+  font-size: 16px;
+  font-style: italic;
+  color: #BA3801;
+}
+
+/* ---------- SKELETON ---------- */
+
+
+.skeleton {
+  pointer-events: none;
+}
+
+.skeleton-card {
+  background: #f2f2f2;
+  overflow: hidden;
+}
+
+.skeleton-img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: linear-gradient(
+    90deg,
+    #eee 25%,
+    #f5f5f5 37%,
+    #eee 63%
+  );
+  animation: shimmer 1.2s infinite;
+}
+
+.skeleton-line {
+  height: 14px;
+  margin: 10px 12px;
+  background: linear-gradient(
+    90deg,
+    #eee 25%,
+    #f5f5f5 37%,
+    #eee 63%
+  );
+  animation: shimmer 1.2s infinite;
+}
+
+.skeleton-line.short {
+  width: 50%;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200px 0; }
+  100% { background-position: 200px 0; }
+}
+.news-skeleton.hidden {
+  display: none;
+}
