@@ -3,29 +3,31 @@
 ================================= */
 let menuAnimationInterval = null;
 let instaAnimationInterval = null;
+let skeletonTimer = null;
 
 /* =================================
-   UI READY BARRIER (CỰC QUAN TRỌNG)
+   UTILS
+================================= */
+function updateNavActiveState() {
+  // logic thực tế nếu có
+}
+document.addEventListener("DOMContentLoaded", loadHeader);
+/* =================================
+   UI READY BARRIER
 ================================= */
 function whenUIReady($root, callback) {
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
       const images = $root.find("img").toArray();
-
-      if (images.length === 0) {
-        callback();
-        return;
-      }
+      if (images.length === 0) return callback();
 
       let loaded = 0;
       images.forEach(img => {
         if (img.complete) {
-          loaded++;
-          if (loaded === images.length) callback();
+          if (++loaded === images.length) callback();
         } else {
           img.onload = img.onerror = () => {
-            loaded++;
-            if (loaded === images.length) callback();
+            if (++loaded === images.length) callback();
           };
         }
       });
@@ -34,12 +36,11 @@ function whenUIReady($root, callback) {
 }
 
 /* =================================
-   HEADER LOGIC
+   HEADER
 ================================= */
 function headerScrollHandler() {
   const header = document.getElementById("header");
   const logo = document.getElementById("logo");
-
   if (!header || !logo) return;
 
   const logoWhite = "https://i.postimg.cc/dDFmbrnX/logo-white.png";
@@ -59,10 +60,9 @@ function initHeaderScrollLogic() {
   const logo = document.getElementById("logo");
 
   window.removeEventListener("scroll", headerScrollHandler);
-
   if (!header || !logo) return;
 
-  const page = window.location.pathname.split("/").pop();
+  const page = location.pathname.split("/").pop();
   const isHome = page === "" || page === "index.html";
 
   if (isHome) {
@@ -76,9 +76,8 @@ function initHeaderScrollLogic() {
   }
 }
 
-
 /* =================================
-   ANIMATION CONTROL
+   ANIMATIONS
 ================================= */
 function stopAllAnimations() {
   if (menuAnimationInterval) clearInterval(menuAnimationInterval);
@@ -88,14 +87,13 @@ function stopAllAnimations() {
 
 function initMenuImageAnimation() {
   const img = document.querySelector(".menu-animation");
-  if (!img) return stopAllAnimations();
+  if (!img) return;
 
   const total = 8;
   const path = "home-user/menu-pic/menu-pic";
   let frame = 1;
 
   stopAllAnimations();
-
   menuAnimationInterval = setInterval(() => {
     frame = frame % total + 1;
     img.src = `${path}${frame}.png`;
@@ -111,7 +109,6 @@ function initInstaImageAnimation() {
   let frame = 1;
 
   if (instaAnimationInterval) clearInterval(instaAnimationInterval);
-
   instaAnimationInterval = setInterval(() => {
     frame = frame % total + 1;
     img.src = `${path}${frame}.png`;
@@ -122,71 +119,79 @@ function initInstaImageAnimation() {
    PAGE UPDATE
 ================================= */
 function handlePageUpdate() {
-  window.scrollTo(0, 0);
   updateNavActiveState();
   initHeaderScrollLogic();
 
-  initMenuImageAnimation();
-  initInstaImageAnimation();
+  if (document.querySelector(".menu-animation")) {
+    initMenuImageAnimation();
+  }
+
+  if (document.querySelector(".insta-animation")) {
+    initInstaImageAnimation();
+  }
 }
 
 /* =================================
-   SPA FETCH CORE (ĐÃ SỬA)
+   NEWS SKELETON (SPA SAFE)
+================================= */
+function renderNewsSkeletonImmediately() {
+  const newsContainer = document.querySelector("#news-container");
+  if (!newsContainer) return;
+
+  if (document.getElementById("news-skeleton-wrapper")) return;
+
+  let html = "";
+  ["Lifestyle", "Journey", "Recipe", "Voucher"].forEach(tag => {
+    html += `
+      <div class="tag-item tag-${tag.toLowerCase()} skeleton"
+           style="width:120px;height:34px;"></div>
+      <div class="news-divider skeleton-divider"></div>
+      <div class="news-grid skeleton-grid">
+        ${Array.from({ length: 3 }).map(() => `
+          <div class="news-card skeleton-card">
+            <div class="skeleton-img"></div>
+            <div class="skeleton-line full"></div>
+            <div class="skeleton-line short"></div>
+          </div>
+        `).join("")}
+      </div>
+    `;
+  });
+
+  newsContainer.innerHTML = `
+    <div id="news-skeleton-wrapper">
+      ${html}
+    </div>
+  `;
+}
+
+
+/* =================================
+   SPA FETCH CORE
 ================================= */
 async function fetchPageContent(url, contentArea) {
   stopAllAnimations();
 
   try {
-    // 🔥 Nếu là NEWS → render skeleton NGAY
-    if (url.includes("news.html")) {
-      renderNewsSkeletonImmediately();
-    }
-
     const html = await fetch(url).then(r => r.text());
     const doc = new DOMParser().parseFromString(html, "text/html");
-
     const newContent = doc.getElementById("content");
+
     if (!newContent) {
-      window.location.href = url;
+      location.href = url;
       return;
     }
 
-    // ✅ Title update ngay
     document.title =
       doc.querySelector("title")?.textContent || "Elis’ Favorite";
 
-    // --- CSS handling ---
-    const oldCSS = document.head.querySelector("link[data-page-style]");
-    const newCSS = doc.head.querySelector("link[data-page-style]");
-    let cssPromise = Promise.resolve();
-
-    if (newCSS && (!oldCSS || oldCSS.href !== newCSS.href)) {
-      const link = document.createElement("link");
-      link.rel = "stylesheet";
-      link.href = newCSS.href;
-      link.dataset.pageStyle = "true";
-
-      cssPromise = new Promise(r => {
-        link.onload = r;
-        link.onerror = r;
-        document.head.appendChild(link);
-      });
+    if (!url.includes("news.html")) {
+      contentArea.innerHTML = newContent.innerHTML;
     }
 
-    // 🚀 RENDER DOM NGAY – KHÔNG ĐỢI CSS
-    contentArea.innerHTML = newContent.innerHTML;
     history.pushState({}, "", url);
-
     document.body.classList.add("page-loaded");
 
-    // ⏳ CSS load ngầm
-    cssPromise.then(() => {
-      if (oldCSS && (!newCSS || oldCSS.href !== newCSS.href)) {
-        oldCSS.remove();
-      }
-    });
-
-    // ✅ ĐỢI UI PAINT XONG RỒI MỚI INIT
     whenUIReady($("#content"), () => {
       handlePageUpdate();
 
@@ -196,38 +201,48 @@ async function fetchPageContent(url, contentArea) {
     });
 
   } catch (err) {
-    console.error("SPA load error:", err);
-    window.location.href = url;
+    console.error("SPA error:", err);
+    location.href = url;
   }
 }
 
 /* =================================
-   ROUTING
+   ROUTING (SINGLE – CLEAN)
 ================================= */
 document.addEventListener("click", e => {
   const link = e.target.closest("a[href]");
   if (!link) return;
 
   const url = link.getAttribute("href");
-  if (!url || url.startsWith("#") || link.target === "_blank" || url.startsWith("http")) return;
+  if (
+    !url ||
+    url.startsWith("#") ||
+    link.target === "_blank" ||
+    url.startsWith("http")
+  ) return;
 
   const content = document.getElementById("content");
   if (!content) return;
 
   e.preventDefault();
-  document.body.classList.remove("page-loaded");
 
-setTimeout(() => {
   if (url.includes("news.html")) {
+    content.innerHTML = `
+      <section class="menu-page">
+        <div class="news-page">
+          <section class="news-title-section">
+            <h1 class="flavors-stories">Flavors & stories</h1>
+          </section>
+          <section class="news-tags">
+            <div id="news-container"></div>
+          </section>
+        </div>
+      </section>
+    `;
     renderNewsSkeletonImmediately();
   }
-  fetchPageContent(url, content);
-}, 300);
-});
 
-window.addEventListener("popstate", () => {
-  const content = document.getElementById("content");
-  if (content) fetchPageContent(location.href, content);
+  fetchPageContent(url, content);
 });
 
 /* =================================
@@ -254,28 +269,4 @@ function loadHeader() {
     });
 }
 
-document.addEventListener("DOMContentLoaded", loadHeader);
-function renderNewsSkeletonImmediately() {
-  const content = document.getElementById("content");
-  if (!content) return;
-
-  // Nếu đã có skeleton thì không render lại
-  if (content.querySelector(".news-skeleton")) return;
-
-  content.innerHTML = `
-    <section class="news-page">
-      <h1 id="news-title">Tin tức</h1>
-
-      <div class="news-skeleton">
-        ${Array.from({ length: 6 }).map(() => `
-          <div class="skeleton-card">
-            <div class="skeleton-thumb"></div>
-            <div class="skeleton-line"></div>
-            <div class="skeleton-line short"></div>
-          </div>
-        `).join("")}
-      </div>
-    </section>
-  `;
-}
 
