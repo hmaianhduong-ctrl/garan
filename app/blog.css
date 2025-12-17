@@ -506,3 +506,51 @@
     
     transition: all 0.3s ease;
 }
+
+/* ===== COMMENT LIST ===== */
+.comment-list {
+  margin-top: 50px;
+}
+
+/* ONE COMMENT */
+.comment-item {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+/* Avatar */
+.comment-item .comment-avatar {
+  font-size: 36px;
+  color: #ba3801;
+}
+
+/* Body */
+.comment-body {
+  position: relative;
+  width: 650px;
+}
+
+/* Name */
+.comment-author {
+  font-size: 16px;
+  font-weight: 500;
+  color: #000;
+}
+
+/* Date */
+.comment-date {
+  position: absolute;
+  right: 0;
+  top: 0;
+  font-size: 13px;
+  opacity: 0.4;
+}
+
+/* Content */
+.comment-content {
+  margin-top: 8px;
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: 350;
+}

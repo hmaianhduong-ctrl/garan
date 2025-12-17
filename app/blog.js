@@ -53,6 +53,8 @@ async function loadBlog() {
     blog = posts.find(p => p.slug === slug);
     if (!blog) throw new Error("Post not found");
 
+    window.currentPostId = blog.id;
+
   } catch (err) {
     console.error("❌ Load blog failed:", err);
     blogTitleEl.textContent = "Không thể tải bài viết.";
@@ -126,6 +128,7 @@ async function loadBlog() {
   }
 
   await loadRecommendedBlogs(slug);
+    await loadComments(window.currentPostId);
 }
 
 /**
@@ -162,6 +165,38 @@ async function loadRecommendedBlogs(currentSlug) {
   }
 }
 
+function renderComment({ author, content, createdAt }) {
+  const list = document.getElementById("commentList");
+  if (!list) return;
+
+  const div = document.createElement("div");
+  div.className = "comment-item";
+
+  div.innerHTML = `
+    <div class="comment-avatar">👤</div>
+    <div class="comment-body">
+      <div class="comment-author">${author}</div>
+      <div class="comment-date">
+        ${new Date(createdAt).toLocaleDateString("vi-VN")}
+      </div>
+      <div class="comment-content">${content}</div>
+    </div>
+  `;
+
+  // animation nhẹ
+  div.style.opacity = "0";
+  div.style.transform = "translateY(10px)";
+  list.prepend(div);
+
+  requestAnimationFrame(() => {
+    div.style.transition = "0.3s ease";
+    div.style.opacity = "1";
+    div.style.transform = "translateY(0)";
+  });
+}
+
+
+
 
 // 💡 THÊM: Logic chuyển đổi trạng thái nút (Chỉ áp dụng khi đã đăng nhập)
 function handleLikeToggleFE() {
@@ -189,33 +224,74 @@ function handleLikeToggleFE() {
 
 // 💡 SỬA: Logic gán sự kiện Like/Comment
 function setupInteractiveActions() {
-    // 1. Nút Like
-    document.getElementById("likeBtn")?.addEventListener("click", e => {
-        if (!isLoggedIn()) {
-            e.preventDefault();
-            // showLoginPopup() được định nghĩa trong login-popup.js
-            showLoginPopup(); 
-            return;
-        }
 
-        // 💡 GỌI HÀM XỬ LÝ LIKE GIẢ LẬP KHI ĐÃ ĐĂNG NHẬP
-        handleLikeToggleFE(); 
-        
-        // TODO: gọi API like thực tế
-        console.log("✅ Đã đăng nhập, tiến hành gọi API Like.");
+  // LIKE
+  document.getElementById("likeBtn")?.addEventListener("click", e => {
+    if (!isLoggedIn()) {
+      e.preventDefault();
+      showLoginPopup();
+      return;
+    }
+    handleLikeToggleFE();
+  });
+
+  // COMMENT
+  document.querySelector(".comment-submit-btn")
+    ?.addEventListener("click", async e => {
+
+      if (!isLoggedIn()) {
+        e.preventDefault();
+        showLoginPopup();
+        return;
+      }
+
+      const textarea = document.querySelector(".comment-textarea");
+      const content = textarea.value.trim();
+      if (!content) return;
+
+      // 👉 MOCK – backend chưa có
+      const mockSavedComment = {
+        author: "Bạn",
+        content,
+        createdAt: new Date().toISOString()
+      };
+
+      renderComment(mockSavedComment);
+      textarea.value = "";
+
+      // 🔜 Sau này bật lại API
+      /*
+      const res = await fetch(`${API_BASE}/api/comments`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          postId: window.currentPostId,
+          content
+        })
+      });
+
+      const savedComment = await res.json();
+      renderComment(savedComment);
+      */
     });
+}
 
-    // 2. Nút Đăng tải bình luận
-    document.querySelector(".comment-submit-btn")?.addEventListener("click", e => {
-        if (!isLoggedIn()) {
-            e.preventDefault();
-            showLoginPopup();
-            return;
-        }
+async function loadComments(postId) {
+  const list = document.getElementById("commentList");
+  if (!list) return;
 
-        // TODO: submit comment
-        console.log("✅ Đã đăng nhập, tiến hành submit comment.");
-    });
+  list.innerHTML = "";
+
+  // MOCK DATA – sau này thay bằng API GET
+  const mockComments = [
+    {
+      author: "Admin",
+      content: "Cảm ơn bạn đã đọc bài viết ❤️",
+      createdAt: new Date().toISOString()
+    }
+  ];
+
+  mockComments.forEach(renderComment);
 }
 
 

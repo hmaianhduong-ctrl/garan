@@ -1,11 +1,21 @@
 /* =================================
-   1. GLOBAL STATE
+   GLOBAL STATE - Lưu trạng thái app
 ================================= */
 let menuAnimationInterval = null;
 let instaAnimationInterval = null;
 
+// Cache auth để không phải check lại liên tục
+let authCache = {
+  checked: false,      // Đã check chưa?
+  isLoggedIn: false,   // Kết quả login
+  timestamp: 0         // Thời gian check (để refresh sau 5 phút)
+};
+
+// Cache header để không load lại
+let headerLoaded = false;
+
 /* =================================
-   2. UTILS & HELPERS
+   UTILS & HELPERS
 ================================= */
 function updateNavActiveState() {
   const links = document.querySelectorAll("#header nav a");
@@ -16,60 +26,86 @@ function updateNavActiveState() {
   });
 }
 
-function whenUIReady($root, callback) {
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      const images = $root.find("img").toArray();
-      if (images.length === 0) return callback();
-      let loaded = 0;
-      images.forEach(img => {
-        if (img.complete) { if (++loaded === images.length) callback(); }
-        else { img.onload = img.onerror = () => { if (++loaded === images.length) callback(); }; }
-      });
-    });
-  });
-}
-
 /* =================================
-   3. LOGIN & USER FEATURES (OPTIMIZED)
+   LOGIN - Check 1 lần, dùng cache
 ================================= */
 async function checkLoginStatus() {
+  // Nếu đã check trong 5 phút → dùng cache
+  const now = Date.now();
+  if (authCache.checked && (now - authCache.timestamp < 300000)) {
+    return authCache.isLoggedIn;
+  }
+
+  // Chưa có cache → check API
   try {
     const res = await fetch("/api/auth/session", { credentials: "include" });
-    if (!res.ok) return false;
+    if (!res.ok) {
+      authCache = { checked: true, isLoggedIn: false, timestamp: now };
+      return false;
+    }
     const data = await res.json();
-    return !!data?.user;
+    const loggedIn = !!data?.user;
+    authCache = { checked: true, isLoggedIn: loggedIn, timestamp: now };
+    return loggedIn;
   } catch (err) {
     console.error("Login check error:", err);
+    authCache = { checked: true, isLoggedIn: false, timestamp: now };
     return false;
   }
 }
 
-// Hàm này cập nhật TẤT CẢ mọi thứ liên quan đến User (Header + Page Content)
+// Cập nhật UI dựa trên login status
 function updateUserUI(isLoggedIn) {
   document.body.classList.toggle("logged-in", isLoggedIn);
   
-  // 1. Cập nhật các nút trong Header (Avatar/Login)
+  // Header buttons
   const avatar = document.getElementById("user-avatar");
   const loginBtn = document.getElementById("login-btn");
   if (avatar) avatar.classList.toggle("hidden", !isLoggedIn);
   if (loginBtn) loginBtn.classList.toggle("hidden", isLoggedIn);
 
-  // 2. Cập nhật các tính năng trong trang (Comment/Post)
+  // Page features (comment, post...)
   const displayStyle = isLoggedIn ? "block" : "none";
   document.querySelectorAll(".action-btn, .comment-form, .post-blog").forEach(el => {
     el.style.display = displayStyle;
   });
 }
 
-// Chạy check login mà không block luồng chính
+// Sync login status - CHỈ GỌI KHI CẦN THIẾT
 async function syncUserStatus() {
   const isLoggedIn = await checkLoginStatus();
   updateUserUI(isLoggedIn);
 }
 
 /* =================================
-   4. HEADER LOGIC + SCROLL
+   HEADER - Load 1 lần duy nhất
+================================= */
+async function loadHeader() {
+  // Nếu đã load rồi → skip
+  if (headerLoaded) return;
+
+  const container = document.getElementById("header-container");
+  if (!container) return;
+
+  try {
+    const res = await fetch("header-footer/header.html");
+    const html = await res.text();
+    container.innerHTML = html;
+    
+    headerLoaded = true; // Đánh dấu đã load
+    
+    initHeaderScrollLogic();
+    updateNavActiveState();
+    
+    // Check login CHỈ 1 LẦN sau khi load header
+    await syncUserStatus();
+  } catch (err) {
+    console.error("Header load error:", err);
+  }
+}
+
+/* =================================
+   HEADER SCROLL LOGIC
 ================================= */
 function headerScrollHandler() {
   const header = document.getElementById("header");
@@ -108,22 +144,8 @@ function initHeaderScrollLogic() {
   }
 }
 
-function loadHeader() {
-  const container = document.getElementById("header-container");
-  if (!container) return;
-  fetch("header-footer/header.html")
-    .then(r => r.text())
-    .then(html => {
-      container.innerHTML = html;
-      initHeaderScrollLogic();
-      updateNavActiveState();
-      // Sau khi load header xong, cần đồng bộ UI login cho header ngay
-      syncUserStatus(); 
-    });
-}
-
 /* =================================
-   5. ANIMATIONS
+   ANIMATIONS
 ================================= */
 function stopAllAnimations() {
   if (menuAnimationInterval) clearInterval(menuAnimationInterval);
@@ -158,95 +180,141 @@ function initInstaImageAnimation() {
 }
 
 /* =================================
-   6. PAGE UPDATE
+   SKELETON - Cho MỌI PAGE
 ================================= */
-function handlePageUpdate() {
-  updateNavActiveState();
-  initHeaderScrollLogic();
-  if (document.querySelector(".menu-animation")) initMenuImageAnimation();
-  if (document.querySelector(".insta-animation")) initInstaImageAnimation();
-}
+function showPageSkeleton() {
+  const content = document.getElementById("content");
+  if (!content) return;
 
-function renderNewsSkeletonImmediately() {
-  const newsContainer = document.querySelector("#news-container");
-  if (!newsContainer || document.getElementById("news-skeleton-wrapper")) return;
-
-  let html = "";
-  ["Lifestyle", "Journey", "Recipe", "Voucher"].forEach(tag => {
-    html += `
-      <div class="tag-item tag-${tag.toLowerCase()} skeleton" style="width:120px;height:34px;"></div>
-      <div class="news-divider skeleton-divider"></div>
-      <div class="news-grid skeleton-grid">
-        ${Array.from({ length: 3 }).map(() => `<div class="news-card skeleton-card"></div>`).join("")}
-      </div>`;
-  });
-  newsContainer.innerHTML = `<div id="news-skeleton-wrapper">${html}</div>`;
+  // Skeleton HTML chung cho mọi page
+  content.innerHTML = `
+    <div class="page-skeleton">
+      <div class="skeleton-header" style="width:60%;height:40px;margin:20px auto;"></div>
+      <div class="skeleton-content">
+        <div class="skeleton-block" style="width:100%;height:200px;margin:20px 0;"></div>
+        <div class="skeleton-block" style="width:100%;height:200px;margin:20px 0;"></div>
+        <div class="skeleton-block" style="width:80%;height:150px;margin:20px 0;"></div>
+      </div>
+    </div>
+  `;
 }
 
 /* =================================
-   7. SPA FETCH CORE
+   PAGE LIFECYCLE - Thống nhất cho mọi page
+================================= */
+function initPageLifecycle() {
+  // 1. Update nav active state
+  updateNavActiveState();
+  
+  // 2. Init header scroll
+  initHeaderScrollLogic();
+  
+  // 3. Init animations nếu có
+  if (document.querySelector(".menu-animation")) initMenuImageAnimation();
+  if (document.querySelector(".insta-animation")) initInstaImageAnimation();
+  
+  // 4. Update user UI (dùng cache, không gọi API)
+  updateUserUI(authCache.isLoggedIn);
+  
+  // 5. Scroll to top
+  window.scrollTo(0, 0);
+}
+
+/* =================================
+   SPA NAVIGATION
 ================================= */
 async function fetchPageContent(url, contentArea) {
+  // 1. Dừng animations
   stopAllAnimations();
+  
+  // 2. Hiện skeleton NGAY LẬP TỨC
+  showPageSkeleton();
+  
+  // 3. Fetch page mới
   try {
-    const html = await fetch(url).then(r => r.text());
+    const res = await fetch(url);
+    const html = await res.text();
     const doc = new DOMParser().parseFromString(html, "text/html");
     const newContent = doc.getElementById("content");
 
     if (!newContent) {
-      location.href = url;
+      location.href = url; // Fallback
       return;
     }
 
-    document.title = doc.querySelector("title")?.textContent || "Elis’ Favorite";
-    contentArea.innerHTML = newContent.innerHTML;
+    // 4. Update URL & Title
+    document.title = doc.querySelector("title")?.textContent || "Elis' Favorite";
     history.pushState({}, "", url);
-    document.body.classList.add("page-loaded");
 
-    // Chạy đồng thời: Cập nhật UI User và Đợi ảnh load để chạy animation
-    syncUserStatus(); 
+    // 5. Thay content
+    contentArea.innerHTML = newContent.innerHTML;
 
-    whenUIReady($(contentArea), () => {
-      handlePageUpdate();
-      if (url.includes("news.html") && window.initNewsPage) window.initNewsPage();
-    });
+    // 6. Chạy lifecycle thống nhất
+    initPageLifecycle();
+
   } catch (err) {
-    console.error("SPA error:", err);
+    console.error("Fetch error:", err);
     location.href = url;
   }
 }
 
 /* =================================
-   8. ROUTING CLICK HANDLER
+   ROUTING - Bắt click links
 ================================= */
 document.addEventListener("click", e => {
   const link = e.target.closest("a[href]");
   if (!link) return;
+  
   const url = link.getAttribute("href");
-  if (!url || url.startsWith("#") || link.target === "_blank" || url.startsWith("http")) return;
+  
+  // Bỏ qua: anchor links, external links, new tabs
+  if (!url || url.startsWith("#") || link.target === "_blank" || url.startsWith("http")) {
+    return;
+  }
 
   const content = document.getElementById("content");
   if (!content) return;
 
   e.preventDefault();
-  if (url.includes("news.html")) {
-    content.innerHTML = `<div id="news-container"></div>`; // Simplified for example
-    renderNewsSkeletonImmediately();
-  }
   fetchPageContent(url, content);
 });
 
 /* =================================
-   9. DOM LOADED INIT (NON-BLOCKING)
+   INIT - Chạy khi page load
 ================================= */
-document.addEventListener("DOMContentLoaded", () => {
-  // 1. Load Header (Trong loadHeader đã có gọi syncUserStatus)
-  loadHeader();
+document.addEventListener("DOMContentLoaded", async () => {
+  // 1. Load header (chỉ 1 lần)
+  await loadHeader();
   
-  // 2. Chạy ngay logic giao diện của trang hiện tại
-  document.body.classList.add("page-loaded");
-  handlePageUpdate();
+  // 2. Init page hiện tại
+  initPageLifecycle();
+});
 
-  // 3. Kiểm tra login cho các phần tử có sẵn trong body (nếu có)
-  syncUserStatus();
+/* =================================
+   BROWSER BACK/FORWARD
+================================= */
+window.addEventListener("popstate", () => {
+  const content = document.getElementById("content");
+  if (content) {
+    fetchPageContent(location.href, content);
+  }
+});
+
+/* =================================
+   TAB VISIBILITY - Chỉ update UI, không check API
+================================= */
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "visible") {
+    // Chỉ re-init animation và nav, KHÔNG check login lại
+    initPageLifecycle();
+  }
+});
+
+/* =================================
+   BF CACHE - Browser restore page
+================================= */
+window.addEventListener("pageshow", e => {
+  if (e.persisted) {
+    initPageLifecycle();
+  }
 });
